@@ -6,7 +6,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.freelancer"
+        applicationId "com.freelancer"
         minSdk 33
         targetSdk 33
         versionCode 1
@@ -28,6 +28,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.freelancer'
 }
 
 dependencies {
