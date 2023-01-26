@@ -1,4 +1,4 @@
-package com.example.freelancer.ui.login;
+package com.freelancer.ui.login;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.freelancer.data.LoginRepository;
-import com.example.freelancer.data.Result;
-import com.example.freelancer.data.model.LoggedInUser;
-import com.example.freelancer.R;
+import com.freelancer.data.LoginRepository;
+import com.freelancer.data.Result;
+import com.freelancer.data.model.LoggedInUser;
+import com.freelancer.R;
 
 public class LoginViewModel extends ViewModel {
 

@@ -1,4 +1,4 @@
-package com.example.freelancer.ui.login;
+package com.freelancer.ui.login;
 
 import android.app.Activity;
 
@@ -22,10 +22,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.freelancer.R;
-import com.example.freelancer.ui.login.LoginViewModel;
-import com.example.freelancer.ui.login.LoginViewModelFactory;
-import com.example.freelancer.databinding.ActivityLoginBinding;
+import com.freelancer.R;
+import com.freelancer.ui.login.LoginViewModel;
+import com.freelancer.ui.login.LoginViewModelFactory;
+import com.freelancer.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 

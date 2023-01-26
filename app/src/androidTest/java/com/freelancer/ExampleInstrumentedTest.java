@@ -1,4 +1,4 @@
-package com.example.freelancer;
+package com.freelancer;
 
 import android.content.Context;
 

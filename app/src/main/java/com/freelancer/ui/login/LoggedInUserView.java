@@ -1,4 +1,4 @@
-package com.example.freelancer.ui.login;
+package com.freelancer.ui.login;
 
 /**
  * Class exposing authenticated user details to the UI.

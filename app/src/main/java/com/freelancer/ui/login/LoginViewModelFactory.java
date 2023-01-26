@@ -1,11 +1,11 @@
-package com.example.freelancer.ui.login;
+package com.freelancer.ui.login;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import com.example.freelancer.data.LoginDataSource;
-import com.example.freelancer.data.LoginRepository;
+import com.freelancer.data.LoginDataSource;
+import com.freelancer.data.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

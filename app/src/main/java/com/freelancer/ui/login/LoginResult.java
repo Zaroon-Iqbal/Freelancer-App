@@ -1,4 +1,4 @@
-package com.example.freelancer.ui.login;
+package com.freelancer.ui.login;
 
 import androidx.annotation.Nullable;
 

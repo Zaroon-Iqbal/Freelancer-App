@@ -1,6 +1,6 @@
-package com.example.freelancer.data;
+package com.freelancer.data;
 
-import com.example.freelancer.data.model.LoggedInUser;
+import com.freelancer.data.model.LoggedInUser;
 
 /**
  * Class that requests authentication and user information from the remote data source and
