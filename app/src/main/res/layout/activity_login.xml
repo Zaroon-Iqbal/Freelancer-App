@@ -61,7 +61,8 @@
         android:layout_height="wrap_content"
         android:text="Register"
         app:layout_constraintTop_toBottomOf="@id/login"
-        tools:layout_editor_absoluteX="33dp" />
+        tools:layout_editor_absoluteX="33dp"
+        tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/loading"
