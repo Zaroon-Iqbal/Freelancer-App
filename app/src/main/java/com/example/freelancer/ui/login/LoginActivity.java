@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -43,10 +44,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //setContentView(binding.getRoot());
 
-        register = (TextView) findViewById(R.id.register);
+        register = findViewById(R.id.register);
         register.setOnClickListener(this);
 
-        login = (Button) findViewById(R.id.login);
+        login = findViewById(R.id.login);
         login.setOnClickListener(this);
 
 
@@ -56,12 +57,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, "Hello", Toast.LENGTH_SHORT);
         switch (view.getId()){
             case R.id.register:
-                startActivity(new Intent(this, RegisterConsumer.class));
-                break;
-            case R.id.login:
-                startActivity(new Intent(this, RegisterConsumer.class));
+                toast.show();
+                startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
                 break;
 
         }
