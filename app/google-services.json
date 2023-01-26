@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "137356775052",
+    "project_id": "freelancer-b7c5a",
+    "storage_bucket": "freelancer-b7c5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137356775052:android:e67ee2badb7c81f03035a9",
+        "android_client_info": {
+          "package_name": "com.freelancer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137356775052-ppiqr254l0bkgp5lupbnp5mnifjlj705.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC02ikVcJCp3i7XgCmC0LIQq02gCV5mL-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137356775052-ppiqr254l0bkgp5lupbnp5mnifjlj705.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
