@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
         android:text="Freelancer"
-        android:textColor="@+color/Darkorange"
         android:textSize="60sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.0"
@@ -68,25 +67,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
+
     <Button
         android:id="@+id/RegisterConsumer"
-        android:layout_width="360"
-        android:layout_height="60"
-        android:layout_gravity="start"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="64dp"
-        android:backgroundTint="@+color/Darkorange"
-        android:textColor="#ffffff"
-        android:enabled="false"
+        android:backgroundTint="#FFFF8C00"
         android:text="Register Consumer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#ffffff"
         app:layout_constraintTop_toBottomOf="@+id/passwordReg"
-        app:layout_constraintVertical_bias="0.2" />
-
-
-
+        app:layout_constraintVertical_bias="0.226"
+        tools:layout_editor_absoluteX="25dp"
+        tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/loading"

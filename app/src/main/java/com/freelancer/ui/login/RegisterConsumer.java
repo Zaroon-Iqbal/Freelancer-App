@@ -1,5 +1,9 @@
 package com.example.freelancer.ui.login;
 
+
+
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -8,6 +12,7 @@ import com.example.freelancer.R;
 
 
 public class RegisterConsumer extends AppCompatActivity {
+
 
 
 
