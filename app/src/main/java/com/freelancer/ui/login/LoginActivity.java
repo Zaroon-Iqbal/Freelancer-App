@@ -5,6 +5,8 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -27,17 +29,39 @@ import com.freelancer.ui.login.LoginViewModel;
 import com.freelancer.ui.login.LoginViewModelFactory;
 import com.freelancer.databinding.ActivityLoginBinding;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
+   // private Button register;
+    private Button login;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Button register = (Button) findViewById(R.id.register);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = getApplicationContext();
+                Toast toast = Toast.makeText(context, "Hello", Toast.LENGTH_SHORT);
+                toast.show();
+                switch (view.getId()){
+                    case R.id.register:
+                        toast.show();
+                        startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
+                        break;
+                    default:
+                        toast.show();
+
+                }
+            }
+        });
+
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -133,4 +157,21 @@ public class LoginActivity extends AppCompatActivity {
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
-}
+
+    @Override
+    public void onClick(View view) {
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, "Hello", Toast.LENGTH_SHORT);
+        toast.show();
+        switch (view.getId()){
+            case R.id.register:
+                toast.show();
+                startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
+                break;
+            default:
+                toast.show();
+
+        }
+    }
+
+    }
