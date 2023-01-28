@@ -43,20 +43,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        /*
+        Registration button on click listener to navigate to the Consumer registration activity
+         */
         Button register = (Button) findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = getApplicationContext();
                 Toast toast = Toast.makeText(context, "Hello", Toast.LENGTH_SHORT);
-                toast.show();
+                toast.show();//used to test if the click listener was working
                 switch (view.getId()){
                     case R.id.register:
                         toast.show();
                         startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
                         break;
-                    default:
-                        toast.show();
 
                 }
             }
@@ -158,6 +159,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
+    /*
+  - switch statement for click listener that can be used for multiple use cases.
+  - might be used in future.
+     */
     @Override
     public void onClick(View view) {
         Context context = getApplicationContext();
