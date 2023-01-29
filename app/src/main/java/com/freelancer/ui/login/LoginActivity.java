@@ -1,110 +1,85 @@
 package com.freelancer.ui.login;
 
 import android.app.Activity;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.freelancer.R;
-import com.freelancer.ui.login.LoginViewModel;
-import com.freelancer.ui.login.LoginViewModelFactory;
 import com.freelancer.databinding.ActivityLoginBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private LoginViewModel loginViewModel;
+    private FirebaseAuth firebaseAuth;
     private ActivityLoginBinding binding;
-   // private Button register;
-    private Button login;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Button register = (Button) findViewById(R.id.register);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = getApplicationContext();
-                Toast toast = Toast.makeText(context, "Hello", Toast.LENGTH_SHORT);
-                toast.show();
-                switch (view.getId()){
-                    case R.id.register:
-                        toast.show();
-                        startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
-                        break;
-                    default:
-                        toast.show();
+        firebaseAuth = FirebaseAuth.getInstance();
 
-                }
-            }
-        });
+        if(firebaseAuth.getCurrentUser() != null) {
+            //TODO: User is authenticated already, log in and go to homepage.
+        }
 
+        final Button loginButton = binding.login;
+        loginButton.setOnClickListener(this);
+
+        final Button register = binding.register;
+        if (register != null) {
+            register.setOnClickListener(this);
+        }
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
-        final ProgressBar loadingProgressBar = binding.loading;
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
+        loginViewModel.getLoginFormState().observe(this, loginFormState -> {
+            if (loginFormState == null) {
+                return;
+            }
+            loginButton.setEnabled(loginFormState.isDataValid());
+            if (loginFormState.getUsernameError() != null) {
+                usernameEditText.setError(getString(loginFormState.getUsernameError()));
+            }
+            if (loginFormState.getPasswordError() != null) {
+                passwordEditText.setError(getString(loginFormState.getPasswordError()));
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
-                finish();
+        loginViewModel.getLoginResult().observe(this, loginResult -> {
+            if (loginResult == null) {
+                return;
             }
+            if (loginResult.getError() != null) {
+                showLoginFailed(loginResult.getError());
+            }
+            if (loginResult.getSuccess() != null) {
+                updateUiWithUser(loginResult.getSuccess());
+            }
+            setResult(Activity.RESULT_OK);
+
+            //Complete and destroy login activity once successful
+            finish();
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -126,26 +101,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
+        passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
+            return false;
         });
+    }
+
+    private void showToast(String text) {
+        Toast.makeText(getApplicationContext(),text, Toast.LENGTH_LONG).show();
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
@@ -160,18 +126,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        Context context = getApplicationContext();
-        Toast toast = Toast.makeText(context, "Hello", Toast.LENGTH_SHORT);
-        toast.show();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.register:
-                toast.show();
                 startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
                 break;
-            default:
-                toast.show();
 
+            case R.id.login:
+                firebaseAuth.signInWithEmailAndPassword(binding.username.getText().toString(), binding.password.getText().toString())
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                showToast("Sign-in successful!");
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                //TODO: Login successful. Go to the homepage.
+                            } else {
+                                showToast(task.getException().getMessage());
+                                //TODO: Login unsuccessful. Inform user of error.
+                            }
+                        });
+                break;
+            default:
+                break;
         }
     }
-
-    }
+}
