@@ -48,7 +48,7 @@
         android:layout_marginTop="19dp"
         android:layout_marginBottom="256dp"
         android:backgroundTint="#FFAC71"
-        android:enabled="false"
+        android:enabled="true"
         android:text="@string/action_sign_in"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,6 +72,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        app:layout_constraintTop_toBottomOf="@id/login"
+        tools:layout_editor_absoluteX="33dp"
+        tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/loading"

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "137356775052",
-    "project_id": "freelancer-b7c5a",
-    "storage_bucket": "freelancer-b7c5a.appspot.com"
+    "project_number": "558802542206",
+    "project_id": "freelancer-775c2",
+    "storage_bucket": "freelancer-775c2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:137356775052:android:e67ee2badb7c81f03035a9",
+        "mobilesdk_app_id": "1:558802542206:android:d60387b0e33b3a45f0c22f",
         "android_client_info": {
           "package_name": "com.freelancer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "137356775052-ppiqr254l0bkgp5lupbnp5mnifjlj705.apps.googleusercontent.com",
+          "client_id": "558802542206-ueupka32mjp9b4nr0seh08sojkt14b9j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC02ikVcJCp3i7XgCmC0LIQq02gCV5mL-0"
+          "current_key": "AIzaSyD4QEPLrLT-8HrRJaVjo1GUCokbRNAeEj8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "137356775052-ppiqr254l0bkgp5lupbnp5mnifjlj705.apps.googleusercontent.com",
+              "client_id": "558802542206-ueupka32mjp9b4nr0seh08sojkt14b9j.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
