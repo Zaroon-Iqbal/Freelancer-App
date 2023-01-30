@@ -24,10 +24,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
 import com.example.freelancer.R;
 import com.example.freelancer.ui.login.LoginViewModel;
 import com.example.freelancer.ui.login.LoginViewModelFactory;
 import com.example.freelancer.databinding.ActivityLoginBinding;
+*/
+
+import com.freelancer.R;
+import com.freelancer.databinding.ActivityLoginBinding;
+import com.freelancer.ui.login.LoginViewModel;
+import com.freelancer.ui.login.RegisterConsumer;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
