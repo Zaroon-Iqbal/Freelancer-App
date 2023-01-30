@@ -1,7 +1,9 @@
 package com.freelancer.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,15 @@ public class RegisterConsumer extends AppCompatActivity {
         final TextView email = binding.consumerEmail;
         final TextView password = binding.userPassword;
         final TextView confirmPass = binding.confirmPass;
+        final TextView haveAccount = binding.Account;
+        /*
+        Goes back to logging in if the consumer already has an account/
+         */
+        haveAccount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterConsumer.this, LoginActivity.class));
+            }
+        });
 
         createAccount.setOnClickListener(view -> {
             if(!validFormPassword(password.getText().toString(), confirmPass.getText().toString())) {
