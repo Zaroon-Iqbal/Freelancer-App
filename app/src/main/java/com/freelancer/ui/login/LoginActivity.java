@@ -67,6 +67,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 showToast("Sign-in successful!");
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
                                 //TODO: Login successful. Go to the homepage.
+                                startActivity(new Intent(LoginActivity.this, HomePage.class));
+
                             } else {
                                 showToast(task.getException().getMessage());
                                 //TODO: Login unsuccessful. Inform user of error.
