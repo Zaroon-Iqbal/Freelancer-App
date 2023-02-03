@@ -49,6 +49,7 @@
         app:layout_constraintVertical_bias="0.026" />
 
     <ScrollView
+        android:id="@+id/scroll1"
         android:layout_width="0dp"
         android:layout_height="198dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,6 +100,72 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </HorizontalScrollView>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/PaidPromotion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Promotions"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.039"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scroll1" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="198dp"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PaidPromotion"
+        app:layout_constraintVertical_bias="0.026">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/paidpromotion1"
+                    android:layout_width="157dp"
+                    android:layout_height="151dp"
+                    android:text="Discount on Towing"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/paidpromotion2"
+                    android:layout_width="157dp"
+                    android:layout_height="151dp"
+                    android:layout_marginStart="32dp"
+                    android:text="Discount on Detailing"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    app:layout_constraintStart_toEndOf="@+id/paidpromotion1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/paidpromotion3"
+                    android:layout_width="157dp"
+                    android:layout_height="151dp"
+                    android:layout_marginStart="32dp"
+                    android:text="DISCOUNT ON HAIRCUTS"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    app:layout_constraintStart_toEndOf="@+id/paidpromotion2"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </HorizontalScrollView>
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
