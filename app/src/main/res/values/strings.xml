@@ -11,10 +11,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="freelancer_logo">freelancer logo</string>
-    <string name="title_activity_contractor_registration_view">Create a contractor account</string>
+    <string name="title_activity_contractor_registration_view">Contractor registration</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">Create a contractor account</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 

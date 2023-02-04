@@ -2,27 +2,19 @@ package com.freelancer.ui.registration;
 
 import android.os.Bundle;
 
-import com.freelancer.databinding.ActivityContractorRegistrationViewBinding;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.freelancer.R;
+import com.freelancer.databinding.ActivityContractorRegistrationBinding;
 
 public class ContractorRegistrationActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityContractorRegistrationViewBinding binding;
+    private ActivityContractorRegistrationBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityContractorRegistrationViewBinding.inflate(getLayoutInflater());
+        binding = ActivityContractorRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
