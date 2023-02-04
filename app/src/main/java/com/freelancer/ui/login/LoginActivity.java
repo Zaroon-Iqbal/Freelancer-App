@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
 import com.freelancer.databinding.ActivityLoginBinding;
+import com.freelancer.ui.registration.ContractorRegistrationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -57,7 +57,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.register:
-                startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
+//aaaaaaaaaaaaaaaaaaaa                startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
+                startActivity(new Intent(LoginActivity.this, ContractorRegistrationActivity.class));
                 break;
 
             case R.id.login:
