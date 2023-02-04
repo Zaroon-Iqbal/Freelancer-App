@@ -3,7 +3,8 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_register">Register</string>
+    <string name="action_register">Consumer Registration</string>
+    <string name="action_register_contractor">Contractor Registration</string>
     <string name="action_sign_in">Sign in</string>
     <string name="no_account_question">Don\'t have an account?</string>
     <string name="welcome">"Welcome !"</string>

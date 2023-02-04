@@ -37,6 +37,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (register != null) {
             register.setOnClickListener(this);
         }
+
+        final Button registerContractorButton = binding.registerContractor;
+        if (registerContractorButton != null) {
+            registerContractorButton.setOnClickListener(this);
+        }
     }
 
     private void showToast(String text) {
@@ -56,9 +61,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.register:
-//aaaaaaaaaaaaaaaaaaaa                startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
+            case R.id.register_contractor:
                 startActivity(new Intent(LoginActivity.this, ContractorRegistrationActivity.class));
+                break;
+
+            case R.id.register:
+                startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
                 break;
 
             case R.id.login:
