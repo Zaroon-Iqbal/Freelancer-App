@@ -3,7 +3,8 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_register">Register</string>
+    <string name="action_register_consumer">Register as \nConsumer</string>
+    <string name="action_register_contractor">Register as Contractor</string>
     <string name="action_sign_in">Sign in</string>
     <string name="no_account_question">Don\'t have an account?</string>
     <string name="welcome">"Welcome !"</string>
@@ -11,4 +12,5 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="freelancer_logo">freelancer logo</string>
+    <string name="guest">Continue as Guest</string>
 </resources>

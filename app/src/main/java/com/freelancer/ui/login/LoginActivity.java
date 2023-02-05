@@ -14,6 +14,7 @@ import com.freelancer.R;
 import com.freelancer.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
@@ -33,10 +34,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final Button loginButton = binding.login;
         loginButton.setOnClickListener(this);
 
-        final Button register = binding.register;
-        if (register != null) {
-            register.setOnClickListener(this);
+        final Button registerConsumer = binding.registerConsumer;
+        final Button registerContractor = binding.registerContractor;
+        if (registerConsumer != null) {
+            registerConsumer.setOnClickListener(this);
         }
+        if(registerContractor != null){
+            registerContractor.setOnClickListener(this);
+        }
+
+        final TextView guest = binding.guest;
+        guest.setOnClickListener(this);
     }
 
     private void showToast(String text) {
@@ -56,12 +64,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.register:
+            case R.id.registerConsumer:
                 startActivity(new Intent(LoginActivity.this, RegisterConsumer.class));
                 break;
 
+            /*case R.id.registerContractor:
+                startActivity(new Intent(LoginActivity.this, ContractorRegistrationActivity.class));
+                break;
+                8/
+             */
+
+            case R.id.guest:
+                startActivity(new Intent(LoginActivity.this, HomePage.class));
+
             case R.id.login:
-                firebaseAuth.signInWithEmailAndPassword(binding.username.getText().toString(), binding.password.getText().toString())
+                firebaseAuth.signInWithEmailAndPassword(((TextInputEditText) binding.username).getText().toString(), ((TextInputEditText) binding.password).getText().toString())
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 showToast("Sign-in successful!");
