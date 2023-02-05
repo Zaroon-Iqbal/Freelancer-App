@@ -14,6 +14,7 @@
         <activity
             android:name=".ui.registration.ContractorRegistrationActivity"
             android:exported="false"
+            android:parentActivityName=".ui.login.LoginActivity"
             android:windowSoftInputMode="adjustResize"
             android:label="@string/title_activity_contractor_registration_view" />
         <activity
