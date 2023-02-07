@@ -92,14 +92,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <View
-                android:id="@+id/divider2"
+                android:id="@+id/contractor_registration_divider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/informational_text_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -146,8 +146,6 @@
                     android:id="@+id/contractor_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:errorEnabled="true"
-                    android:maxLength="16"
                     android:minHeight="48dp"
                     android:inputType="textPassword" />
 

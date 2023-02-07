@@ -2,6 +2,9 @@ package com.freelancer.data.validation;
 
 import android.util.Patterns;
 
+/**
+ * The Validator class contains static methods for validating fields.
+ */
 public class Validator {
     public static boolean validFormPassword(String firstPasswordText, String confirmPasswordText) {
         if(firstPasswordText == null || confirmPasswordText == null) {

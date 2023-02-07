@@ -7,7 +7,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.freelancer.R;
 import com.freelancer.data.validation.Validator;
 import com.freelancer.data.viewmodel.RegisterContractorViewModel;
 import com.freelancer.databinding.ActivityContractorRegistrationBinding;
@@ -20,7 +19,8 @@ public class ContractorRegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityContractorRegistrationBinding binding = ActivityContractorRegistrationBinding.inflate(getLayoutInflater());
+        ActivityContractorRegistrationBinding binding =
+                ActivityContractorRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
@@ -32,20 +32,27 @@ public class ContractorRegistrationActivity extends AppCompatActivity {
         viewModel.getUserLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
                 Toast.makeText(getApplicationContext(), "Account registration complete", Toast.LENGTH_LONG).show();
-
             }
         });
 
-        String email = ((EditText)findViewById(R.id.contractor_email_address)).getText().toString();
-        String password = ((EditText)findViewById(R.id.contractor_password)).getText().toString();
-        String passwordConfirmation = ((EditText)findViewById(R.id.contractor_confirm_password)).getText().toString();
+        binding.contractorCreateAccount.setOnClickListener(view -> {
+            EditText contractorEmailField = binding.contractorEmailAddress;
+            String email = contractorEmailField.getText().toString();
 
-        if(Validator.isEmailValid(email) &&
-        Validator.validFormPassword(password, passwordConfirmation)) {
-            binding.contractorCreateAccount.setOnClickListener(view ->
-                    viewModel.register(email, password));
-        } else {
-            Toast.makeText(getApplicationContext(), "Invalid form.", Toast.LENGTH_SHORT).show();
-        }
+            EditText contractorPasswordField = binding.contractorPassword;
+            String password = contractorPasswordField.getText().toString();
+
+            EditText contractorConfirmPasswordField = binding.contractorConfirmPassword;
+            String passwordConfirmation = contractorConfirmPasswordField.getText().toString();
+
+            if(Validator.isEmailValid(email) &&
+                    Validator.validFormPassword(password, passwordConfirmation)) {
+                viewModel.register(email, password);
+            } else {
+                Toast.makeText(
+                        getApplicationContext(), email + ":" + password,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
