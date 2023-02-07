@@ -4,7 +4,6 @@ import android.app.Application;
 import android.util.Patterns;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.ObservableArrayList;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 

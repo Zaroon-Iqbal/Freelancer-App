@@ -12,11 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".calendar.CalendarActivity"
+            android:exported="false"
+            android:label="@string/title_activity_calendar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.registration.ContractorRegistrationActivity"
             android:exported="false"
+            android:label="@string/title_activity_contractor_registration_view"
             android:parentActivityName=".ui.login.LoginActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:label="@string/title_activity_contractor_registration_view" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.login.HomePage"
             android:exported="false" />

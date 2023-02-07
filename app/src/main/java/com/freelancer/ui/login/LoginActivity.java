@@ -12,6 +12,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
+import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
@@ -48,6 +49,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Button contractorRegistration = findViewById(R.id.register_contractor);
         contractorRegistration.setOnClickListener(this);
+
+        Button calendar = findViewById(R.id.go_to_calendar);
+        calendar.setOnClickListener(this);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -66,6 +70,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 loginViewModel.login(email.getText().toString(), password.getText().toString());
                 break;
 
+            case R.id.go_to_calendar:
+                startActivity(new Intent(LoginActivity.this, CalendarActivity.class));
             default:
                 break;
         }

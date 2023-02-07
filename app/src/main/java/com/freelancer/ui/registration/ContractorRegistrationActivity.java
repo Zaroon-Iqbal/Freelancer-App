@@ -5,14 +5,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
 import com.freelancer.data.validation.Validator;
 import com.freelancer.data.viewmodel.RegisterContractorViewModel;
 import com.freelancer.databinding.ActivityContractorRegistrationBinding;
-import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * Initializes the contractor registration activity.
@@ -49,10 +47,5 @@ public class ContractorRegistrationActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Invalid form.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @BindingAdapter("app:errorText")
-    void setErrorMessage(TextInputLayout view, String errorMessage) {
-        view.setError(errorMessage);
     }
 }
