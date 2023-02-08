@@ -68,6 +68,10 @@ public class CalendarActivity extends AppCompatActivity {
 
 
     }
+    /*
+    This method will be used for showcasing the correct appointment data
+
+     */
     private void dateClicked()
     {
      appointmentData.child(selectedDate).addListenerForSingleValueEvent(new ValueEventListener() {
