@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/HomeNav"
+        android:title="Home"
+        android:icon="@drawable/home_icons" />
+
+    <item
+        android:id="@+id/CalendarNav"
+        android:title="Calendar"
+        android:icon="@drawable/calendar_icons" />
+
+    <item
+        android:id="@+id/FavoriteNav"
+        android:title="Favorites"
+        android:icon="@drawable/favorite_icons" />
+
+    <item
+        android:id="@+id/MessageNav"
+        android:title="Messages"
+        android:icon="@drawable/message_icons" />
+
+    <item
+        android:id="@+id/ProfileNav"
+        android:title="Profile"
+        android:icon="@drawable/profile_icons" />
+
+</menu>
