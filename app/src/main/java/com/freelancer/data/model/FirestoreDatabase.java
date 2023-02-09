@@ -11,6 +11,7 @@ import com.freelancer.R;
 import com.freelancer.TestingActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,19 +25,19 @@ public class FirestoreDatabase  {
     private FirebaseFirestore firestoreDatabase;
     private Application application;
 
-    public void saveAppointment(String date, EditText service){
-        firestoreDatabase.getInstance();
+    public void saveAppointment(String date, String service){
+        firestoreDatabase = FirebaseFirestore.getInstance();
         Map<String, Object> appointmentData = new HashMap<>();
-       String data = service.getText().toString();
-       Toast.makeText(application.getApplicationContext() , data, Toast.LENGTH_LONG).show();
+       Toast.makeText(application.getApplicationContext() , date, Toast.LENGTH_LONG).show();
 
-        appointmentData.put("01", "test");
+        appointmentData.put(date, service);
 
-        firestoreDatabase.collection("Appointment")
-                .document("TeST").set(appointmentData).addOnSuccessListener(new OnSuccessListener<Void>() {
+        firestoreDatabase.collection("Appoint")
+                .add(appointmentData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(application.getApplicationContext()  ,"Success", Toast.LENGTH_LONG).show();
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
 
                     }
 
