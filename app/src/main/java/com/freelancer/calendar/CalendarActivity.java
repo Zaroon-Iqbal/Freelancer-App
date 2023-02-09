@@ -59,7 +59,7 @@ public class CalendarActivity extends AppCompatActivity {
 
                 selectedDate = Integer.toString(year) + Integer.toString(month) + Integer.toString(day);//month starts from 0 so added 1
 
-                dateClicked();
+                //dateClicked();
             }
         });
 
@@ -67,11 +67,15 @@ public class CalendarActivity extends AppCompatActivity {
 
 
 
+
+
     }
+
+
     /*
     This method will be used for showcasing the correct appointment data
 
-     */
+
     private void dateClicked()
     {
      appointmentData.child(selectedDate).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -93,14 +97,16 @@ public class CalendarActivity extends AppCompatActivity {
      });
     }
 
-    /*
+
     this is how data will be stored into the real time database from a button that is clicked for
     creating the appointment
-     */
+
     public void saveAppointment(View view) {
         String name = appointment.getText().toString();//testing storage of a string
         appointmentData.child("01").setValue(name);//for some reason the selectedDate can't be used
     }
+    */
+
 
 
     @Override
