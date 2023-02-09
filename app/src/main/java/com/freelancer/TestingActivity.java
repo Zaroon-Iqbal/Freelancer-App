@@ -2,7 +2,7 @@ package com.freelancer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.freelancer.data.model.FirestoreDatabase;
+import com.freelancer.data.model.FirestoreRepository;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,13 +20,15 @@ import java.util.Map;
 
 public class TestingActivity extends AppCompatActivity {
 
-    private FirestoreDatabase fdb;
+    private FirestoreRepository fdb;
 
     private Button testButton;
 
     private EditText testData;
 
     private FirebaseFirestore firestoreDatabase;
+
+    private FirestoreRepository firestoreDatabaseModel;
 
     private String data;
 
@@ -36,6 +38,7 @@ public class TestingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
+        firestoreDatabaseModel = new FirestoreRepository(getApplication());
         //git test
         firestoreDatabase = FirebaseFirestore.getInstance();
         testData = findViewById(R.id.testData);
