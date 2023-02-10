@@ -7,9 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
@@ -17,6 +15,7 @@ import com.freelancer.TestingActivity;
 import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
+import com.freelancer.ui.bottom_nav.BottomNav;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginViewModel.getUserLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
-                startActivity(new Intent(LoginActivity.this, HomePage.class));
+                startActivity(new Intent(LoginActivity.this, BottomNav.class));
             }
         });
 
