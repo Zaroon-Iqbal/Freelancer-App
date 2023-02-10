@@ -26,4 +26,8 @@ public class CalendarViewModel extends AndroidViewModel {
     public void createAppointment(String title, Date startTime, Date endTime) {
         firestoreRepository.saveAppointment(title, startTime, endTime);
     }
+
+    public void retrieveAppointment(String item){
+        firestoreRepository.retrieveAppointment(item);
+    }
 }

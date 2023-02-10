@@ -1,12 +1,21 @@
 package com.freelancer.data.model;
 
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +23,7 @@ import java.util.Map;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * The FirestoreRepository is responsible for sending and fetching data from the Firestore Database.
@@ -51,6 +61,26 @@ public class FirestoreRepository {
                 .addOnFailureListener(e -> Toast.makeText(application.getApplicationContext()  ,"Fail", Toast.LENGTH_LONG).show());
 
     }
+
+    public void retrieveAppointment(String item)
+    {
+        DocumentReference doc = firestoreDatabase.collection("appointment"). document("5Fvu1z3OdFZtqe7fXoYL");
+        doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists())
+                {
+                    Toast.makeText(application.getApplicationContext()  ,documentSnapshot.getString("title"), Toast.LENGTH_LONG).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(application.getApplicationContext()  ,"fail", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     /**
      * This method will be used for showcasing the correct appointment data

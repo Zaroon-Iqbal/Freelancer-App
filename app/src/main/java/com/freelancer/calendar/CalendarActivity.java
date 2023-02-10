@@ -43,6 +43,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         calendar.setOnDateChangeListener((calendarView, year, month, day) -> {
             viewModel.createAppointment("Hello", Date.from(Instant.now()), Date.from(Instant.now()));
+            //viewModel.retrieveAppointment("item");used to test retrieval method.
         });
 
         //appointmentData = FirebaseDatabase.getInstance().getReference().child("Appointments");

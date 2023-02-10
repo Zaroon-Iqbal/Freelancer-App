@@ -51,7 +51,7 @@ public class TestingActivity extends AppCompatActivity {
 
                 Map<String, Object> calendar = new HashMap<>();
                 data = testData.getText().toString();
-                calendar.put("01", data);
+                calendar.put("02", data);
                 /*
                 This method of storing to database works correctly
                  */
@@ -69,6 +69,7 @@ public class TestingActivity extends AppCompatActivity {
 
                             }
                         });
+
 
 
              //   fdb.saveAppointment(calDate, data);  // not sure why getting a null object referenc error when trying to use this
