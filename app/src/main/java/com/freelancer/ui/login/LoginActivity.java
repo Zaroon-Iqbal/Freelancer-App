@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
+import com.freelancer.TestingActivity;
 import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
+import com.freelancer.ui.bottom_nav.BottomNav;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -22,6 +23,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText email;
     private EditText password;
+
+    static int count = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginViewModel.getUserLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
-                startActivity(new Intent(LoginActivity.this, HomePage.class));
+                startActivity(new Intent(LoginActivity.this, BottomNav.class));
             }
         });
 
@@ -52,6 +55,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Button calendar = findViewById(R.id.go_to_calendar);
         calendar.setOnClickListener(this);
+
+        //This will be used for testing purposes of the database/application
+        TextView test = findViewById(R.id.testView);
+        test.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                count++;
+                if(count == 5)
+                {
+                    startActivity(new Intent(LoginActivity.this, TestingActivity.class));
+
+                }
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -72,6 +90,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.go_to_calendar:
                 startActivity(new Intent(LoginActivity.this, CalendarActivity.class));
+                break;
+
             default:
                 break;
         }

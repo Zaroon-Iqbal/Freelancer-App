@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".TestingActivity"
+            android:exported="false" />
+        <activity
             android:name=".calendar.CalendarActivity"
             android:exported="false"
             android:label="@string/title_activity_calendar"
@@ -27,6 +30,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.login.RegisterConsumer"
+            android:exported="false" />
+        <activity
+            android:name=".ui.bottom_nav.BottomNav"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"

@@ -1,47 +1,36 @@
 package com.freelancer.calendar;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
-import com.freelancer.databinding.ActivityCalendarBinding;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.freelancer.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.freelancer.data.viewmodel.CalendarViewModel;
+import com.freelancer.databinding.ActivityCalendarBinding;
 
+import java.time.Instant;
+import java.util.Date;
+
+/**
+ * The CalendarActivity renders a calendar view, and upcoming appointments for the contractor or
+ * the consumer.
+ */
 public class CalendarActivity extends AppCompatActivity {
-
     private AppBarConfiguration appBarConfiguration;
-    private ActivityCalendarBinding binding;
-
-    private CalendarView calendar;
-    private String selectedDate;
-    private TextView appointment;
-
-    private String y;
-
-    private DatabaseReference appointmentData;
+    private CalendarViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityCalendarBinding.inflate(getLayoutInflater());
+        com.freelancer.databinding.ActivityCalendarBinding binding = ActivityCalendarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        viewModel = new CalendarViewModel(this.getApplication());
 
         setSupportActionBar(binding.toolbar);
 
@@ -49,55 +38,16 @@ public class CalendarActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        calendar = findViewById(R.id.calendarView);
-        appointment = findViewById(R.id.data1);
+        CalendarView calendar = findViewById(R.id.calendarView);
+        TextView appointment = findViewById(R.id.data1);
 
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-                y = Integer.toString(year);
-
-                selectedDate = Integer.toString(year) + Integer.toString(month) + Integer.toString(day);//month starts from 0 so added 1
-
-                dateClicked();
-            }
+        calendar.setOnDateChangeListener((calendarView, year, month, day) -> {
+            viewModel.createAppointment("Hello", Date.from(Instant.now()), Date.from(Instant.now()));
+            //viewModel.retrieveAppointment("item");used to test retrieval method.
         });
 
-        appointmentData = FirebaseDatabase.getInstance().getReference().child("Appointments");
-
-
-
+        //appointmentData = FirebaseDatabase.getInstance().getReference().child("Appointments");
     }
-    private void dateClicked()
-    {
-     appointmentData.child(selectedDate).addListenerForSingleValueEvent(new ValueEventListener() {
-         @Override
-         public void onDataChange(@NonNull DataSnapshot snapshot) {
-             if (snapshot.getValue() != null){
-                 appointment.setText(snapshot.getValue().toString());
-             }
-             else {
-                 appointment.setText("null");
-             }
-
-         }
-
-         @Override
-         public void onCancelled(@NonNull DatabaseError error) {
-
-         }
-     });
-    }
-
-    /*
-    this is how data will be stored into the real time database from a button that is clicked for
-    creating the appointment
-     */
-    public void saveAppointment(View view) {
-        String name = appointment.getText().toString();//testing storage of a string
-        appointmentData.child("01").setValue(name);//for some reason the selectedDate can't be used
-    }
-
 
     @Override
     public boolean onSupportNavigateUp() {
