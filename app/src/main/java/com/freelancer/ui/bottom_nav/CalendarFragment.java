@@ -9,13 +9,12 @@ import androidx.fragment.app.Fragment;
 
 import com.freelancer.R;
 
-//Connects the the calendar contents
+//Connects the the calendar contents. By Edward Kuoch.
 public class CalendarFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.content_calendar, container, false);
     }
 }

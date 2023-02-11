@@ -14,7 +14,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.freelancer.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-
+/*
+The Backend of the Bottom Navigation Bar which takes the user to the
+corresponding page. By Edward Kuoch.
+  */
 public class BottomNav extends AppCompatActivity {
     FrameLayout frameLayout;
     BottomNavigationView bottomNavigationView;

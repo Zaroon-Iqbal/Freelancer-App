@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Background buttons-->
+
+    <!--The Home Button-->
     <item
         android:id="@+id/HomeNav"
         android:title="Home"
         android:icon="@drawable/home_icons" />
-
+    <!--The Calendar Button-->
     <item
         android:id="@+id/CalendarNav"
         android:title="Calendar"
         android:icon="@drawable/calendar_icons" />
-
+    <!--The Favorites Button-->
     <item
         android:id="@+id/FavoriteNav"
         android:title="Favorites"
         android:icon="@drawable/favorite_icons" />
-
+    <!--The Messages Button-->
     <item
         android:id="@+id/MessageNav"
         android:title="Messages"
         android:icon="@drawable/message_icons" />
-
+    <!--The Profile Button-->
     <item
         android:id="@+id/ProfileNav"
         android:title="Profile"

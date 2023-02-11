@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.freelancer.R;
 
-// Connects to the homepage activity.
+// Connects to the homepage activity. By Edward Kuoch.
 public class HomeFragment extends Fragment {
 
     @Override
