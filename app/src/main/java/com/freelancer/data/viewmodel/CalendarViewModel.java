@@ -21,6 +21,7 @@ public class CalendarViewModel extends AndroidViewModel {
     public CalendarViewModel(@NonNull Application application) {
         super(application);
         firestoreRepository = new FirestoreRepository(application);
+
     }
 
     public void createAppointment(String title, Date startTime, Date endTime) {

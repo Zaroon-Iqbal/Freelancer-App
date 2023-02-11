@@ -2,9 +2,9 @@ package com.freelancer.calendar;
 
 import android.os.Bundle;
 import android.widget.CalendarView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -39,7 +39,6 @@ public class CalendarActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         CalendarView calendar = findViewById(R.id.calendarView);
-        TextView appointment = findViewById(R.id.data1);
 
         calendar.setOnDateChangeListener((calendarView, year, month, day) -> {
             viewModel.createAppointment("Hello", Date.from(Instant.now()), Date.from(Instant.now()));

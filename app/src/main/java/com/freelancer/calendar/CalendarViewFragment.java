@@ -21,17 +21,12 @@ public class CalendarViewFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
         binding = CalendarViewFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        binding.textView23.setOnClickListener(view1 -> NavHostFragment.findNavController(CalendarViewFragment.this)
-                .navigate(R.id.action_FirstFragment_to_SecondFragment));
     }
 
     @Override
