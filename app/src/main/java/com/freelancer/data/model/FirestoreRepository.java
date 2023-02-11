@@ -62,15 +62,23 @@ public class FirestoreRepository {
 
     }
 
-    public void retrieveAppointment(String item)
+    /**
+     * This Method is used to retrieve data from the firestore database.
+     * Notice that currently these specified collection, document, and field elements are hardcoded in
+     * for testing and a method of finding out which ones are needed will be implemented in the future.
+    @param collection, The specified collection of the firestore
+    @param document, The specified document of that colleciton
+    @param field, one of the three fields that are needed from: start, end , title
+     */
+    public void retrieveAppointment(String collection, String document, String field )
     {
-        DocumentReference doc = firestoreDatabase.collection("appointment"). document("5Fvu1z3OdFZtqe7fXoYL");
+        DocumentReference doc = firestoreDatabase.collection(collection). document(document);
         doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists())
                 {
-                    Toast.makeText(application.getApplicationContext()  ,documentSnapshot.getString("title"), Toast.LENGTH_LONG).show();
+                    Toast.makeText(application.getApplicationContext()  ,documentSnapshot.getString(field), Toast.LENGTH_LONG).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

@@ -44,7 +44,7 @@ public class RegisterConsumer extends AppCompatActivity {
         final TextView haveAccount = binding.Account;
 
         /*
-            Goes back to logging in if the consumer already has an account/
+            Goes back to logging in if the consumer already has an account
          */
         haveAccount.setOnClickListener(v ->
                 startActivity(new Intent(RegisterConsumer.this, LoginActivity.class)));

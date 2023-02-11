@@ -28,7 +28,10 @@ public class CalendarViewModel extends AndroidViewModel {
         firestoreRepository.saveAppointment(title, startTime, endTime);
     }
 
-    public void retrieveAppointment(String item){
-        firestoreRepository.retrieveAppointment(item);
+    /*
+    This Method is used to call the firestoreRepository method for retrieving the specified field.
+     */
+    public void retrieveAppointment(String Collection, String Document, String Field){
+        firestoreRepository.retrieveAppointment(Collection, Document, Field);
     }
 }

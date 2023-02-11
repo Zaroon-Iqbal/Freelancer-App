@@ -25,12 +25,26 @@ public class CalendarActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private CalendarViewModel viewModel;
 
+    private String calendarCollection;
+
+    private String calendarDocument;
+
+    private String calendarField;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         com.freelancer.databinding.ActivityCalendarBinding binding = ActivityCalendarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         viewModel = new CalendarViewModel(this.getApplication());
+
+        /*
+        These are test values for retrieving a specific field from the firestoreDatabase,
+        A method for determining which specific is needed will be added in the future.
+         */
+        calendarCollection = "appointment";
+        calendarDocument = "1KTxxZdPa1LnIopJBBb1";
+        calendarField = "title";
 
         setSupportActionBar(binding.toolbar);
 
@@ -41,11 +55,11 @@ public class CalendarActivity extends AppCompatActivity {
         CalendarView calendar = findViewById(R.id.calendarView);
 
         calendar.setOnDateChangeListener((calendarView, year, month, day) -> {
-            viewModel.createAppointment("Hello", Date.from(Instant.now()), Date.from(Instant.now()));
-            //viewModel.retrieveAppointment("item");used to test retrieval method.
+            viewModel.createAppointment("Bye", Date.from(Instant.now()), Date.from(Instant.now()));
+            viewModel.retrieveAppointment(calendarCollection, calendarDocument, calendarField);//used to test retrieval method.
         });
 
-        //appointmentData = FirebaseDatabase.getInstance().getReference().child("Appointments");
+
     }
 
     @Override
