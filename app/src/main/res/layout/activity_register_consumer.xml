@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.RegisterConsumer">
-
+<!-- Registration page for the consumers who will be using the application, By Zaroon Iqbal-->
+    <!-- Freelancer project logo-->
     <ImageView
         android:id="@+id/freelancerlogo2"
         android:layout_width="419dp"
@@ -17,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logotransparent" />
 
-
+    <!-- Registration title-->
     <TextView
         android:id="@+id/AppName"
         android:layout_width="128dp"
@@ -31,7 +32,7 @@
         tools:ignore="MissingConstraints" />
 
 
-
+    <!-- users full name field for entry-->
     <EditText
         android:id="@+id/entirename"
         android:layout_width="0dp"
@@ -48,6 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AppName" />
 
+    <!-- users email field for entry-->
     <EditText
         android:id="@+id/consumerEmail"
         android:layout_width="0dp"
@@ -63,6 +65,7 @@
         app:layout_constraintStart_toStartOf="@+id/entirename"
         app:layout_constraintTop_toBottomOf="@+id/entirename" />
 
+    <!-- users passwrod field for entry-->
     <EditText
         android:id="@+id/userPassword"
         android:layout_width="0dp"
@@ -77,6 +80,7 @@
         app:layout_constraintStart_toStartOf="@+id/consumerEmail"
         app:layout_constraintTop_toBottomOf="@+id/consumerEmail" />
 
+    <!-- users confirming password field for entry-->
     <EditText
         android:id="@+id/confirmPass"
         android:layout_width="0dp"
@@ -91,6 +95,7 @@
         app:layout_constraintStart_toStartOf="@+id/userPassword"
         app:layout_constraintTop_toBottomOf="@+id/userPassword" />
 
+    <!--finalizing registration button-->
     <Button
         android:id="@+id/registerButton"
         android:layout_width="0dp"
@@ -101,6 +106,7 @@
         app:layout_constraintStart_toStartOf="@+id/confirmPass"
         app:layout_constraintTop_toBottomOf="@+id/confirmPass" />
 
+    <!--used to navigate back to login screen if the person has an account-->
     <TextView
         android:id="@+id/Account"
         android:layout_width="wrap_content"
@@ -111,6 +117,7 @@
         app:layout_constraintStart_toStartOf="@+id/registerButton"
         app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
+    <!--Used to track progress of account creation-->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
