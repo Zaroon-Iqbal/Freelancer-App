@@ -10,7 +10,7 @@ public class Validator {
         if(firstPasswordText == null || confirmPasswordText == null) {
             return false;
         }
-        return (firstPasswordText.equals(confirmPasswordText) && firstPasswordText.length() > 5);
+        return (firstPasswordText.equals(confirmPasswordText));
     }
 
     // A placeholder username validation check

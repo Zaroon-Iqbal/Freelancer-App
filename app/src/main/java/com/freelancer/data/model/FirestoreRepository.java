@@ -1,29 +1,21 @@
 package com.freelancer.data.model;
 
+import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import androidx.annotation.NonNull;
+
+import com.freelancer.data.model.booking.BookingModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * The FirestoreRepository is responsible for sending and fetching data from the Firestore Database.
@@ -34,45 +26,47 @@ import androidx.annotation.Nullable;
  */
 public class FirestoreRepository {
 
-    private FirebaseFirestore firestoreDatabase;
+    private final FirebaseFirestore db;
     private DatabaseReference appointmentData;
     private Application application;
+    private static final String TAG = "firestore";
+
 
     public FirestoreRepository(Application application) {
-        firestoreDatabase = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         this.application = application;
-    }
 
+    }
 
     /**
-     *   this is how data will be stored into the real time database from a button that is clicked for
-     *     creating the appointment
+     * This method attempts to add a new booking to the database.
      */
-    public void saveAppointment(String title, Date start, Date end) {
-        Map<String, Object> appointmentData = new HashMap<>();
-
-        appointmentData.put("title", title);
-        appointmentData.put("start", start);
-        appointmentData.put("end", end);
-
-        firestoreDatabase.collection("appointment")
-                .add(appointmentData)
-                .addOnSuccessListener(documentReference -> Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_LONG).show())
-                .addOnFailureListener(e -> Toast.makeText(application.getApplicationContext()  ,"Fail", Toast.LENGTH_LONG).show());
-
+    public void addBooking() {
+        BookingModel booking = BookingModel.createSampleBooking();
+        db.collection("bookings")
+                .add(booking)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "Successfully added booking to Firestore.");
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(application.getApplicationContext()  ,"Fail", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "Failed to add booking to Firestore. Error:\n" + e.getMessage());
+                });
     }
+
 
     /**
      * This Method is used to retrieve data from the firestore database.
      * Notice that currently these specified collection, document, and field elements are hardcoded in
      * for testing and a method of finding out which ones are needed will be implemented in the future.
-    @param collection, The specified collection of the firestore
-    @param document, The specified document of that colleciton
-    @param field, one of the three fields that are needed from: start, end , title
+        @param collection, The specified collection of the firestore
+        @param document, The specified document of that colleciton
+        @param field, one of the three fields that are needed from: start, end , title
      */
-    public void retrieveAppointment(String collection, String document, String field )
+    public void retrieveAppointment(String collection, String document, String field)
     {
-        DocumentReference doc = firestoreDatabase.collection(collection). document(document);
+        DocumentReference doc = db.collection(collection). document(document);
         doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {

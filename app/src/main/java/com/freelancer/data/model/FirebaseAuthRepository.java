@@ -6,7 +6,11 @@ import android.widget.Toast;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.freelancer.ui.registration.result.AuthFailure;
+import com.freelancer.ui.registration.result.AuthResult;
+import com.freelancer.ui.registration.result.AuthSuccess;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
@@ -36,12 +40,14 @@ public class FirebaseAuthRepository extends LiveData<FirebaseUser> {
     private final FirebaseAuth firebaseAuth;
     private final MutableLiveData<FirebaseUser> firebaseUserLiveData;
     private final MutableLiveData<Boolean> loggedOutLiveData;
+    private final MutableLiveData<AuthResult> authResult;
 
     public FirebaseAuthRepository(Application application) {
         this.application = application;
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.loggedOutLiveData = new MutableLiveData<>();
         this.firebaseUserLiveData = new MutableLiveData<>();
+        this.authResult = new MutableLiveData<>();
     }
 
     /**
@@ -74,12 +80,16 @@ public class FirebaseAuthRepository extends LiveData<FirebaseUser> {
                 .addOnCompleteListener(application.getMainExecutor(), task -> {
                     if (task.isSuccessful()) {
                         firebaseUserLiveData.postValue(firebaseAuth.getCurrentUser());
+                        authResult.postValue(new AuthSuccess(firebaseAuth.getCurrentUser()));
                     } else {
-                        Toast.makeText(application.getApplicationContext(),
-                                "Registration Failure: " + task.getException().getMessage(),
-                                Toast.LENGTH_SHORT).show();
+                        FirebaseAuthException exception = (FirebaseAuthException)task.getException();
+                        authResult.postValue(new AuthFailure(exception));
                     }
                 });
+    }
+
+    public MutableLiveData<AuthResult> getAuthExceptionMutableLiveData() {
+        return authResult;
     }
 
     /**

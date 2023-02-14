@@ -1,13 +1,13 @@
 package com.freelancer.data.viewmodel;
 
 import android.app.Application;
-import android.util.Patterns;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.freelancer.data.model.FirebaseAuthRepository;
+import com.freelancer.ui.registration.result.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
@@ -40,6 +40,16 @@ public class RegisterContractorViewModel extends AndroidViewModel {
     }
 
     /**
+     * A reference to an observable AuthResult LiveData object. See the FirebaseAuthRepository
+     * class for more information on the MutableLiveData structure.
+     * @return A MutableLiveData object.
+     */
+    public MutableLiveData<AuthResult> getAuthResultLiveData() {
+        return firebaseAuthRepository.getAuthExceptionMutableLiveData();
+    }
+
+
+    /**
      * Given email and password credentials, call on the FirebaseAuthRepository to register an account.
      * @param email The email to register.
      * @param password The password to register.
@@ -48,3 +58,5 @@ public class RegisterContractorViewModel extends AndroidViewModel {
         firebaseAuthRepository.register(email, password);
     }
 }
+
+

@@ -62,6 +62,8 @@
                 android:text="@string/what_s_your_name" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_first_name_layout"
+                app:helperText="* Required"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -76,9 +78,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_last_name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
+                app:helperText="* Required"
                 android:layout_marginBottom="16dp"
                 android:hint="@string/last_name">
 
@@ -106,6 +109,8 @@
                 android:text="@string/we_ll_need_some_login_details" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_email_layout"
+                app:helperText="* Required"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
@@ -121,8 +126,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_password_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:helperText="* Required"
                 android:layout_marginBottom="16dp"
                 android:hint="@string/password"
                 android:orientation="vertical">
@@ -137,8 +144,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_confirm_password_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:helperText="* Required"
                 android:layout_marginBottom="16dp"
                 android:hint="@string/confirm_password">
 

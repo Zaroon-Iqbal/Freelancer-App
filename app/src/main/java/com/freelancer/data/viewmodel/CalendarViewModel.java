@@ -7,8 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.freelancer.data.model.FirestoreRepository;
 
-import java.util.Date;
-
 /**
  * The Calendar ViewModel.
  *
@@ -24,8 +22,8 @@ public class CalendarViewModel extends AndroidViewModel {
 
     }
 
-    public void createAppointment(String title, Date startTime, Date endTime) {
-        firestoreRepository.saveAppointment(title, startTime, endTime);
+    public void createAppointment() {
+        firestoreRepository.addBooking();
     }
 
     /*

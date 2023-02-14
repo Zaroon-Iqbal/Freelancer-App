@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.freelancer.placeholder.CalendarPlaceholderContent.BookingModel;
+import com.freelancer.data.model.booking.BookingModel;
 import com.freelancer.databinding.FragmentItemBinding;
 
 import java.util.List;
@@ -25,14 +25,13 @@ public class MyCalendarListRecyclerViewAdapter extends RecyclerView.Adapter<MyCa
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(FragmentItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).content);
-        holder.mContentView.setText(mValues.get(position).details);
+        holder.mIdView.setText(mValues.get(position).getContractorId());
+        holder.mContentView.setText(mValues.get(position).getContractorId());
     }
 
     @Override
@@ -40,7 +39,7 @@ public class MyCalendarListRecyclerViewAdapter extends RecyclerView.Adapter<MyCa
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mIdView;
         public final TextView mContentView;
         public BookingModel mItem;

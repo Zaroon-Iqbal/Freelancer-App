@@ -53,9 +53,8 @@ public class CalendarActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         CalendarView calendar = findViewById(R.id.calendarView);
-
         calendar.setOnDateChangeListener((calendarView, year, month, day) -> {
-            viewModel.createAppointment("Bye", Date.from(Instant.now()), Date.from(Instant.now()));
+            viewModel.createAppointment();
             viewModel.retrieveAppointment(calendarCollection, calendarDocument, calendarField);//used to test retrieval method.
         });
 
