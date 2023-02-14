@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View view) {
                 count++;
-                if(count == 5)
+                if(count == 5)//by clicking on the freelancer name 5 times you will be navigated
                 {
                     startActivity(new Intent(LoginActivity.this, TestingActivity.class));
 

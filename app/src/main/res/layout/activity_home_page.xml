@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logotransparent" />
 
-    <!--The search bar-->
+    <!--The search bar place holder-->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="378dp"
@@ -109,6 +109,7 @@
 
     </ScrollView>
 
+    <!--Paid Promotion scroll section by Zaroon Iqbal-->
     <TextView
         android:id="@+id/PaidPromotion"
         android:layout_width="wrap_content"
@@ -130,6 +131,7 @@
         app:layout_constraintTop_toBottomOf="@+id/PaidPromotion"
         app:layout_constraintVertical_bias="0.026">
 
+        <!--Makes the scrolling animation occur horizontally-->
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

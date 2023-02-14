@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".TestingActivity">
 
+    <!--This is a testing activity made for testing database functions, by Zaroon Iqbal-->
     <TextView
         android:id="@+id/testView"
         android:layout_width="wrap_content"
@@ -21,6 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+<!-- This button is used to save data to the specified database-->
     <Button
         android:id="@+id/testButton"
         android:layout_width="wrap_content"
