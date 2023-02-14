@@ -61,7 +61,7 @@ public class FirestoreRepository {
         appointmentData.put("start", start);
         appointmentData.put("end", end);
 
-        firestoreDatabase.collection("appointment")
+        firestoreDatabase.collection("appointments")
                 .add(appointmentData)// Storing the appointment hasmap of data int he database.
                 //Checking to verify if the data was correctly stored or not
                 .addOnSuccessListener(documentReference -> Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_LONG).show())

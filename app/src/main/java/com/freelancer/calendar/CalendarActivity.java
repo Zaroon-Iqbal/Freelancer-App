@@ -62,7 +62,7 @@ public class CalendarActivity extends AppCompatActivity {
          */
         calendar.setOnDateChangeListener((calendarView, year, month, day) -> {
             //Stores the appointment creation date and gives the title that is hardcoded in.
-            viewModel.createAppointment("Bye", Date.from(Instant.now()), Date.from(Instant.now()));
+            viewModel.createAppointment("example", Date.from(Instant.now()), Date.from(Instant.now()));
             //used to test retrieval method.
             viewModel.retrieveAppointment(calendarCollection, calendarDocument, calendarField);
         });
