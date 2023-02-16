@@ -2,6 +2,8 @@ package com.freelancer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.data.model.FirestoreRepository;
 import com.freelancer.joblisting.CreateJobListingTabbedActivity;
 import com.freelancer.ui.login.HomePage;
@@ -12,6 +14,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,15 +29,11 @@ import java.util.Map;
 This activity was creating mainly for testing database funcitonality
 Contributors: Zaroon Iqbal, Spencer Carlson
  */
-public class TestingActivity extends AppCompatActivity {
+public class TestingActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseFirestore firestoreDatabase;
 
-    private Button testButton;
-    private Button newListing;
     private EditText testData;
-
     private String data;
-    private String calDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,41 +42,48 @@ public class TestingActivity extends AppCompatActivity {
         //git test
         firestoreDatabase = FirebaseFirestore.getInstance();
         testData = findViewById(R.id.testData);//get desired inputs from text box
-        testButton = findViewById(R.id.testButton);
-        newListing = findViewById(R.id.newListing);
+        Button testButton = findViewById(R.id.testButton);
+        Button newListing = findViewById(R.id.newListing);
+        Button calendar = findViewById(R.id.calendarButton);
 
-        calDate = "01";
 
-        newListing.setOnClickListener(click -> {
-            Intent intent = new Intent(this, CreateJobListingTabbedActivity.class);
-            startActivity(intent);
-        });
+        calendar.setOnClickListener(this);
+        newListing.setOnClickListener(this);
 
         //when the save button is clicked
         testButton.setOnClickListener(view -> {
 
-            Map<String, Object> calendar = new HashMap<>();
+            Map<String, Object> calendarMap = new HashMap<>();
             data = testData.getText().toString();//turn the edittext data into a string
-            calendar.put("02", data);//storing hashmap
+            calendarMap.put("02", data);//storing hashmap
             /*
             This method of storing to database works correctly
              */
+            //Check if the data was successfully stored or not
             firestoreDatabase.collection("appointments")
-                            .add(calendar)//adding data to the appointments collection of database
-                                    . addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        //Check if the data was successfully stored or not
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            Toast.makeText(TestingActivity.this, "The Data was stored", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(TestingActivity.this, "The Data was not stored:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                        }
+                    .add(calendarMap) //adding data to the appointments collection of database
+                    .addOnSuccessListener(documentReference -> {
+                        Toast.makeText(TestingActivity.this, "The Data was stored", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(TestingActivity.this, "The Data was not stored:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
-         //   fdb.saveAppointment(calDate, data);  // not sure why getting a null object referenc error when trying to use this
         });
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.newListing:
+                Intent listingIntent = new Intent(this, CreateJobListingTabbedActivity.class);
+                startActivity(listingIntent);
+                break;
+
+            case R.id.calendarButton:
+                Intent calendarIntent = new Intent(this, CalendarActivity.class);
+                startActivity(calendarIntent);
+                break;
+        }
     }
 }

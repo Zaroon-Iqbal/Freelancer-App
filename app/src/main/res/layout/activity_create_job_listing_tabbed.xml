@@ -24,14 +24,14 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:contentDescription="The job listing creation process"
+            android:contentDescription="@string/the_job_listing_creation_process"
             android:layout_height="wrap_content" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:contentDescription="A scrollable set of pages to create a job listing"
+        android:contentDescription="@string/a_scrollable_set_of_pages_to_create_a_job_listing"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -49,15 +49,21 @@
 
         <LinearLayout
             android:layout_marginVertical="8dp"
-
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/newListing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="New listing" />
+
+            <Button
+                android:id="@+id/calendarButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Calendar" />
 
         </LinearLayout>
     </LinearLayout>

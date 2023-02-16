@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".RegistrationSelectionActivity"
+            android:exported="false" />
+        <activity
             android:name=".joblisting.CreateJobListingTabbedActivity"
             android:exported="false"
             android:label="@string/title_activity_create_job_listing_tabbed"

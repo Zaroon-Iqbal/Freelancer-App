@@ -39,4 +39,7 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="use_this_to_continue_through_the_job_listing_creation_process">Use this to continue through the job listing creation process.</string>
+    <string name="the_job_listing_creation_process">The job listing creation process</string>
+    <string name="a_scrollable_set_of_pages_to_create_a_job_listing">A scrollable set of pages to create a job listing</string>
+    <string name="consumer_or_contractor">Are you a consumer or contractor?</string>
 </resources>

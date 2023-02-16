@@ -56,9 +56,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Button contractorRegistration = findViewById(R.id.register_contractor);
         contractorRegistration.setOnClickListener(this);
 
-        Button calendar = findViewById(R.id.go_to_calendar);
-        calendar.setOnClickListener(this);
-
         //This will be used for testing purposes of the database/application
         TextView test = findViewById(R.id.testView);
         test.setOnClickListener(view -> {
@@ -92,10 +89,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.login:
                 loginViewModel.login(email.getText().toString(), password.getText().toString());
-                break;
-
-            case R.id.go_to_calendar:
-                startActivity(new Intent(LoginActivity.this, CalendarActivity.class));
                 break;
 
             default:
