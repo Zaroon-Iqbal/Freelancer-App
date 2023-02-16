@@ -1,9 +1,9 @@
 package com.freelancer.ui.registration.result;
 
 public abstract class AuthResult {
-    private boolean authSuccessful;
+    private boolean authenticated;
 
-    public AuthResult(boolean authSuccessful) {
-        this.authSuccessful = authSuccessful;
+    public AuthResult(boolean authenticated) {
+        this.authenticated = authenticated;
     }
 }

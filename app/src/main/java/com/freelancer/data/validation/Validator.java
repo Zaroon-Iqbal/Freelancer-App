@@ -2,11 +2,13 @@ package com.freelancer.data.validation;
 
 import android.util.Patterns;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * The Validator class contains static methods for validating fields.
  */
 public class Validator {
-    public static boolean validFormPassword(String firstPasswordText, String confirmPasswordText) {
+    public static boolean passwordsMatch(String firstPasswordText, String confirmPasswordText) {
         if(firstPasswordText == null || confirmPasswordText == null) {
             return false;
         }
@@ -15,7 +17,7 @@ public class Validator {
 
     // A placeholder username validation check
     public static boolean isEmailValid(String username) {
-        if (username == null) {
+        if (StringUtils.countMatches(username, '@') != 1 || username == null) {
             return false;
         }
         if (username.contains("@")) {
