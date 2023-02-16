@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,11 +25,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText email;
     private EditText password;
 
-    static int count = 0;
+    private static Toast toast;
+    private static int count = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         loginViewModel = new LoginViewModel(getApplication());
 
@@ -58,17 +61,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //This will be used for testing purposes of the database/application
         TextView test = findViewById(R.id.testView);
-        test.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                count++;
-                if(count == 5)//by clicking on the freelancer name 5 times you will be navigated
-                {
-                    startActivity(new Intent(LoginActivity.this, TestingActivity.class));
-
-                }
+        test.setOnClickListener(view -> {
+            count++;
+            if(toast != null) {
+                toast.cancel();
             }
+            if (count == 5) { //by clicking on the freelancer name 5 times you will be navigated
+                count = 0;
+                startActivity(new Intent(LoginActivity.this, TestingActivity.class));
+                toast = Toast.makeText(getApplicationContext(), "Welcome to the secret menu \uD83D\uDE0E \uD83D\uDD25", Toast.LENGTH_SHORT);
+                toast.show();
+                return;
+            }
+            toast = Toast.makeText(getApplicationContext(), "Only " + (5 - count) + " more taps...", Toast.LENGTH_SHORT);
+            toast.show();
         });
     }
 

@@ -35,4 +35,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="category_plumbing_electrical"><![CDATA[Category: Plumbing & Electrical]]></string>
+    <string name="title_activity_create_job_listing_tabbed">CreateJobListingTabbedActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="use_this_to_continue_through_the_job_listing_creation_process">Use this to continue through the job listing creation process.</string>
 </resources>
