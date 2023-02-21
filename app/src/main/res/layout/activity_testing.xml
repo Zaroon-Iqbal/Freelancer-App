@@ -65,6 +65,8 @@
                 android:layout_height="wrap_content"
                 android:text="Calendar" />
 
+
+
         </LinearLayout>
     </LinearLayout>
     <!--This is a testing activity made for testing database functions, by Zaroon Iqbal-->

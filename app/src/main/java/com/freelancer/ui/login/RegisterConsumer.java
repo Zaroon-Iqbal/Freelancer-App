@@ -32,16 +32,6 @@ public class RegisterConsumer extends AppCompatActivity {
         com.freelancer.databinding.ActivityRegisterConsumerBinding binding = ActivityRegisterConsumerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        viewModel = new ViewModelProvider(this).get(RegisterConsumerViewModel.class);
-
-        //Used to check if the registrationw as successful or not
-        viewModel.getUserLiveData().observe(this, firebaseUser -> {
-            if (firebaseUser != null) {
-                showToast("Account registration complete.");
-            } else {
-                showToast("Couldn't find a Firebase user.");
-            }
-        });
         //variables of the registration page where the data is gathered from
         final Button createAccount = binding.registerButton;
         final TextView name = binding.entirename;
@@ -50,18 +40,33 @@ public class RegisterConsumer extends AppCompatActivity {
         final TextView confirmPass = binding.confirmPass;
         final TextView haveAccount = binding.Account;
 
+        viewModel = new ViewModelProvider(this).get(RegisterConsumerViewModel.class);
+
+        //Used to check if the registration was successful or not using the viewModel
+        viewModel.getUserLiveData().observe(this, firebaseUser -> {
+            if (firebaseUser != null) {
+                showToast("Account registration complete.");
+            } else {
+                showToast("Couldn't find a Firebase user.");
+            }
+        });
+
         /*
             Goes back to logging in if the consumer already has an account
             Used as a return to login page button.
-         */
+        */
         haveAccount.setOnClickListener(v ->
                 startActivity(new Intent(RegisterConsumer.this, LoginActivity.class)));
 
-        //used to send the email and password to the firebase database, and is authenticated
+        //used to send the email and password to the firebaseAuthRepository to register
         createAccount.setOnClickListener(view ->
                 viewModel.register(email.getText().toString(), password.getText().toString()));
     }
 
+    /**
+     Method used to easily make toast messages
+     @param text, the message to be displayed
+    */
     private void showToast(String text) {
         Toast.makeText(getApplicationContext(),text, Toast.LENGTH_LONG).show();
     }

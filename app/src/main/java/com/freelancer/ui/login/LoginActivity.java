@@ -16,6 +16,7 @@ import com.freelancer.TestingActivity;
 import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
+import com.freelancer.joblisting.ui.main.JobInfoFragment;
 import com.freelancer.ui.bottom_nav.BottomNav;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
 
