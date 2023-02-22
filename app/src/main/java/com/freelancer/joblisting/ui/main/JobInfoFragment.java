@@ -27,6 +27,10 @@ public class JobInfoFragment extends Fragment {
 
     TextInputLayout textcat;
     AutoCompleteTextView viewcat;
+    TextInputLayout textLoc;
+    AutoCompleteTextView viewLoc;
+    TextInputLayout textType;
+    AutoCompleteTextView viewType;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -68,12 +72,24 @@ public class JobInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         textcat = getView().findViewById(R.id.category_menu);
         viewcat = getView().findViewById(R.id.category_items);
+        textLoc = getView().findViewById(R.id.menu_radius);
+        viewLoc = getView().findViewById(R.id.radius_items);
+        textType = getView().findViewById(R.id.menu_location);
+        viewType = getView().findViewById(R.id.location_items);
 
         String [] items = {"Accounting/Finance", "Engineering", "Art/Media/Design", "Biotech/Science", "Business", "Customer Service", "Education", "Food/Bev", "General Labor",
                            "Government", "Human Resources", "Legal", "Manufacturing", "Marketing", "Medical/health", "Nonprofit Sector", "Real Estate", "Wholesale/Retail",
-                           "Salon/Spa/Fitness", "Security", "Skilled Trade", "Software", "Systems/Networks", "Techinical Support", "Transport", "Tv/Film", "Web/Info Design", "Writing/Editting"};
+                           "Salon/Spa/Fitness", "Security", "Skilled Trade", "Software", "Systems/Networks", "Technical Support", "Transport", "Tv/Film", "Web/Info Design", "Writing/Editting", "other"};
         ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(getContext(), R.layout.category_list, items);
         viewcat.setAdapter(itemAdapter);
+
+        String [] radius = {"10 miles", "20 miles", "50 miles", "other"};
+        ArrayAdapter<String> radiusAdapter = new ArrayAdapter<>(getContext(), R.layout.category_list, radius);
+        viewLoc.setAdapter(radiusAdapter);
+
+        String [] location = {"Virtual", "Mobile", "Business Location", "other"};
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getContext(), R.layout.category_list, location);
+        viewType.setAdapter(locationAdapter);
 
 
         // Inflate the layout for this fragment
