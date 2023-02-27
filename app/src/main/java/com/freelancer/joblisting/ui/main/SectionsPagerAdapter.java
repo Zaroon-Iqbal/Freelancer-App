@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.freelancer.R;
+import com.freelancer.calendar.CalendarListFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -31,8 +32,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        JobInfoFragment frag = new JobInfoFragment();
-        return frag;
+        CalendarListFragment cal = new CalendarListFragment();
+        JobInfoFragment job = new JobInfoFragment();
+        return job;
     }
 
     @Nullable

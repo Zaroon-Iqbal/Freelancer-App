@@ -25,11 +25,12 @@ public class JobInfoFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    TextInputLayout textcat;
+
+
+
     AutoCompleteTextView viewcat;
-    TextInputLayout textLoc;
+
     AutoCompleteTextView viewLoc;
-    TextInputLayout textType;
     AutoCompleteTextView viewType;
 
     // TODO: Rename and change types of parameters
@@ -70,17 +71,16 @@ public class JobInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        textcat = getView().findViewById(R.id.category_menu);
-        viewcat = getView().findViewById(R.id.category_items);
-        textLoc = getView().findViewById(R.id.menu_radius);
-        viewLoc = getView().findViewById(R.id.radius_items);
-        textType = getView().findViewById(R.id.menu_location);
-        viewType = getView().findViewById(R.id.location_items);
+        View view = inflater.inflate(R.layout.fragment_job_info, container, false);
+
+        viewcat = view.findViewById(R.id.category_items);
+        viewLoc = view.findViewById(R.id.radius_items);
+        viewType = view.findViewById(R.id.location_items);
 
         String [] items = {"Accounting/Finance", "Engineering", "Art/Media/Design", "Biotech/Science", "Business", "Customer Service", "Education", "Food/Bev", "General Labor",
                            "Government", "Human Resources", "Legal", "Manufacturing", "Marketing", "Medical/health", "Nonprofit Sector", "Real Estate", "Wholesale/Retail",
                            "Salon/Spa/Fitness", "Security", "Skilled Trade", "Software", "Systems/Networks", "Technical Support", "Transport", "Tv/Film", "Web/Info Design", "Writing/Editting", "other"};
-        ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(getContext(), R.layout.category_list, items);
+        ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(requireContext(), R.layout.category_list, items);
         viewcat.setAdapter(itemAdapter);
 
         String [] radius = {"10 miles", "20 miles", "50 miles", "other"};
@@ -93,6 +93,6 @@ public class JobInfoFragment extends Fragment {
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_job_info, container, false);
+        return view;
     }
 }
