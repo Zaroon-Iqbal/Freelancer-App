@@ -78,6 +78,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:helperText="* Required"
                 android:hint="Job Category">
 
                 <AutoCompleteTextView
@@ -151,6 +152,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:helperText="* Required"
                 android:hint="Radius">
 
                 <AutoCompleteTextView
@@ -166,6 +168,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:helperText="* Required"
                 android:hint="Location">
 
                 <AutoCompleteTextView

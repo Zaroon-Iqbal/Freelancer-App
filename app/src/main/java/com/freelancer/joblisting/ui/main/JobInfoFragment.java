@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.freelancer.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,6 +30,12 @@ public class JobInfoFragment extends Fragment {
 
 
 
+    Button createService;
+    EditText title;
+    EditText description;
+    EditText phone;
+    EditText city;
+    EditText price;
 
     AutoCompleteTextView viewcat;
 
@@ -91,8 +100,119 @@ public class JobInfoFragment extends Fragment {
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getContext(), R.layout.category_list, location);
         viewType.setAdapter(locationAdapter);
 
+        title = view.findViewById(R.id.contractor_title);
+        description = view.findViewById(R.id.contractor_description);
+        phone = view.findViewById(R.id.contractor_phone);
+        city = view.findViewById(R.id.contractor_city);
+        price = view.findViewById(R.id.contractor_price);
+        createService = view.findViewById(R.id.contractor_create_service);
+
+        createService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String jobTitle = title.getText().toString();
+                String jobDescription = description.getText().toString();
+                String jobPhone = phone.getText().toString();
+                String jobCity = city.getText().toString();
+                String jobPrice = price.getText().toString();
+                String category = viewcat.getText().toString();
+                String location = viewLoc.getText().toString();
+                String type = viewType.getText().toString();
+
+                boolean valid = validation(jobTitle, jobDescription, jobPhone, jobCity, jobPrice, category, location, type);
+                if(valid)
+                {
+                    Toast.makeText(view.getContext(), "Data was valid", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(view.getContext(), jobPhone, Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(view.getContext(), "Sorry Check the input fields again", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+
+
+
+
+
+
 
         // Inflate the layout for this fragment
         return view;
     }
+
+    private Boolean validation(String Jtitle, String Jdescription, String Jphone, String Jcity, String Jprice, String cat, String loc, String typ) {
+        if (Jtitle.length() == 0) {
+            title.requestFocus();
+            title.setError("THE FIELD MUST NOT BE EMPTY");
+            return false;
+        }
+        else if(!Jtitle.matches("[a-zA-Z]+"))
+        {
+            title.requestFocus();
+            title.setError("ONLY ALPHABETICAL CHARACTERS");
+            return false;
+        }
+        else if (Jdescription.length() == 0)
+        {
+            description.requestFocus();
+            description.setError("THE FIELD MUST NOT BE EMPTY");
+            return false;
+        }
+        else if(Jphone.length() == 0)
+        {
+            phone.requestFocus();
+            phone.setError("THE FIELD MUST NOT BE EMPTY");
+            return false;
+        }
+        else if (!Jphone.matches("^\\d{10}$"))
+        {
+            phone.requestFocus();
+            phone.setError("A PHONE NUMBER MUST HAVE 10 DIGITS");
+            return false;
+        }
+        else if(Jcity.length() == 0)
+        {
+            city.requestFocus();
+            city.setError("THE FIELD MUST NOT BE EMPTY");
+            return false;
+        }
+        else if(!Jcity.matches("[a-zA-Z]+"))
+        {
+            city.requestFocus();
+            city.setError("ONLY ALPHABETICAL CHARACTERS");
+            return false;
+        }
+        else if(Jprice.length() == 0)
+        {
+            price.requestFocus();
+            price.setError("THE FIELD MUST NOT BE EMPTY");
+            return false;
+        }
+        else if(cat.length() == 0)
+        {
+            viewcat.requestFocus();
+            viewcat.setError("MUST CHOOSE A FIELD");
+            return false;
+        }
+        else if(loc.length() == 0)
+        {
+            viewLoc.requestFocus();
+            viewLoc.setError("MUST CHOOSE A FIELD");
+            return false;
+        }
+        else if(typ.length() == 0)
+        {
+            viewType.requestFocus();
+            viewType.setError("MUST CHOOSE A FIELD");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
 }
