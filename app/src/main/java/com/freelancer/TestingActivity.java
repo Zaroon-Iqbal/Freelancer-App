@@ -1,19 +1,5 @@
 package com.freelancer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.freelancer.calendar.CalendarActivity;
-import com.freelancer.data.model.FirestoreRepository;
-import com.freelancer.joblisting.CreateJobListingTabbedActivity;
-import com.freelancer.ui.login.HomePage;
-import com.freelancer.ui.login.LoginActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.freelancer.calendar.CalendarActivity;
+import com.freelancer.joblisting.CreateJobListingTabbedActivity;
+import com.freelancer.joblisting.creation.custom.CustomFieldForm;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,11 +38,12 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         Button testButton = findViewById(R.id.testButton);
         Button newListing = findViewById(R.id.newListing);
         Button calendar = findViewById(R.id.calendarButton);
+        Button customField = findViewById(R.id.custom_field_button);
 
 
         calendar.setOnClickListener(this);
         newListing.setOnClickListener(this);
-
+        customField.setOnClickListener(this);
         //when the save button is clicked
         testButton.setOnClickListener(view -> {
 
@@ -83,6 +77,11 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.calendarButton:
                 Intent calendarIntent = new Intent(this, CalendarActivity.class);
                 startActivity(calendarIntent);
+                break;
+
+            case R.id.custom_field_button:
+                Intent customFieldIntent = new Intent(this, CustomFieldForm.class);
+                startActivity(customFieldIntent);
                 break;
         }
     }

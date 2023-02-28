@@ -13,21 +13,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
 import com.freelancer.TestingActivity;
-import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
-import com.freelancer.joblisting.ui.main.JobInfoFragment;
 import com.freelancer.ui.bottom_nav.BottomNav;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private LoginViewModel loginViewModel;
-
-    private EditText email;
-    private EditText password;
-
     private static Toast toast;
     private static int count = 0;
+    private LoginViewModel loginViewModel;
+    private EditText email;
+    private EditText password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,17 +57,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         TextView test = findViewById(R.id.testView);
         test.setOnClickListener(view -> {
             count++;
-            if(toast != null) {
+            if (toast != null) {
                 toast.cancel();
             }
-            if (count == 5) { //by clicking on the freelancer name 5 times you will be navigated
+            if (count == 3) { //by clicking on the freelancer name 5 times you will be navigated
                 count = 0;
                 startActivity(new Intent(LoginActivity.this, TestingActivity.class));
                 toast = Toast.makeText(getApplicationContext(), "Welcome to the secret menu \uD83D\uDE0E \uD83D\uDD25", Toast.LENGTH_SHORT);
                 toast.show();
                 return;
             }
-            toast = Toast.makeText(getApplicationContext(), "Only " + (5 - count) + " more taps...", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(getApplicationContext(), "Only " + (3 - count) + " more taps...", Toast.LENGTH_SHORT);
             toast.show();
         });
     }
