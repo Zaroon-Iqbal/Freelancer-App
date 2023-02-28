@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Freelancer</string>
+
+    <string name="prompt_email">Correo electrónico</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_register">Registro de Consumidores</string>
+    <string name="action_register_contractor">Registro de Contratistas</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="no_account_question">¿No tienes una cuenta?</string>
+    <string name="welcome">"Bienvenido !"</string>
+    <string name="invalid_username">No es un nombre de usuario válido</string>
+    <string name="invalid_password">La contraseña debe tener >5 caracteres</string>
+    <string name="login_failed">error de inicio de sesion</string>
+    <string name="freelancer_logo">freelancer logo</string>
+    <string name="title_activity_contractor_registration_view">Registro de contratista</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Próximo</string>
+    <string name="previous">Previous</string>
+    <string name="register">Previo</string>
+
+
+    <string name="hello_first_fragment">Hola primer fragmento</string>
+    <string name="hello_second_fragment">Hola segundo fragmento. Arg: %1$s</string>
+    <string name="first_name">Nombre de pila</string>
+    <string name="create_account">Crear una cuenta</string>
+    <string name="cancel">Cancelar</string>
+    <string name="confirm_password">Confirmar Contraseña</string>
+    <string name="password">Contraseña</string>
+    <string name="email_address">Dirección de correo electrónico</string>
+    <string name="we_ll_need_some_login_details">Necesitaremos algunos datos de inicio de sesión.</string>
+    <string name="last_name">Apellido</string>
+    <string name="what_s_your_name">¿Cómo te llamas?</string>
+    <string name="title_activity_calendar">CalendarActividad</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Calendario</string>
+    <string name="second_fragment_label">Segundo Fragmento</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
+    <string name="category_plumbing_electrical"><![CDATA[Category: Plumbing & Electrical]]></string>
+    <string name="title_activity_create_job_listing_tabbed">CreateJobListingTabbedActivity</string>
+    <string name="tab_text_1">Pestaña 1</string>
+    <string name="tab_text_2">Pestaña 2</string>
+    <string name="use_this_to_continue_through_the_job_listing_creation_process">Use esto para continuar con el proceso de creación de la lista de trabajos.</string>
+    <string name="the_job_listing_creation_process">El proceso de creación de la lista de trabajos</string>
+    <string name="a_scrollable_set_of_pages_to_create_a_job_listing">Un conjunto de páginas desplazables para crear una lista de trabajos</string>
+    <string name="consumer_or_contractor">¿Eres consumidor o contratista?</string>
+    <!-- Home page text variables -->
+    <string name="popular_near_you">Popular cerca de usted</string>
+    <string name="hair_styling">Cortes de cabello</string>
+    <string name="towing">Remolque</string>
+    <string name="home_repair">Reparaciones en el hogar</string>
+    <string name="promotions">Promociones</string>
+    <string name="discount_on_towing">Descuento en Remolque</string>
+    <string name="discount_on_detailing">Descuento en detallado</string>
+    <string name="discount_on_haircuts">DESCUENTO EN CORTES DE PELO</string>
+</resources>

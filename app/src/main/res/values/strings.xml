@@ -42,4 +42,14 @@
     <string name="the_job_listing_creation_process">The job listing creation process</string>
     <string name="a_scrollable_set_of_pages_to_create_a_job_listing">A scrollable set of pages to create a job listing</string>
     <string name="consumer_or_contractor">Are you a consumer or contractor?</string>
+    <!-- Home page text variables -->
+    <string name="popular_near_you">Popular Near You</string>
+    <string name="hair_styling">Hair Styling</string>
+    <string name="towing">Towing</string>
+    <string name="home_repair">Home Repair</string>
+    <string name="promotions">Promotions</string>
+    <string name="discount_on_towing">Discount on Towing</string>
+    <string name="discount_on_detailing">Discount on Detailing</string>
+    <string name="discount_on_haircuts">DISCOUNT ON HAIRCUTS</string>
+    <string name="register">Register</string>
 </resources>
