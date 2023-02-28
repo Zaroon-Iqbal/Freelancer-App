@@ -3,6 +3,7 @@ package com.freelancer.joblisting.ui.main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.freelancer.R;
+import com.freelancer.data.model.FirestoreRepository;
+import com.freelancer.data.viewmodel.CalendarViewModel;
+import com.freelancer.data.viewmodel.JobInfoViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
@@ -41,6 +45,10 @@ public class JobInfoFragment extends Fragment {
 
     AutoCompleteTextView viewLoc;
     AutoCompleteTextView viewType;
+
+    FirestoreRepository database;
+
+    JobInfoViewModel jobviewModel;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -81,6 +89,8 @@ public class JobInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_job_info, container, false);
+        jobviewModel = new ViewModelProvider(this).get(JobInfoViewModel.class);
+
 
         viewcat = view.findViewById(R.id.category_items);
         viewLoc = view.findViewById(R.id.radius_items);
@@ -123,10 +133,10 @@ public class JobInfoFragment extends Fragment {
                 if(valid)
                 {
                     Toast.makeText(view.getContext(), "Data was valid", Toast.LENGTH_SHORT).show();
+                    //USER ID is still needed as a field to be entered
+                    jobviewModel.createJobListing(jobTitle, jobDescription, jobPhone, jobCity, jobPrice, category, location, type);
                 }
                 else {
-                    Toast.makeText(view.getContext(), jobPhone, Toast.LENGTH_SHORT).show();
-
                     Toast.makeText(view.getContext(), "Sorry Check the input fields again", Toast.LENGTH_SHORT).show();
 
                 }
@@ -148,12 +158,6 @@ public class JobInfoFragment extends Fragment {
         if (Jtitle.length() == 0) {
             title.requestFocus();
             title.setError("THE FIELD MUST NOT BE EMPTY");
-            return false;
-        }
-        else if(!Jtitle.matches("[a-zA-Z]+"))
-        {
-            title.requestFocus();
-            title.setError("ONLY ALPHABETICAL CHARACTERS");
             return false;
         }
         else if (Jdescription.length() == 0)

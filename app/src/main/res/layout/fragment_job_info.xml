@@ -13,7 +13,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="100dp">
+        android:layout_height="5dp">
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
