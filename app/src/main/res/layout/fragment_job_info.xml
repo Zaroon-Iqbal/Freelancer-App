@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="what's your job title?" />
+                android:text="@string/what_s_your_job_title1" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Job Title">
+                android:hint="@string/job_title">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/contractor_title"
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Well need some additional information." />
+                android:text="@string/well_need_some_additional_information" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/category_menu"
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:helperText="* Required"
-                android:hint="Job Category">
+                android:hint="@string/job_category">
 
                 <AutoCompleteTextView
                     android:id="@+id/category_items"
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
-                android:hint="Service Description"
+                android:hint="@string/service_description"
                 app:counterEnabled="true"
                 app:counterMaxLength="500">
 
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
-                android:hint="Phone Number"
+                android:hint="@string/phone_number"
                 app:prefixText="+1"
            >
 
@@ -135,7 +135,7 @@
                 android:layout_height="match_parent"
                 app:helperText="* Required"
                 android:layout_marginBottom="16dp"
-                android:hint="City"
+                android:hint="@string/city"
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -153,7 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:helperText="* Required"
-                android:hint="Radius">
+                android:hint="@string/radius">
 
                 <AutoCompleteTextView
                     android:id = "@+id/radius_items"
@@ -169,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:helperText="* Required"
-                android:hint="Location">
+                android:hint="@string/location">
 
                 <AutoCompleteTextView
                     android:id="@+id/location_items"
@@ -187,7 +187,7 @@
                 app:helperText="* Required"
                 android:layout_marginBottom="16dp"
                 app:prefixText="$"
-                android:hint="Base Price"
+                android:hint="@string/base_price"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -210,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:minHeight="56dp"
-                    android:text="Create Service"
+                    android:text="@string/create_service"
                     app:cornerRadius="24dp" />
             </RelativeLayout>
 

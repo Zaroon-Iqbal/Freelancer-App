@@ -52,4 +52,26 @@
     <string name="discount_on_detailing">Discount on Detailing</string>
     <string name="discount_on_haircuts">DISCOUNT ON HAIRCUTS</string>
     <string name="register">Register</string>
+    <!-- additional string variables-->
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="password1">Password</string>
+    <string name="pass">*******</string>
+    <string name="register1">Register</string>
+    <string name="have_an_account">Have an Account?</string>
+    <string name="testingpage">TestingPage</string>
+    <string name="save">Save</string>
+    <string name="new_listing">New listing</string>
+    <string name="calendar">Calendar</string>
+    <string name="what_s_your_job_title1">what\'s your job title?</string>
+    <string name="job_title">Job Title</string>
+    <string name="well_need_some_additional_information">Well need some additional information.</string>
+    <string name="job_category">Job Category</string>
+    <string name="service_description">Service Description</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="city">City</string>
+    <string name="radius">Radius</string>
+    <string name="location">Location</string>
+    <string name="base_price">Base Price</string>
+    <string name="create_service">Create Service</string>
 </resources>

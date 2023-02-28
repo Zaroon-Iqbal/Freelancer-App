@@ -54,4 +54,26 @@
     <string name="discount_on_towing">Descuento en Remolque</string>
     <string name="discount_on_detailing">Descuento en detallado</string>
     <string name="discount_on_haircuts">DESCUENTO EN CORTES DE PELO</string>
+    <!-- additional string variables-->
+    <string name="full_name">Nombre completo</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password1">Contraseña</string>
+    <string name="pass">*******</string>
+    <string name="register1">Registro</string>
+    <string name="have_an_account">¿Tener una cuenta?</string>
+    <string name="testingpage">PruebaPágina</string>
+    <string name="save">Ahorrar</string>
+    <string name="new_listing">Nuevo Listado</string>
+    <string name="calendar">Calendario</string>
+    <string name="what_s_your_job_title1">¿Cuál es el título de tu trabajo?</string>
+    <string name="job_title">Título profesional</string>
+    <string name="well_need_some_additional_information">Bien necesitamos alguna información adicional.</string>
+    <string name="job_category">Categoría de Trabajo</string>
+    <string name="service_description">Descripción del Servicio</string>
+    <string name="phone_number">Número de Teléfono</string>
+    <string name="city">Ciudad</string>
+    <string name="radius">Radio</string>
+    <string name="location">Ubicación</string>
+    <string name="base_price">Precio Base</string>
+    <string name="create_service">Crear Servicio</string>
 </resources>

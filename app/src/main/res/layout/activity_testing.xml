@@ -20,7 +20,7 @@
             android:id="@+id/testView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TestingPage"
+            android:text="@string/testingpage"
             android:textAlignment="center"
             android:layout_marginVertical="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
@@ -43,7 +43,7 @@
                 android:id="@+id/testButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save" />
+                android:text="@string/save" />
 
         </LinearLayout>
 
@@ -57,13 +57,13 @@
                 android:id="@+id/newListing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New listing" />
+                android:text="@string/new_listing" />
 
             <Button
                 android:id="@+id/calendarButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Calendar" />
+                android:text="@string/calendar" />
 
 
 
