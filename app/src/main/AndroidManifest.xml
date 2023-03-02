@@ -18,7 +18,8 @@
             android:name=".joblisting.CreateJobListingTabbedActivity"
             android:exported="false"
             android:label="@string/title_activity_create_job_listing_tabbed"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".TestingActivity"
             android:exported="false" />
