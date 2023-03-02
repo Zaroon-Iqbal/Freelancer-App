@@ -1,6 +1,9 @@
 package com.freelancer.joblisting.creation.custom;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -11,10 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.freelancer.CustomCheckboxField;
 import com.freelancer.R;
 import com.freelancer.databinding.ActivityCustomFieldFormBinding;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CustomFieldForm extends AppCompatActivity {
@@ -31,38 +34,82 @@ public class CustomFieldForm extends AppCompatActivity {
         AutoCompleteTextView customFieldTypeDropdown = findViewById(R.id.custom_field_dropdown);
         setDropdownArrayAdapter(customFieldTypeDropdown);
 
+        String selectedDropdownEntry = customFieldTypeDropdown.getText().toString();
         Button addCustomField = findViewById(R.id.add_custom_field_button);
-        addCustomField.setOnClickListener(onClick -> addChildFragmentTransaction());
 
-        Button checkFields = findViewById(R.id.check_fields);
+        customFieldTypeDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                addCustomField.setEnabled(true);
 
-        checkFields.setOnClickListener(onClick -> {
-            List<Fragment> addedFragments = getAddedFragments();
-            Toast.makeText(getApplicationContext(), "Fragments: " + addedFragments.size(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                addCustomField.setEnabled(false);
+            }
         });
+        addCustomField.setOnClickListener(onClick -> {
+            addChildFragmentTransaction(customFieldTypeDropdown.getText().toString());
+        });
+    }
+
+    private HashMap<String, CustomFieldType> getCustomFields() {
+        HashMap<String, CustomFieldType> customFieldTypeHashMap = new HashMap<>();
+        for (int a = 0; a < CustomFieldType.values().length; a++) {
+            customFieldTypeHashMap.put(CustomFieldType.values()[a].customFieldName, CustomFieldType.values()[a]);
+        }
+
+        return customFieldTypeHashMap;
     }
 
     private List<Fragment> getAddedFragments() {
         return fragmentManager.getFragments();
     }
 
-    private void addChildFragmentTransaction() {
+    private void addChildFragmentTransaction(String selection) {
 
-        CustomCheckboxField customCheckboxField = new CustomCheckboxField();
+        HashMap<String, CustomFieldType> fields = getCustomFields();
+
+
+        Log.i("TAG", fields.keySet().toString());
+        Log.i("TAG", selection);
+        CustomFieldType fieldType = fields.getOrDefault(selection, CustomFieldType.BOOLEAN);
+        Fragment fragment;
+        Toast.makeText(getApplicationContext(), "Field type: " + fieldType.customFieldName, Toast.LENGTH_SHORT).show();
+        switch (fieldType) {
+            case BOOLEAN:
+                fragment = new CustomField(CustomFieldType.BOOLEAN);
+                break;
+
+            case FREE_FORM:
+                fragment = new CustomField(CustomFieldType.MULTI_SELECT);
+                break;
+
+            case MULTI_SELECT:
+                fragment = new CustomField(CustomFieldType.MULTI_SELECT);
+                break;
+
+            case SINGLE_SELECT:
+                fragment = new CustomMultiSelectField();
+                break;
+
+            default:
+                fragment = new CustomCheckboxField();
+                return;
+        }
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.parent_linear_layout, customCheckboxField);
+        transaction.add(R.id.parent_linear_layout, fragment);
         transaction.commit();
     }
 
     private void setDropdownArrayAdapter(AutoCompleteTextView dropdown) {
-        String[] customFieldTitles = new String[CustomFieldType.values().length];
-        for (int a = 0; a < CustomFieldType.values().length; a++) {
-            customFieldTitles[a] = CustomFieldType.values()[a].customFieldName;
-        }
+        HashMap<String, CustomFieldType> fields = getCustomFields();
+        String[] dropdownOptions = fields.keySet().toArray(new String[0]);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>
-                (getApplicationContext(), R.layout.dropdown_menu_popup_item, customFieldTitles);
+                (getApplicationContext(), R.layout.dropdown_menu_popup_item, dropdownOptions);
 
         dropdown.setAdapter(adapter);
     }

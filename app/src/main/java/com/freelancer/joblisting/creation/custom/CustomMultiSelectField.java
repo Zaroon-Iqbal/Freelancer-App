@@ -10,26 +10,26 @@ import android.view.animation.TranslateAnimation;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.freelancer.R;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CustomField#newInstance} factory method to
+ * Use the {@link CustomMultiSelectField#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomField extends Fragment {
-    private final CustomFieldType customFieldType;
-    public CustomField(CustomFieldType customFieldType) {
-        this.customFieldType = customFieldType;
+public class CustomMultiSelectField extends Fragment {
+    public CustomMultiSelectField() {
+        // Required empty public constructor
     }
 
     /**
@@ -39,13 +39,12 @@ public class CustomField extends Fragment {
      * @return A new instance of fragment CustomCheckboxField.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomField newInstance(CustomFieldType customFieldType) {
-        CustomField fragment = new CustomField(customFieldType);
+    public static CustomMultiSelectField newInstance() {
+        CustomMultiSelectField fragment = new CustomMultiSelectField();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class CustomField extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_custom_field_template, container, false);
+        View view = inflater.inflate(R.layout.fragment_custom_multiselect_field, container, false);
 
         ImageView expandedStateArrow = view.findViewById(R.id.expanded_state_arrow);
         LinearLayout layoutToHide = view.findViewById(R.id.custom_field_details);
@@ -66,6 +65,9 @@ public class CustomField extends Fragment {
         ConstraintLayout constraintLayout = view.findViewById(R.id.coordinatorLayout);
         MaterialCardView cardView = view.findViewById(R.id.checkbox_card_view);
         TextInputLayout additionalCostTextView = view.findViewById(R.id.custom_checkbox_additional_cost_layout);
+
+        ChipGroup chipGroup = view.findViewById(R.id.chip_group);
+        Chip chip = view.findViewById(R.id.chip_1);
 
         additionalCostCheckbox.setOnClickListener(onClick -> {
             int visibility = (additionalCostCheckbox.isChecked() ? View.VISIBLE : View.GONE);
@@ -104,6 +106,7 @@ public class CustomField extends Fragment {
         });
 
         titleLayout.setOnClickListener(onClick -> {
+            Toast.makeText(view.getContext(), "Clicked", Toast.LENGTH_SHORT).show();
             TypedValue typedValue = new TypedValue();
             if (layoutToHide.getVisibility() == View.VISIBLE) {
                 view.getContext().getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSecondary, typedValue, true);
@@ -119,27 +122,6 @@ public class CustomField extends Fragment {
                 layoutToHide.setVisibility(View.VISIBLE);
             }
         });
-
-        int resource;
-        switch (customFieldType) {
-            case BOOLEAN:
-                resource = R.layout.fragment_custom_checkbox_field;
-                break;
-
-            case MULTI_SELECT:
-                resource = R.layout.fragment_custom_multiselect_field;
-                break;
-
-            default:
-                resource = R.layout.fragment_custom_checkbox_field;
-                break;
-        }
-
-        FragmentManager manager = getParentFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.custom_field_details, new CustomCheckboxField());
-        transaction.commit();
-
         return view;
     }
 }

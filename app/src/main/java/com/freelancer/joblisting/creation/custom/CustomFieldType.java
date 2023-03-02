@@ -11,8 +11,15 @@ public enum CustomFieldType {
     CustomFieldType(String customFieldName) {
         this.customFieldName = customFieldName;
     }
-
     public String getCustomFieldName() {
         return customFieldName;
+    }
+
+    public static CustomFieldType getFieldTypeFromString(String value) {
+        try {
+            return CustomFieldType.valueOf(value);
+        } catch (IllegalArgumentException iae) {
+            return BOOLEAN;
+        }
     }
 }

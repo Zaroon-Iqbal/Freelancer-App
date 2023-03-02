@@ -1,6 +1,6 @@
 package com.freelancer.joblisting.creation.custom;
 
-public class BooleanCustomField extends CustomField {
+public class BooleanCustomField extends CustomFieldModel {
     private String booleanFieldTitle;
     private boolean customFieldState;
 
