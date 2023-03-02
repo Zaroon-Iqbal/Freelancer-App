@@ -69,7 +69,7 @@
                 android:id="@+id/custom_field_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/calendar" />
+                android:text="@string/custom_fields" />
 
 
 
