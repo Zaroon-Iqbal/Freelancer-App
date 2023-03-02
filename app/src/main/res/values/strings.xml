@@ -74,4 +74,8 @@
     <string name="location">Location</string>
     <string name="base_price">Base Price</string>
     <string name="create_service">Create Service</string>
+    <string name="custom_field_type">Custom field type</string>
+    <string name="add_custom_field_plus">+</string>
+    <string name="additional_cost">Additional cost</string>
+    <string name="custom_field_name">Custom field name</string>
 </resources>

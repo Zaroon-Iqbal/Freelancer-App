@@ -79,15 +79,15 @@ public class CustomFieldForm extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Field type: " + fieldType.customFieldName, Toast.LENGTH_SHORT).show();
         switch (fieldType) {
             case BOOLEAN:
-                fragment = new CustomField(CustomFieldType.BOOLEAN);
+                fragment = CustomField.newInstance(CustomFieldType.BOOLEAN);
                 break;
 
             case FREE_FORM:
-                fragment = new CustomField(CustomFieldType.MULTI_SELECT);
+                fragment = CustomField.newInstance(CustomFieldType.MULTI_SELECT);
                 break;
 
             case MULTI_SELECT:
-                fragment = new CustomField(CustomFieldType.MULTI_SELECT);
+                fragment = CustomField.newInstance(CustomFieldType.MULTI_SELECT);
                 break;
 
             case SINGLE_SELECT:
@@ -95,7 +95,7 @@ public class CustomFieldForm extends AppCompatActivity {
                 break;
 
             default:
-                fragment = new CustomCheckboxField();
+                fragment = CustomField.newInstance(CustomFieldType.BOOLEAN);
                 return;
         }
 

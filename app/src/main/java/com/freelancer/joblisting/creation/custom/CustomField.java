@@ -10,6 +10,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -120,24 +121,24 @@ public class CustomField extends Fragment {
             }
         });
 
-        int resource;
+        FragmentManager manager = this.getChildFragmentManager();
+        Fragment fragment;
         switch (customFieldType) {
             case BOOLEAN:
-                resource = R.layout.fragment_custom_checkbox_field;
+                fragment = CustomCheckboxField.newInstance();
                 break;
 
             case MULTI_SELECT:
-                resource = R.layout.fragment_custom_multiselect_field;
+                fragment = CustomMultiSelectField.newInstance();
                 break;
 
             default:
-                resource = R.layout.fragment_custom_checkbox_field;
+                fragment = CustomMultiSelectField.newInstance();
                 break;
         }
 
-        FragmentManager manager = getParentFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.custom_field_details, new CustomCheckboxField());
+        transaction.add(R.id.custom_field_details, fragment);
         transaction.commit();
 
         return view;

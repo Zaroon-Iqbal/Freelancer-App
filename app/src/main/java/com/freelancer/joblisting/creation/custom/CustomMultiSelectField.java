@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -56,71 +57,22 @@ public class CustomMultiSelectField extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_custom_multiselect_field, container, false);
 
-        ImageView expandedStateArrow = view.findViewById(R.id.expanded_state_arrow);
-        LinearLayout layoutToHide = view.findViewById(R.id.custom_field_details);
-        LinearLayout titleLayout = view.findViewById(R.id.title_layout);
-        ImageView deleteImage = view.findViewById(R.id.delete_image_icon);
-
-        CheckBox additionalCostCheckbox = view.findViewById(R.id.additional_cost_checkbox);
-        ConstraintLayout constraintLayout = view.findViewById(R.id.coordinatorLayout);
-        MaterialCardView cardView = view.findViewById(R.id.checkbox_card_view);
-        TextInputLayout additionalCostTextView = view.findViewById(R.id.custom_checkbox_additional_cost_layout);
-
         ChipGroup chipGroup = view.findViewById(R.id.chip_group);
         Chip chip = view.findViewById(R.id.chip_1);
 
-        additionalCostCheckbox.setOnClickListener(onClick -> {
-            int visibility = (additionalCostCheckbox.isChecked() ? View.VISIBLE : View.GONE);
-            additionalCostTextView.setVisibility(visibility);
-        });
-
-        deleteImage.setOnClickListener(onClick -> {
-            if(constraintLayout.getAnimation() != null) {
+        chip.setOnClickListener(onClick -> {
+            if(chip.getAnimation() != null && !chip.getAnimation().hasEnded()) {
+                Toast.makeText(getContext(), "Returning", Toast.LENGTH_SHORT).show();
                 return;
             }
-            TranslateAnimation animate = new TranslateAnimation(
-                    0,
-                    view.getWidth(),
-                    0,
-                    0);
-            animate.setDuration(350);
-            animate.setFillAfter(true);
-            animate.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
+            TranslateAnimation animation =
+                    new TranslateAnimation(0, view.getWidth() - 200, 0, 0);
 
-                }
+            animation.setRepeatMode(Animation.REVERSE);
+            animation.setRepeatCount(Animation.INFINITE);
+            animation.setDuration(900);
 
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    cardView.setVisibility(View.GONE);
-                    constraintLayout.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            constraintLayout.startAnimation(animate);
-        });
-
-        titleLayout.setOnClickListener(onClick -> {
-            Toast.makeText(view.getContext(), "Clicked", Toast.LENGTH_SHORT).show();
-            TypedValue typedValue = new TypedValue();
-            if (layoutToHide.getVisibility() == View.VISIBLE) {
-                view.getContext().getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSecondary, typedValue, true);
-                int color = ContextCompat.getColor(view.getContext(), typedValue.resourceId);
-                expandedStateArrow.setImageResource(R.drawable.drop_down);
-                titleLayout.setBackgroundColor(color);
-                layoutToHide.setVisibility(View.GONE);
-            } else {
-                view.getContext().getTheme().resolveAttribute(com.google.android.material.R.attr.colorSurfaceVariant, typedValue, true);
-                int color = ContextCompat.getColor(view.getContext(), typedValue.resourceId);
-                expandedStateArrow.setImageResource(R.drawable.drop_up);
-                titleLayout.setBackgroundColor(color);
-                layoutToHide.setVisibility(View.VISIBLE);
-            }
+            chip.startAnimation(animation);
         });
         return view;
     }
