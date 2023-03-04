@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- A fragment that contains the map. UI by Edward Kuoch-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/maps"
         android:layout_width="0dp"
