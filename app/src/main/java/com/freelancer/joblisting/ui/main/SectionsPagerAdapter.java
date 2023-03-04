@@ -16,6 +16,8 @@ import com.freelancer.calendar.CalendarListFragment;
  * one of the sections/tabs/pages.
  *
  * @TODO: ViewPager and FragmentPagerAdapter are deprecated. Migrate to ViewPager2 and FragmentStateAdapter.
+ *
+ * Contributors: Zaroon Iqbal, Spencer Carlson
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -29,12 +31,27 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
+    /**
+     * this method is used to determine which fragment should be displayed on each of the tabbed views
+     * Contributors: Zaroon Iqbal
+     */
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        CalendarListFragment cal = new CalendarListFragment();
-        JobInfoFragment job = new JobInfoFragment();
-        return job;
+        CalendarListFragment cal = new CalendarListFragment();//placeholder fragment
+
+        JobInfoFragment job = new JobInfoFragment();//general listing information fragment
+        Fragment choice = new Fragment();//choice of tab
+        switch (position) {
+            case 0:
+                choice = job;
+                break;
+            case 1:
+                choice = cal;
+                break;
+        }
+
+        return choice;//return choice according to tab
     }
 
     @Nullable

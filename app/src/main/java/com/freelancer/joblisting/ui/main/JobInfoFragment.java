@@ -20,6 +20,10 @@ import com.freelancer.data.viewmodel.CalendarViewModel;
 import com.freelancer.data.viewmodel.JobInfoViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
+/**job info fragment made for displaying and retrieving accurate job listing data from contractors
+ *
+ */
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link JobInfoFragment#newInstance} factory method to
@@ -27,13 +31,11 @@ import com.google.android.material.textfield.TextInputLayout;
  */
 public class JobInfoFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
-
+    //variables used for retrieving and storing data
     Button createService;
     EditText title;
     EditText description;
@@ -50,10 +52,12 @@ public class JobInfoFragment extends Fragment {
 
     JobInfoViewModel jobviewModel;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    /**
+     * required constructor
+     */
     public JobInfoFragment() {
         // Required empty public constructor
     }
@@ -77,6 +81,9 @@ public class JobInfoFragment extends Fragment {
     }
 
     @Override
+    /**
+     * onCreate method for creating the instance
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -86,30 +93,39 @@ public class JobInfoFragment extends Fragment {
     }
 
     @Override
+    /**
+     * main method where variables data is altered and stored in the database
+     *
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //view inflater needed for referencing the fragment
         View view = inflater.inflate(R.layout.fragment_job_info, container, false);
+
         jobviewModel = new ViewModelProvider(this).get(JobInfoViewModel.class);
-
-
+        //instantiating variables to appropriate ones in XML layout file
         viewcat = view.findViewById(R.id.category_items);
         viewLoc = view.findViewById(R.id.radius_items);
         viewType = view.findViewById(R.id.location_items);
 
+        //adding the job listing categories
         String [] items = {"Accounting/Finance", "Engineering", "Art/Media/Design", "Biotech/Science", "Business", "Customer Service", "Education", "Food/Bev", "General Labor",
                            "Government", "Human Resources", "Legal", "Manufacturing", "Marketing", "Medical/health", "Nonprofit Sector", "Real Estate", "Wholesale/Retail",
                            "Salon/Spa/Fitness", "Security", "Skilled Trade", "Software", "Systems/Networks", "Technical Support", "Transport", "Tv/Film", "Web/Info Design", "Writing/Editting", "other"};
         ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(requireContext(), R.layout.category_list, items);
-        viewcat.setAdapter(itemAdapter);
+        viewcat.setAdapter(itemAdapter);//storing them in a dropdown menu
 
+        //adding the radius options for dropdown menu
         String [] radius = {"10 miles", "20 miles", "50 miles", "other"};
         ArrayAdapter<String> radiusAdapter = new ArrayAdapter<>(getContext(), R.layout.category_list, radius);
         viewLoc.setAdapter(radiusAdapter);
 
+        //adding the method of business conducting to the drop down menu
         String [] location = {"Virtual", "Mobile", "Business Location", "other"};
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getContext(), R.layout.category_list, location);
         viewType.setAdapter(locationAdapter);
 
+        //variables used for accurately retrieving data from input fields
         title = view.findViewById(R.id.contractor_title);
         description = view.findViewById(R.id.contractor_description);
         phone = view.findViewById(R.id.contractor_phone);
@@ -117,9 +133,11 @@ public class JobInfoFragment extends Fragment {
         price = view.findViewById(R.id.contractor_price);
         createService = view.findViewById(R.id.contractor_create_service);
 
+        //on click listener used to check for button click and retrieve data when done so
         createService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //converting the input data to strings
                 String jobTitle = title.getText().toString();
                 String jobDescription = description.getText().toString();
                 String jobPhone = phone.getText().toString();
@@ -129,6 +147,7 @@ public class JobInfoFragment extends Fragment {
                 String location = viewLoc.getText().toString();
                 String type = viewType.getText().toString();
 
+                //check whether the input data are valid inputs to be stored int he database
                 boolean valid = validation(jobTitle, jobDescription, jobPhone, jobCity, jobPrice, category, location, type);
                 if(valid)
                 {
@@ -144,16 +163,22 @@ public class JobInfoFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
         // Inflate the layout for this fragment
         return view;
     }
 
+    /**
+     * Method used for input validation
+     * @param Jtitle, must not be empty
+     * @param Jdescription, must not be empty
+     * @param Jphone, must not be empty, and 10 digits long
+     * @param Jcity, must not be empty, must be letters
+     * @param Jprice, must not be empty
+     * @param cat, must not be empty
+     * @param loc, must not be empty
+     * @param typ,must not be empty
+     * @return whether the conditions are met or not
+     */
     private Boolean validation(String Jtitle, String Jdescription, String Jphone, String Jcity, String Jprice, String cat, String loc, String typ) {
         if (Jtitle.length() == 0) {
             title.requestFocus();
