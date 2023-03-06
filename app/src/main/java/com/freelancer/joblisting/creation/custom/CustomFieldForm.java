@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.freelancer.R;
 import com.freelancer.databinding.ActivityCustomFieldFormBinding;
+import com.freelancer.joblisting.creation.custom.viewmodel.CustomFieldFormViewModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,34 +24,43 @@ import java.util.List;
 public class CustomFieldForm extends AppCompatActivity {
     private ActivityCustomFieldFormBinding binding;
     private FragmentManager fragmentManager;
+    private CustomFieldFormViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_field_form);
         binding = ActivityCustomFieldFormBinding.inflate(getLayoutInflater());
+
+        viewModel = new CustomFieldFormViewModel(this.getApplication());
         fragmentManager = getSupportFragmentManager();
 
         AutoCompleteTextView customFieldTypeDropdown = findViewById(R.id.custom_field_dropdown);
         setDropdownArrayAdapter(customFieldTypeDropdown);
 
-        String selectedDropdownEntry = customFieldTypeDropdown.getText().toString();
         Button addCustomField = findViewById(R.id.add_custom_field_button);
+        Button done = findViewById(R.id.done_button);
 
+        done.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+        });
         customFieldTypeDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 addCustomField.setEnabled(true);
-
             }
-
+            
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 addCustomField.setEnabled(false);
             }
         });
         addCustomField.setOnClickListener(onClick -> {
-            addChildFragmentTransaction(customFieldTypeDropdown.getText().toString());
+            Fragment fragment = addChildFragmentTransaction(customFieldTypeDropdown.getText().toString());
+            if (fragment == null) {
+                return;
+            }
+            viewModel.addFragment(fragment);
         });
     }
 
@@ -67,10 +77,8 @@ public class CustomFieldForm extends AppCompatActivity {
         return fragmentManager.getFragments();
     }
 
-    private void addChildFragmentTransaction(String selection) {
-
+    private Fragment addChildFragmentTransaction(String selection) {
         HashMap<String, CustomFieldType> fields = getCustomFields();
-
 
         Log.i("TAG", fields.keySet().toString());
         Log.i("TAG", selection);
@@ -79,29 +87,30 @@ public class CustomFieldForm extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Field type: " + fieldType.customFieldName, Toast.LENGTH_SHORT).show();
         switch (fieldType) {
             case BOOLEAN:
-                fragment = CustomField.newInstance(CustomFieldType.BOOLEAN);
+                fragment = CustomFieldTemplate.newInstance(CustomFieldType.BOOLEAN);
                 break;
 
             case FREE_FORM:
-                fragment = CustomField.newInstance(CustomFieldType.MULTI_SELECT);
+                fragment = CustomFieldTemplate.newInstance(CustomFieldType.MULTI_SELECT);
                 break;
 
             case MULTI_SELECT:
-                fragment = CustomField.newInstance(CustomFieldType.MULTI_SELECT);
+                fragment = CustomFieldTemplate.newInstance(CustomFieldType.MULTI_SELECT);
                 break;
 
             case SINGLE_SELECT:
-                fragment = new CustomMultiSelectField();
+                fragment = CustomFieldTemplate.newInstance(CustomFieldType.MULTI_SELECT);
                 break;
 
             default:
-                fragment = CustomField.newInstance(CustomFieldType.BOOLEAN);
-                return;
+                fragment = CustomFieldTemplate.newInstance(CustomFieldType.BOOLEAN);
+                return null;
         }
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.parent_linear_layout, fragment);
+        transaction.add(R.id.fragment_linear_layout, fragment);
         transaction.commit();
+        return fragment;
     }
 
     private void setDropdownArrayAdapter(AutoCompleteTextView dropdown) {
@@ -112,5 +121,9 @@ public class CustomFieldForm extends AppCompatActivity {
                 (getApplicationContext(), R.layout.dropdown_menu_popup_item, dropdownOptions);
 
         dropdown.setAdapter(adapter);
+    }
+
+    public CustomFieldFormViewModel getViewModel() {
+        return viewModel;
     }
 }

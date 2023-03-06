@@ -77,6 +77,8 @@
     <string name="custom_field_type">Custom field type</string>
     <string name="add_custom_field_plus">+</string>
     <string name="additional_cost">Additional cost</string>
-    <string name="custom_field_name">Custom field name</string>
+    <string name="custom_field_name">Custom field title</string>
     <string name="custom_fields">Custom fields</string>
+    <string name="option_name">Option name</string>
+    <string name="done">Done</string>
 </resources>

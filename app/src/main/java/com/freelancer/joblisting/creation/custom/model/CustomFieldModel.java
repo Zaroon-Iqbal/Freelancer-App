@@ -1,4 +1,6 @@
-package com.freelancer.joblisting.creation.custom;
+package com.freelancer.joblisting.creation.custom.model;
+
+import com.freelancer.joblisting.creation.custom.CustomFieldType;
 
 public abstract class CustomFieldModel {
     private CustomFieldType customFieldType;

@@ -47,13 +47,24 @@
                 android:layout_height="match_parent"
                 android:text="@string/add_custom_field_plus"
                 app:cornerRadius="24dp" />
+
+
+            <Button
+                android:id="@+id/done_button"
+                style="@style/ThemeOverlay.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/done"
+                app:cornerRadius="24dp" />
         </LinearLayout>
 
+
         <LinearLayout
-            android:id="@+id/parent_linear_layout"
+            android:id="@+id/fragment_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
