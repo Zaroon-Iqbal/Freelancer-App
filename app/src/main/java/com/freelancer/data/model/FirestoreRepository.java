@@ -83,6 +83,19 @@ public class FirestoreRepository {
                 .addOnFailureListener(e -> Toast.makeText(application.getApplicationContext()  ,"Fail", Toast.LENGTH_LONG).show());
 
     }
+
+    /**NEW addition function for storing job listing of contractors. This method is used to store the
+     * job listing information in firebase firestore
+     * @param Jtitle , the job title
+     * @param Jdescription, description of service
+     * @param Jphone, contact phone number
+     * @param Jcity, city where service will be provided
+     * @param Jprice, base price of the service
+     * @param category, category that this service fits into,
+     * @param loc, radius of which the service can cover
+     * @param type, job location type
+     * Contributors: Zaroon Iqbal
+     */
     public void createJobListing(String Jtitle, String Jdescription, String Jphone, String Jcity, String Jprice, String category, String loc, String type)
     {
         Map<String, Object> jobListing = new HashMap<>();//Hashmap used to store key value pairs
