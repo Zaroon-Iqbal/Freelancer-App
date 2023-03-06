@@ -7,7 +7,7 @@ public class BooleanCustomFieldModel extends CustomFieldModel {
     private boolean customFieldState;
 
     public BooleanCustomFieldModel(String customFieldName, String booleanFieldTitle, boolean customFieldState) {
-        super(CustomFieldType.BOOLEAN, customFieldName);
+        super(CustomFieldType.BOOLEAN);
         this.booleanFieldTitle = booleanFieldTitle;
         this.customFieldState = customFieldState;
     }

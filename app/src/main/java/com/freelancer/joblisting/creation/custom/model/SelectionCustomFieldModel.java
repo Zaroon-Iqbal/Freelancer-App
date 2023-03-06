@@ -2,11 +2,17 @@ package com.freelancer.joblisting.creation.custom.model;
 
 import com.freelancer.joblisting.creation.custom.CustomFieldType;
 
-public class SelectionCustomFieldModel extends CustomFieldModel {
-    private SelectionType selectionType;
+import java.util.ArrayList;
 
-    public SelectionCustomFieldModel(CustomFieldType customFieldType, SelectionType selectionType, String customFieldName) {
-        super(customFieldType, customFieldName);
-        this.selectionType = selectionType;
+public class SelectionCustomFieldModel extends CustomFieldModel {
+    private final ArrayList<CustomFieldOption> options;
+
+    public SelectionCustomFieldModel(CustomFieldType customFieldType) {
+        super(customFieldType);
+        options = new ArrayList<>();
+    }
+
+    public void addOption(CustomFieldOption option) {
+        options.add(option);
     }
 }
