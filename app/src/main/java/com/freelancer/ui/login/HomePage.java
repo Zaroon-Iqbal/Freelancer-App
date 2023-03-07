@@ -19,12 +19,9 @@ public class HomePage extends AppCompatActivity {
 
         ImageView image = findViewById(R.id.freelancerlogo2);
 
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConsumerProfile consumer = new ConsumerProfile();
-                consumer.show(getSupportFragmentManager(),"ConsumerProfile");
-            }
+        image.setOnClickListener(v -> {
+            ConsumerProfile consumer = new ConsumerProfile();
+            consumer.show(getSupportFragmentManager(),"ConsumerProfile");
         });
     }
 }

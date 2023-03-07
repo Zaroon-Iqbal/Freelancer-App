@@ -1,6 +1,7 @@
 package com.freelancer.ui.bottom_nav;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.freelancer.R;
+import com.freelancer.TestingActivity;
+import com.freelancer.ui.profile.ConsumerProfile;
+import com.freelancer.ui.profile.ContractorProfile;
+import com.freelancer.ui.profile.EditConsumerProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -45,9 +50,12 @@ public class BottomNav extends AppCompatActivity {
                         return true;
                     //When user clicks on the calendar icon
                     case R.id.CalendarNav:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.frameLayout, new CalendarFragment()).commit();
+//                        getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.frameLayout, new ConsumerProfile()).commit();
+                        ConsumerProfile consumer = new ConsumerProfile();
+                        consumer.show(getSupportFragmentManager(),"Consumer Profile");
                         return true;
+
                     //TODO Connect the rest of the fragments
                 }
                 return false;
