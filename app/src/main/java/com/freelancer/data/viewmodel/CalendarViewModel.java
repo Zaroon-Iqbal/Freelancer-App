@@ -7,8 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.freelancer.data.model.FirestoreRepository;
 
-import java.util.Date;
-
 /**
  * The Calendar ViewModel.
  *
@@ -21,13 +19,17 @@ public class CalendarViewModel extends AndroidViewModel {
     public CalendarViewModel(@NonNull Application application) {
         super(application);
         firestoreRepository = new FirestoreRepository(application);
+
     }
 
-    public void createAppointment(String title, Date startTime, Date endTime) {
-        firestoreRepository.saveAppointment(title, startTime, endTime);
+    public void createAppointment() {
+        firestoreRepository.addBooking();
     }
 
-    public void retrieveAppointment(String item){
-        firestoreRepository.retrieveAppointment(item);
+    /*
+    This Method is used to call the firestoreRepository method for retrieving the specified field.
+     */
+    public void retrieveAppointment(String Collection, String Document, String Field){
+        firestoreRepository.retrieveAppointment(Collection, Document, Field);
     }
 }

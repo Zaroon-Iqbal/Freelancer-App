@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.RegisterConsumer">
-
+<!-- Registration page for the consumers who will be using the application, By Zaroon Iqbal-->
+    <!-- Freelancer project logo-->
     <ImageView
         android:id="@+id/freelancerlogo2"
         android:layout_width="419dp"
         android:layout_height="188dp"
-        android:background="@color/black"
         android:contentDescription="@string/freelancer_logo"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,13 +18,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logotransparent" />
 
-
+    <!-- Registration title-->
     <TextView
         android:id="@+id/AppName"
         android:layout_width="128dp"
         android:layout_height="46dp"
         android:text="Register"
-        android:textColor="@color/material_dynamic_neutral30"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +32,7 @@
         tools:ignore="MissingConstraints" />
 
 
-
+    <!-- users full name field for entry-->
     <EditText
         android:id="@+id/entirename"
         android:layout_width="0dp"
@@ -46,11 +45,11 @@
         android:ems="10"
         android:hint="Full Name"
         android:inputType="textPersonName"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AppName" />
 
+    <!-- users email field for entry-->
     <EditText
         android:id="@+id/consumerEmail"
         android:layout_width="0dp"
@@ -61,12 +60,12 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/entirename"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/entirename"
         app:layout_constraintTop_toBottomOf="@+id/entirename" />
 
+    <!-- users passwrod field for entry-->
     <EditText
         android:id="@+id/userPassword"
         android:layout_width="0dp"
@@ -77,11 +76,11 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/consumerEmail"
         app:layout_constraintStart_toStartOf="@+id/consumerEmail"
         app:layout_constraintTop_toBottomOf="@+id/consumerEmail" />
 
+    <!-- users confirming password field for entry-->
     <EditText
         android:id="@+id/confirmPass"
         android:layout_width="0dp"
@@ -92,35 +91,33 @@
         android:ems="10"
         android:hint="*******"
         android:inputType="textPassword"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/userPassword"
         app:layout_constraintStart_toStartOf="@+id/userPassword"
         app:layout_constraintTop_toBottomOf="@+id/userPassword" />
 
+    <!--finalizing registration button-->
     <Button
         android:id="@+id/registerButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Register"
-        android:textColor="@color/black"
-        android:backgroundTint="#FFAC71"
         app:layout_constraintEnd_toEndOf="@+id/confirmPass"
         app:layout_constraintStart_toStartOf="@+id/confirmPass"
         app:layout_constraintTop_toBottomOf="@+id/confirmPass" />
 
+    <!--used to navigate back to login screen if the person has an account-->
     <TextView
         android:id="@+id/Account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:shadowColor="@color/black"
         android:text="Have an Account?"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/registerButton"
         app:layout_constraintStart_toStartOf="@+id/registerButton"
         app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
+    <!--Used to track progress of account creation-->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"

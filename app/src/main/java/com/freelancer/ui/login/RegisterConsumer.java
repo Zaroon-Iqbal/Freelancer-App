@@ -18,16 +18,23 @@ import com.freelancer.ui.registration.ContractorRegistrationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Consumer registration page
+ * Contributors: Spencer Carlson, Zaroon Iqbal
+ */
 public class RegisterConsumer extends AppCompatActivity {
 
-    private RegisterConsumerViewModel viewModel;
+    private RegisterConsumerViewModel viewModel;//used to connect to the firebaseAuth Repository
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         com.freelancer.databinding.ActivityRegisterConsumerBinding binding = ActivityRegisterConsumerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         viewModel = new ViewModelProvider(this).get(RegisterConsumerViewModel.class);
 
+        //Used to check if the registrationw as successful or not
         viewModel.getUserLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
                 showToast("Account registration complete.");
@@ -35,7 +42,7 @@ public class RegisterConsumer extends AppCompatActivity {
                 showToast("Couldn't find a Firebase user.");
             }
         });
-
+        //variables of the registration page where the data is gathered from
         final Button createAccount = binding.registerButton;
         final TextView name = binding.entirename;
         final TextView email = binding.consumerEmail;
@@ -44,11 +51,13 @@ public class RegisterConsumer extends AppCompatActivity {
         final TextView haveAccount = binding.Account;
 
         /*
-            Goes back to logging in if the consumer already has an account/
+            Goes back to logging in if the consumer already has an account
+            Used as a return to login page button.
          */
         haveAccount.setOnClickListener(v ->
                 startActivity(new Intent(RegisterConsumer.this, LoginActivity.class)));
 
+        //used to send the email and password to the firebase database, and is authenticated
         createAccount.setOnClickListener(view ->
                 viewModel.register(email.getText().toString(), password.getText().toString()));
     }

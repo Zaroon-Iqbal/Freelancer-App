@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<!--The frontend UI of the bottom navigation bar by Edward Kuoch-->
+<!--Creates the frame where all the corresponding activities happen-->
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="408dp"
@@ -15,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>
-
+<!--The layout of the bottom navigation bar-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
