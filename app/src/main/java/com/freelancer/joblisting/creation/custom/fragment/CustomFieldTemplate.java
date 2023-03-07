@@ -1,4 +1,4 @@
-package com.freelancer.joblisting.creation.custom;
+package com.freelancer.joblisting.creation.custom.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +19,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
+import com.freelancer.joblisting.creation.custom.CustomFieldType;
+import com.freelancer.joblisting.creation.custom.viewmodel.CustomCheckboxViewModel;
 import com.freelancer.joblisting.creation.custom.viewmodel.CustomFieldFormViewModel;
+import com.freelancer.joblisting.creation.custom.viewmodel.CustomSelectionFieldViewModel;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -32,9 +36,14 @@ import com.google.android.material.textfield.TextInputLayout;
  * create an instance of this fragment.
  */
 public class CustomFieldTemplate extends Fragment {
+    private CustomFieldType customFieldType;
     private Fragment customFieldFragment;
 
     public CustomFieldTemplate() {
+    }
+
+    public CustomFieldTemplate(CustomFieldType customFieldType) {
+        this.customFieldType = customFieldType;
     }
 
     /**
@@ -45,20 +54,7 @@ public class CustomFieldTemplate extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static CustomFieldTemplate newInstance(CustomFieldType customFieldType) {
-        CustomFieldTemplate fragment = new CustomFieldTemplate();
-        switch (customFieldType) {
-            case BOOLEAN:
-                fragment.customFieldFragment = CustomCheckboxField.newInstance();
-                break;
-
-            case MULTI_SELECT:
-                fragment.customFieldFragment = CustomMultiSelectField.newInstance();
-                break;
-
-            default:
-                fragment.customFieldFragment = CustomMultiSelectField.newInstance();
-                break;
-        }
+        CustomFieldTemplate fragment = new CustomFieldTemplate(customFieldType);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -67,6 +63,32 @@ public class CustomFieldTemplate extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FragmentManager manager = this.getChildFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        if (manager.getFragments().size() == 0) {
+            switch (customFieldType) {
+                case BOOLEAN:
+                    customFieldFragment = CustomCheckboxField.newInstance();
+                    break;
+
+                case MULTI_SELECT:
+                    customFieldFragment = CustomMultiSelectField.newInstance();
+                    break;
+
+                default:
+                    customFieldFragment = CustomMultiSelectField.newInstance();
+                    break;
+            }
+            transaction.add(R.id.linear_layout_insertion, customFieldFragment);
+        } else {
+            customFieldFragment = manager.getFragments().get(0);
+            transaction.replace(R.id.linear_layout_insertion, customFieldFragment);
+        }
+
+        transaction.commit();
+
     }
 
     @Override
@@ -74,7 +96,8 @@ public class CustomFieldTemplate extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_custom_field_template, container, false);
 
-        CustomFieldFormViewModel formViewModel = ((CustomFieldForm) requireActivity()).getViewModel();
+        //CustomFieldFormViewModel formViewModel = ((CustomFieldForm) requireActivity()).getViewModel();
+        CustomFieldFormViewModel formViewModel = new ViewModelProvider(requireActivity()).get(CustomFieldFormViewModel.class);
         if (this.getActivity() == null) {
             Toast.makeText(getContext(), "The parent activity is null.", Toast.LENGTH_SHORT).show();
             return view;
@@ -103,7 +126,7 @@ public class CustomFieldTemplate extends Fragment {
         });
 
         deleteImage.setOnClickListener(onClick -> {
-            Log.i("ACTIVITY B4", formViewModel.getFragmentsSize() + "");
+            Log.i("ACTIVITY B4", "Field count: " + formViewModel.customFieldCount());
             if (constraintLayout.getAnimation() != null) {
                 return;
             }
@@ -128,14 +151,26 @@ public class CustomFieldTemplate extends Fragment {
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {
-                    
+
                 }
             });
             constraintLayout.startAnimation(animate);
 
-            formViewModel.removeFragment(this);
 
-            Log.i("ACTIVITY", formViewModel.getFragmentsSize() + "");
+            switch (customFieldType) {
+                case MULTI_SELECT:
+                    CustomSelectionFieldViewModel childFragmentViewModel
+                            = new ViewModelProvider(customFieldFragment).get(CustomSelectionFieldViewModel.class);
+                    formViewModel.removeCustomField(childFragmentViewModel.getCustomFieldModel());
+                    break;
+
+                case BOOLEAN:
+                    CustomCheckboxViewModel checkboxViewModel = new ViewModelProvider(requireActivity()).get(CustomCheckboxViewModel.class);
+                    Toast.makeText(getContext(), "Checkbox data: " + checkboxViewModel.getCustomCheckboxTitle().getValue(), Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
+            Log.i("ACTIVITY", formViewModel.customFieldCount() + "");
         });
 
         titleLayout.setOnClickListener(onClick -> {
@@ -155,12 +190,10 @@ public class CustomFieldTemplate extends Fragment {
             }
         });
 
-        FragmentManager manager = this.getChildFragmentManager();
-
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.linear_layout_insertion, customFieldFragment);
-        transaction.commit();
-
         return view;
+    }
+
+    public Fragment getCustomFieldFragment() {
+        return customFieldFragment;
     }
 }

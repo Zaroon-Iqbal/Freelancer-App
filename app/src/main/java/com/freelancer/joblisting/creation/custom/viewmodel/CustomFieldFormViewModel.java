@@ -1,35 +1,43 @@
 package com.freelancer.joblisting.creation.custom.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.freelancer.joblisting.creation.custom.model.CustomFieldModel;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CustomFieldFormViewModel extends AndroidViewModel {
-    private final ArrayList<Fragment> fragments;
+    private final ArrayList<CustomFieldModel> customFields;
 
     public CustomFieldFormViewModel(@NonNull Application application) {
         super(application);
-        fragments = new ArrayList<>();
+        customFields = new ArrayList<>();
     }
 
-    public ArrayList<Fragment> getFragments() {
-        return fragments;
+    public ArrayList<CustomFieldModel> getCustomFields() {
+        return customFields;
     }
 
-    public int getFragmentsSize() {
-        return fragments.size();
+    public void printModels() {
+        Log.i("PRINT", Arrays.toString(customFields.toArray()));
     }
 
-    public boolean removeFragment(Fragment fragment) {
-        return fragments.remove(fragment);
+    public void addCustomField(CustomFieldModel customFieldModel) {
+        customFields.add(customFieldModel);
+        Log.i("FORM VM ADD", "custom field count: " + customFields.size());
     }
 
+    public void removeCustomField(CustomFieldModel customFieldModel) {
+        customFields.remove(customFieldModel);
+        Log.i("FORM VM RM", "custom field count: " + customFields.size());
+    }
 
-    public boolean addFragment(Fragment fragment) {
-        return fragments.add(fragment);
+    public int customFieldCount() {
+        return customFields.size();
     }
 }

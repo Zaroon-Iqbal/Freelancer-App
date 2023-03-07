@@ -1,6 +1,7 @@
-package com.freelancer.joblisting.creation.custom;
+package com.freelancer.joblisting.creation.custom.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
+import com.freelancer.joblisting.creation.custom.CustomFieldType;
 import com.freelancer.joblisting.creation.custom.viewmodel.CustomSelectionFieldViewModel;
 import com.freelancer.joblisting.creation.custom.viewmodel.factory.CustomSelectionFieldFactory;
 import com.google.android.material.chip.Chip;
@@ -41,9 +43,9 @@ public class CustomMultiSelectField extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static CustomMultiSelectField newInstance() {
         CustomMultiSelectField fragment = new CustomMultiSelectField();
-
         Bundle args = new Bundle();
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -51,21 +53,24 @@ public class CustomMultiSelectField extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this, new CustomSelectionFieldFactory(CustomFieldType.MULTI_SELECT)).get(CustomSelectionFieldViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_custom_multiselect_field, container, false);
-//        ViewModelProvider vmp = new ViewModelProvider(getParentFragment());
-//        CustomFieldTemplateViewModel parentViewModel = vmp.get(CustomFieldTemplateViewModel.class);
-//        Toast.makeText(getContext(), parentViewModel.getHello(), Toast.LENGTH_SHORT).show();
         if (getParentFragment() == null || getParentFragment().getView() == null) {
             return view;
         }
+
+        viewModel
+                = new ViewModelProvider(requireActivity(),
+                new CustomSelectionFieldFactory(CustomFieldType.MULTI_SELECT))
+                .get(CustomSelectionFieldViewModel.class);
+
+        Log.i("TEST", "Data: " + viewModel.getCustomFieldModel().toString());
         ChipGroup chipGroup = view.findViewById(R.id.chip_group);
-        TextInputEditText chipTextView = view.findViewById(R.id.chip_text_edit);
+        TextInputEditText chipTextView = view.findViewById(R.id.custom_mutliselect_text);
 
         CheckBox additionalCost = getActivity().findViewById(R.id.additional_cost_checkbox);
         TextInputEditText additionalCostText = getParentFragment().getView().findViewById(R.id.additional_cost_text);

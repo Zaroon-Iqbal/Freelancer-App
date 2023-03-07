@@ -1,7 +1,6 @@
 package com.freelancer.joblisting.creation.custom.model;
 
 public class CustomFieldOption {
-
     private final String optionName;
     private final Double additionalPrice;
 
@@ -16,5 +15,13 @@ public class CustomFieldOption {
 
     public Double getAdditionalPrice() {
         return additionalPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomFieldOption{" +
+                "optionName='" + optionName + '\'' +
+                ", additionalPrice=" + additionalPrice +
+                '}';
     }
 }

@@ -14,5 +14,7 @@ public class CustomSelectionFieldViewModel extends ViewModel {
         customFieldModel = new SelectionCustomFieldModel(customFieldType);
     }
 
-    
+    public SelectionCustomFieldModel getCustomFieldModel() {
+        return customFieldModel;
+    }
 }

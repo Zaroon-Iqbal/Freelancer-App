@@ -81,4 +81,5 @@
     <string name="custom_fields">Custom fields</string>
     <string name="option_name">Option name</string>
     <string name="done">Done</string>
+    <string name="custom_checkbox_title">Custom checkbox title</string>
 </resources>

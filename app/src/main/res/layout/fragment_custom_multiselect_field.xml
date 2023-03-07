@@ -24,14 +24,14 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/custom_checkbox_name_text_layout"
+                android:id="@+id/custom_mutliselect_text_layout"
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:helperText="* Required">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/chip_text_edit"
+                    android:id="@+id/custom_mutliselect_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/option_name"
@@ -46,4 +46,3 @@
         </com.google.android.material.chip.ChipGroup>
     </LinearLayout>
 </LinearLayout>
-

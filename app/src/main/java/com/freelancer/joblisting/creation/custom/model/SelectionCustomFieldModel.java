@@ -15,4 +15,11 @@ public class SelectionCustomFieldModel extends CustomFieldModel {
     public void addOption(CustomFieldOption option) {
         options.add(option);
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", SelectionCustomFieldModel{" +
+                "options=" + options +
+                '}';
+    }
 }
