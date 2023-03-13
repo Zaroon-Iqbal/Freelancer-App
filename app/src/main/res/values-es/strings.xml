@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- string variables for text displayed in spanish on our mobile device-->
 <resources>
     <string name="app_name">Freelancer</string>
-
     <string name="prompt_email">Correo electrónico</string>
     <string name="prompt_password">Contraseña</string>
     <string name="action_register">Registro de Consumidores</string>
@@ -18,8 +18,6 @@
     <string name="next">Próximo</string>
     <string name="previous">Previous</string>
     <string name="register">Previo</string>
-
-
     <string name="hello_first_fragment">Hola primer fragmento</string>
     <string name="hello_second_fragment">Hola segundo fragmento. Arg: %1$s</string>
     <string name="first_name">Nombre de pila</string>
