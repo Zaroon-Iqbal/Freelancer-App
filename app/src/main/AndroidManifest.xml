@@ -15,6 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.profile.ContractorProfile"
+            android:exported="false"/>
+        <activity
+            android:name=".ui.profile.portfolio.PortfolioActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".ui.profile.EnlargeImage"
+            android:exported="false"/>
+        <activity
             android:name=".ui.profile.EditConsumerProfile"
             android:exported="false"
             android:parentActivityName=".ui.login.LoginActivity"/>

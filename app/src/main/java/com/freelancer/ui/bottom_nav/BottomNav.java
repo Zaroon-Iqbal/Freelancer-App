@@ -1,6 +1,7 @@
 package com.freelancer.ui.bottom_nav;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.freelancer.R;
+import com.freelancer.ui.profile.ConsumerProfile;
+import com.freelancer.ui.profile.ContractorProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 /*
@@ -69,8 +72,11 @@ public class BottomNav extends AppCompatActivity {
 
                     //When user clicks on the profile icon
                     case R.id.ProfileNav:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.frameLayout, new ProfileFragment()).commit();
+//                        getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.frameLayout, new ProfileFragment()).commit();
+//                        ConsumerProfile consumer = new ConsumerProfile();
+//                        consumer.show(getSupportFragmentManager(),"Consumer Profile");
+                        startActivity(new Intent(getApplicationContext(), ContractorProfile.class));
                         return true;
                 }
                 return false;

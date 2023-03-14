@@ -21,14 +21,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.freelancer.R;
 import com.freelancer.databinding.ActivityEditConsumerBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class EditConsumerProfile extends AppCompatActivity implements View.OnClickListener{
 
@@ -41,9 +55,15 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
 
     final String TAG = "LOG";
     DocumentReference userDocRef;
+    StorageReference storageReference;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user;
+    WriteBatch write;
+    String location;
+    String previousPhoto;
+
+    boolean photoExists = false;
 
     ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new RequestPermission(), isGranted->{
         if(isGranted)
@@ -58,8 +78,6 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
         if(uri != null){
             imageUri = uri.getData().getData();
             photo.setImageURI(imageUri);
-
-            //uploadPhoto();
         }
     });
 
@@ -75,6 +93,8 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
         updatePic = binding.updatePicBtn;
         nameText = binding.name;
         photo = binding.profilePic;
+        storageReference = FirebaseStorage.getInstance().getReference();
+        write = db.batch();
 
         cancel.setOnClickListener(this);
         submit.setOnClickListener(this);
@@ -88,7 +108,12 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     nameText.setText(document.getString("Name"));
-                    //if(document.contains("PhotoUri"))
+                    if(document.contains("ProfilePic")) {
+                        previousPhoto = document.getString("ProfilePic");
+                        StorageReference imageRef = storageReference.child(previousPhoto);
+                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(EditConsumerProfile.this).load(uri).into(photo));
+                        photoExists = true;
+                    }
                 } else {
                     Log.d(TAG, "No such document");
                 }
@@ -106,9 +131,23 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.submitBtn:
                 if(nameText.getText().toString().trim().length() > 0){
-                    userDocRef.update("Name",nameText.getText().toString())
-                            .addOnSuccessListener(unused -> Log.d(TAG,"Name updated"))
-                            .addOnFailureListener(e -> Log.w(TAG,"Name Not updated",e));
+                    write.update(userDocRef,"Name",nameText.getText().toString());
+                }
+                if(imageUri != null) {
+                    location = user.getUid() + UUID.randomUUID().toString();
+                    StorageReference imageRef = storageReference.child(location);
+                    imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+                        if (photoExists) {
+                            deletePrevious();
+                            write.update(userDocRef, "ProfilePic", location);
+                            commitChanges();
+                        } else {
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("ProfilePic", location);
+                            write.set(userDocRef, map, SetOptions.merge());
+                            commitChanges();
+                        }
+                    });
                 }
                 finish();
                 break;
@@ -129,5 +168,20 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
 
     public void requestPermission(){
         requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+
+    public void deletePrevious(){
+        StorageReference imageRef = storageReference.child(previousPhoto);
+        imageRef.delete().addOnSuccessListener(unused -> Log.d(TAG,"Previous photo deleted"))
+                .addOnFailureListener(e -> Log.w(TAG,"Previous photo was not deleted",e));
+    }
+
+    public void commitChanges(){
+        write.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(EditConsumerProfile.this,"Profile updated",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
