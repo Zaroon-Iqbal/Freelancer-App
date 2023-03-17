@@ -160,9 +160,12 @@ public class JobInfoFragment extends Fragment {
         });
 
         //adding the job listing categories
-        String [] items = {"Accounting/Finance", "Engineering", "Art/Media/Design", "Biotech/Science", "Business", "Customer Service", "Education", "Food/Bev", "General Labor",
-                           "Government", "Human Resources", "Legal", "Manufacturing", "Marketing", "Medical/health", "Nonprofit Sector", "Real Estate", "Wholesale/Retail",
-                           "Salon/Spa/Fitness", "Security", "Skilled Trade", "Software", "Systems/Networks", "Technical Support", "Transport", "Tv/Film", "Web/Info Design", "Writing/Editting", "other"};
+        String [] items = {"Accounting/Finance", "Engineering", "Art/Media/Design", "Biotech/Science", "Business",
+                            "Customer Service", "Education", "Food/Bev", "General Labor",
+                            "Government", "Human Resources", "Legal", "Manufacturing", "Marketing",
+                            "Medical/health", "Nonprofit Sector", "Real Estate", "Wholesale/Retail",
+                            "Salon/Spa/Fitness", "Security", "Skilled Trade", "Software", "Systems/Networks",
+                            "Technical Support", "Transport", "Tv/Film", "Web/Info Design", "Writing/Editting", "other"};
         ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(requireContext(), R.layout.category_list, items);
         viewcat.setAdapter(itemAdapter);//storing them in a dropdown menu
 
@@ -242,15 +245,6 @@ public class JobInfoFragment extends Fragment {
         });
 
     }
-
-    private void imageSelect() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,100);
-
-    }
-
     /**
      * Method used for input validation
      * @param Jtitle, must not be empty
