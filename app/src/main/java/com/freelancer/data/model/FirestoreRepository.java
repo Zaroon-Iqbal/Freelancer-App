@@ -77,12 +77,45 @@ public class FirestoreRepository {
         appointmentData.put("end", end);
 
         db.collection("appointments")
-                .add(appointmentData)// Storing the appointment hasmap of data int he database.
+                .add(appointmentData)// Storing the appointment hashmap of data int he database.
                 //Checking to verify if the data was correctly stored or not
                 .addOnSuccessListener(documentReference -> Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_LONG).show())
                 .addOnFailureListener(e -> Toast.makeText(application.getApplicationContext()  ,"Fail", Toast.LENGTH_LONG).show());
 
     }
+
+    /**NEW addition function for storing job listing of contractors. This method is used to store the
+     * job listing information in firebase firestore
+     * @param Jtitle , the job title
+     * @param Jdescription, description of service
+     * @param Jphone, contact phone number
+     * @param Jcity, city where service will be provided
+     * @param Jprice, base price of the service
+     * @param category, category that this service fits into,
+     * @param loc, radius of which the service can cover
+     * @param type, job location type
+     * Contributors: Zaroon Iqbal
+     */
+    public void createJobListing(String Jtitle, String Jdescription, String Jphone, String Jcity, String Jprice, String category, String loc, String type)
+    {
+        Map<String, Object> jobListing = new HashMap<>();//Hashmap used to store key value pairs
+
+        jobListing.put("title", Jtitle);//storing appropriate data under the correct header
+        jobListing.put("description", Jdescription);
+        jobListing.put("city", Jcity);
+        jobListing.put("price", Jprice);
+        jobListing.put("category", category);
+        jobListing.put("radius", loc);
+        jobListing.put("locationType", type);
+
+        db.collection("jobListings")
+                .add(jobListing)// Storing the appointment hashmap of data int he database.
+                //Checking to verify if the data was correctly stored or not
+                .addOnSuccessListener(documentReference -> Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_LONG).show())
+                .addOnFailureListener(e -> Toast.makeText(application.getApplicationContext()  ,"Fail", Toast.LENGTH_LONG).show());
+
+    }
+
 
     /**
      * This Method is used to retrieve data from the firestore database.

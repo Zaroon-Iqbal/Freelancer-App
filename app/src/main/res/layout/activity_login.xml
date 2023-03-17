@@ -56,21 +56,6 @@
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.0" />
 
-
-    <Button
-        android:id="@+id/go_to_calendar"
-        android:layout_width="140dp"
-        android:layout_height="60dp"
-        android:layout_gravity="start"
-        android:backgroundTint="#FFAC71"
-        android:enabled="true"
-        android:text="Calendar"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register" />
-
     <Button
         android:id="@+id/register"
         android:layout_width="236dp"
@@ -106,7 +91,7 @@
         android:id="@+id/registerview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="@string/register"
         app:layout_constraintTop_toBottomOf="@id/login"
         tools:layout_editor_absoluteX="33dp"
         tools:ignore="MissingConstraints" />
@@ -128,7 +113,7 @@
     <ImageView
         android:id="@+id/freelancerlogo"
         android:layout_width="257dp"
-        android:layout_height="161dp"
+        android:layout_height="261dp"
         android:layout_marginBottom="60dp"
         android:contentDescription="freelancer logo"
         app:layout_constraintBottom_toTopOf="@+id/username"
@@ -136,7 +121,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/freelancerlogo" />
+        app:srcCompat="@drawable/logotransparent" />
 
     <TextView
         android:id="@+id/testView"
@@ -150,7 +135,6 @@
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freelancerlogo"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
