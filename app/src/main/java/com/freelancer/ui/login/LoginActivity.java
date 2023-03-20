@@ -17,6 +17,7 @@ import com.freelancer.R;
 import com.freelancer.TestingActivity;
 import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
+import com.freelancer.ui.ChatMessaging.UserModel;
 import com.freelancer.ui.bottom_nav.BottomNav;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -63,28 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Button contractorRegistration = findViewById(R.id.register_contractor);
         contractorRegistration.setOnClickListener(this);
-        FirebaseFirestore data = FirebaseFirestore.getInstance();
-        CollectionReference doc = data
-                .collection("userListings");
-        doc.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                        if (error != null) {
-                                            Log.w(TAG, "Listen failed.", error);
-                                            return;
-                                        }
-                                        for (DocumentSnapshot document : value.getDocuments()) {
-                                            String id = document.getString("uid");
-                                            //Toast.makeText(getApplicationContext()  ,id, Toast.LENGTH_LONG).show();
-                                            Log.d(TAG, document.getId() + " => " + document.getString("uid"));
-                                            if (!id.equals(FirebaseAuth.getInstance().getUid())) {
-                                                Log.d(TAG, document.getId() + " THIS => " + document.getString("uid"));
 
-                                            }
-
-                                        }
-                                    }
-                                });
 
         //This will be used for testing purposes of the database/application
         TextView test = findViewById(R.id.testView);

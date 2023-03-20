@@ -3,10 +3,18 @@ package com.freelancer.ui.ChatMessaging;
 public class UserModel {
     private String userId,userEmail, userName, userPassword;
 
-    public UserModel(String userId, String userEmail, String userPassword) {
+    public UserModel(){
+
+    }
+
+    public UserModel(String userName, String userId, String userEmail ) {
         this.userEmail = userEmail;
         this.userId = userId;
-        this.userPassword = userPassword;
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public String getUserId() {
