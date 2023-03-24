@@ -44,7 +44,13 @@
             android:name=".ui.login.RegisterConsumer"
             android:exported="false" />
         <activity
-            android:name=".ui.bottom_nav.BottomNav"
+            android:name=".placeholder.FavoriteActivityPlaceholder"
+            android:exported="false" />
+        <activity
+            android:name=".placeholder.MessageActivityPlaceholder"
+            android:exported="false" />
+        <activity
+            android:name=".placeholder.ProfileActivityPlaceholder"
             android:exported="false" />
         <activity
             android:name=".ui.Checklist"

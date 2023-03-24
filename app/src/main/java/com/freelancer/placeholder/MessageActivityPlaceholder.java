@@ -1,29 +1,25 @@
-package com.freelancer.ui.login;
+package com.freelancer.placeholder;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
 import com.freelancer.calendar.CalendarActivity;
-import com.freelancer.placeholder.FavoriteActivityPlaceholder;
-import com.freelancer.placeholder.MessageActivityPlaceholder;
-import com.freelancer.placeholder.ProfileActivityPlaceholder;
+import com.freelancer.ui.login.HomePage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomePage extends AppCompatActivity {
+import org.checkerframework.checker.nullness.qual.NonNull;
 
+public class MessageActivityPlaceholder extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
-
-        //The bottom navigation bar
+        setContentView(R.layout.message_placeholder);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.HomeNav);
+        bottomNavigationView.setSelectedItemId(R.id.MessageNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -31,6 +27,8 @@ public class HomePage extends AppCompatActivity {
 
                     //When user clicks on the home icon
                     case R.id.HomeNav:
+                        startActivity(new Intent(getApplicationContext(), HomePage.class));
+                        overridePendingTransition(0,0);
                         return true;
 
                     //When user clicks on the calendar icon
@@ -47,8 +45,6 @@ public class HomePage extends AppCompatActivity {
 
                     //When user clicks on the message icon
                     case R.id.MessageNav:
-                        startActivity(new Intent(getApplicationContext(), MessageActivityPlaceholder.class));
-                        overridePendingTransition(0,0);
                         return true;
 
                     //When user clicks on the profile icon
