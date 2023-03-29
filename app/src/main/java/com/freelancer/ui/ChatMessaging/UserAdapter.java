@@ -15,20 +15,34 @@ import com.freelancer.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to create a list of contacts for the chat page.
+ */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
     private Context context;
     private List<UserModel> userList;
 
+    /**
+     * constructor to iniitialze values
+     * @param context
+     */
     public UserAdapter(Context context) {
         this.context = context;
-        userList = new ArrayList<>();
+        userList = new ArrayList<>();//stored in an arraylist
     }
 
+    /**
+     * add a user to contacts
+     * @param userModel
+     */
     public void add(UserModel userModel){
         userList.add(userModel);
-        notifyDataSetChanged();
+        notifyDataSetChanged();//notify the database that the data has changed
     }
 
+    /**
+     * clear users and notify data changed
+     */
     public void clear(){
         userList.clear();
         notifyDataSetChanged();
@@ -36,17 +50,24 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
     @NonNull
     @Override
+    /**
+     * used to set the inflator to be of the user row xml
+     */
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_row, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
+    /**
+     * used to set the values of the elements of a user
+     */
     public void onBindViewHolder(@NonNull UserAdapter.MyViewHolder holder, int position) {
         UserModel userModel = userList.get(position);
         holder.name.setText(userModel.getUserName());
         holder.email.setText(userModel.getUserEmail());
 
+        // used to make sure to launch the chat activy once somone clicks on a contact
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

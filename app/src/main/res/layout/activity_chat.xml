@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This is used as the UI for the chat messagin part of the application-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,6 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <!-- The message that is typed in-->
         <EditText
             android:padding="15dp"
             android:id="@+id/messageEd"
@@ -25,6 +27,7 @@
             android:hint="Write message here"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <!-- The send message button-->
         <ImageView
             android:id="@+id/sendMessageButton"
             android:padding="15dp"
