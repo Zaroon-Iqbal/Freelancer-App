@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- U.I. for a custom list view for a bid activity-->
+<!-- U.I. for a custom list view for viewing the bidders-->
 <!-- Created by Edward Kuoch-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,31 +10,32 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/bidImageView"
+        android:id="@+id/bidderImageView"
         android:layout_width="75dp"
         android:layout_height="75dp"
         app:srcCompat="@drawable/smalluser_icon" />
 
     <TextView
-        android:id="@+id/bidActivityName"
+        android:id="@+id/bidderUserName"
         style="@style/MaterialAlertDialog.Material3.Title.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@id/bidImageView"
+        android:layout_toRightOf="@id/bidderImageView"
         android:maxLength="100"
         android:singleLine="true"
-        android:text="Activity Name" />
+        android:text="Username" />
 
     <TextView
-        android:id="@+id/bidStartPrice"
+        android:id="@+id/bidderPrice"
         style="@style/MaterialAlertDialog.Material3.Body.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bidActivityName"
+        android:layout_below="@id/bidderUserName"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@id/bidImageView"
-        android:text="Starting Price"
+        android:layout_toRightOf="@id/bidderImageView"
+        android:text="Bid Price"
         android:textSize="20sp" />
+
 </RelativeLayout>

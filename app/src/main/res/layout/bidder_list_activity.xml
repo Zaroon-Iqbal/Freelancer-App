@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--The main layout for the Contractor Bidding System. Created by Edward Kuoch-->
+<!--The activity U.I. for looking at the bidders-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,38 +7,40 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/addBid"
-        style="@style/Widget.Material3.Button"
+        android:id="@+id/acceptBidder"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="150dp"
-        android:layout_height="98dp"
-        android:layout_marginStart="128dp"
-        android:layout_marginBottom="16dp"
-        android:text="Add Bid"
+        android:layout_height="75dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginBottom="25dp"
+        android:text="Accept"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider2"
         android:layout_width="409dp"
         android:layout_height="1dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="41dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/addBid"
+        app:layout_constraintBottom_toTopOf="@+id/acceptBidder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
-        android:id="@+id/bidListView"
+        android:id="@+id/biddersListView"
         android:layout_width="409dp"
-        android:layout_height="569dp"
+        android:layout_height="587dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:dividerHeight="10.0sp"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/divider2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

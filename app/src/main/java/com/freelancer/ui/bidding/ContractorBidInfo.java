@@ -1,11 +1,11 @@
 package com.freelancer.ui.bidding;
 
+//Contractor Info when creating a bidding system.
 public class ContractorBidInfo {
-    int Image;
-    String ActivityName;
-    String StartingPrice;
-    String Description;
-
+    private int Image;
+    private String ActivityName;
+    private String StartingPrice;
+    private String Description;
     public ContractorBidInfo(int image, String activityName, String startingPrice, String description) {
         Image = image;
         ActivityName = activityName;

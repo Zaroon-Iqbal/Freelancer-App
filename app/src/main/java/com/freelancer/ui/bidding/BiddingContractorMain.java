@@ -1,10 +1,14 @@
 package com.freelancer.ui.bidding;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +17,7 @@ import com.freelancer.R;
 
 import java.util.ArrayList;
 
-//Activity for the Contractor to view and start their bids.
+//Activity for the Contractor to view and start their bids. Created by Edward Kuoch
 public class BiddingContractorMain extends AppCompatActivity {
 
     private ArrayList<ContractorBidInfo> list = new ArrayList<>();
@@ -28,6 +32,8 @@ public class BiddingContractorMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bidding_contractor_main);
+
+        //Connects the buttons, the listView, and the adapter
         mainAdd = findViewById(R.id.addBid);
         listView = findViewById(R.id.bidListView);
         //TODO sample data, delete after linking to database
@@ -36,10 +42,38 @@ public class BiddingContractorMain extends AppCompatActivity {
         bidAdapter = new ContractorBidAdapter(this, R.layout.bidding_list_row, list);
         listView.setAdapter(bidAdapter);
 
+        //Creates a pop up menu when clicking the creating bid button.
         mainAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createNewBidDialog();
+            }
+        });
+        deleteBid();
+        viewBidders();
+    }
+
+    //Deletes a bidding activity.
+    private void deleteBid(){
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Context context = getApplicationContext();
+                Toast.makeText(context, "Bidding Removed", Toast.LENGTH_LONG).show();
+                list.remove(position);
+                bidAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+    }
+
+    //Clicking on the listView item takes the user to
+    //a different activity where they can see the bidders.
+    private void viewBidders(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(BiddingContractorMain.this, BidderList.class));
             }
         });
     }
