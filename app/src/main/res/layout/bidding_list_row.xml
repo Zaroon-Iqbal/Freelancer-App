@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- U.I. for a custom list view-->
+<!-- Created by Edward Kuoch-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_dark_inverseSurface"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/bidImageView"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:srcCompat="@drawable/smalluser_icon" />
+
+    <TextView
+        android:id="@+id/bidActivityName"
+        style="@style/MaterialAlertDialog.Material3.Title.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/bidImageView"
+        android:maxLength="100"
+        android:singleLine="true"
+        android:text="Activity Name" />
+
+    <TextView
+        android:id="@+id/bidStartPrice"
+        style="@style/MaterialAlertDialog.Material3.Body.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bidActivityName"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/bidImageView"
+        android:text="Starting Price"
+        android:textSize="20sp" />
+</RelativeLayout>

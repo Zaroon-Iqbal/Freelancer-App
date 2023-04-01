@@ -55,6 +55,8 @@
         <activity
             android:name=".ui.Checklist"
             android:exported="false" />
+        <activity android:name=".ui.bidding.BiddingContractorMain"
+            android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
