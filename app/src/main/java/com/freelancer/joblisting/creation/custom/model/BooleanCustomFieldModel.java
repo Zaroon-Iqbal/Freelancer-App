@@ -1,14 +1,25 @@
 package com.freelancer.joblisting.creation.custom.model;
 
-import com.freelancer.joblisting.creation.custom.CustomFieldType;
+import androidx.lifecycle.MutableLiveData;
+
+import com.freelancer.joblisting.creation.custom.FieldType;
 
 public class BooleanCustomFieldModel extends CustomFieldModel {
-    private String booleanFieldTitle;
-    private boolean customFieldState;
+    private final MutableLiveData<String> booleanFieldTitle;
 
-    public BooleanCustomFieldModel(String customFieldName, String booleanFieldTitle, boolean customFieldState) {
-        super(CustomFieldType.BOOLEAN);
-        this.booleanFieldTitle = booleanFieldTitle;
-        this.customFieldState = customFieldState;
+    public BooleanCustomFieldModel() {
+        super(FieldType.BOOLEAN);
+        booleanFieldTitle = new MutableLiveData<>();
+    }
+
+    public MutableLiveData<String> getBooleanFieldTitle() {
+        return booleanFieldTitle;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", BooleanCustomFieldModel{" +
+                "booleanFieldTitle=" + booleanFieldTitle.getValue() +
+                '}';
     }
 }

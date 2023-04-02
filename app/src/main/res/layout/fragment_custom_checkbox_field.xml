@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    android:id="@+id/custom_checkbox_text_view"
-    style="@style/TextAppearance.Material3.TitleLarge"
-    android:layout_width="wrap_content"
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/custom_checkbox_name_text_layout"
+    style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical|start"
-    android:padding="8dp"
-    android:text="Checkbox-exclusive!"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    app:helperText="* Required">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/custom_checkbox_text_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/custom_checkbox_title"
+        android:minHeight="48dp" />
+    
+</com.google.android.material.textfield.TextInputLayout>

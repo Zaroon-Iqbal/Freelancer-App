@@ -1,13 +1,27 @@
 package com.freelancer.joblisting.creation.custom.model;
 
-import com.freelancer.joblisting.creation.custom.CustomFieldType;
+import androidx.lifecycle.MutableLiveData;
+
+import com.freelancer.joblisting.creation.custom.FieldType;
 
 public abstract class CustomFieldModel {
-    private CustomFieldType customFieldType;
-    private String customFieldName;
+    private final FieldType fieldType;
+    private final MutableLiveData<String> customFieldName;
 
-    public CustomFieldModel(CustomFieldType customFieldType) {
-        this.customFieldType = customFieldType;
-        this.customFieldName = "";
+    public CustomFieldModel(FieldType fieldType) {
+        this.fieldType = fieldType;
+        this.customFieldName = new MutableLiveData<>();
+    }
+
+    public MutableLiveData<String> getCustomFieldName() {
+        return customFieldName;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomFieldModel{" +
+                "customFieldType=" + fieldType +
+                ", customFieldName='" + customFieldName.getValue() + '\'' +
+                '}';
     }
 }

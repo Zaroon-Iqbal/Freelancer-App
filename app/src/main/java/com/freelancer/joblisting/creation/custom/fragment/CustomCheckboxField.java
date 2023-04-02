@@ -1,15 +1,17 @@
-package com.freelancer.joblisting.creation.custom;
+package com.freelancer.joblisting.creation.custom.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
+import com.freelancer.joblisting.creation.custom.viewmodel.CustomCheckboxViewModel;
+import com.freelancer.joblisting.creation.custom.viewmodel.CustomFieldFormViewModel;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,6 +19,8 @@ import com.freelancer.R;
  * create an instance of this fragment.
  */
 public class CustomCheckboxField extends Fragment {
+    private CustomCheckboxViewModel viewModel;
+
     public CustomCheckboxField() {
         // Required empty public constructor
     }
@@ -43,10 +47,20 @@ public class CustomCheckboxField extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_custom_checkbox_field, container, false);
-        TextView textView = view.findViewById(R.id.custom_checkbox_text_view);
-        textView.setOnClickListener(onClick -> {
-            Toast.makeText(view.getContext(), "Tapped on the checkbox thing!", Toast.LENGTH_SHORT).show();
+        TextInputEditText textInput = view.findViewById(R.id.custom_checkbox_text_input);
+        viewModel = new ViewModelProvider(requireParentFragment()).get(CustomCheckboxViewModel.class);
+
+        CustomFieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(CustomFieldFormViewModel.class);
+        parentViewModel.addCustomField(viewModel.getModel());
+
+        textInput.setOnKeyListener((view1, i, keyEvent) -> {
+            if (textInput.getText() != null) {
+                viewModel.getModel().getBooleanFieldTitle().setValue(textInput.getText().toString());
+                return false;
+            }
+            return false;
         });
+
         return view;
     }
 }
