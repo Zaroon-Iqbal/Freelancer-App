@@ -1,11 +1,9 @@
 package com.freelancer.joblisting.creation.custom;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -46,37 +44,20 @@ public class CustomFieldForm extends AppCompatActivity {
         });
     }
 
-    private HashMap<String, CustomFieldType> getCustomFields() {
-        HashMap<String, CustomFieldType> customFieldTypeHashMap = new HashMap<>();
-        for (int a = 0; a < CustomFieldType.values().length; a++) {
-            customFieldTypeHashMap.put(CustomFieldType.values()[a].customFieldName, CustomFieldType.values()[a]);
+    private HashMap<String, FieldType> getCustomFields() {
+        HashMap<String, FieldType> customFieldTypeHashMap = new HashMap<>();
+        for (int a = 0; a < FieldType.values().length; a++) {
+            customFieldTypeHashMap.put(FieldType.values()[a].customFieldName, FieldType.values()[a]);
         }
 
         return customFieldTypeHashMap;
     }
 
     private Fragment addChildFragmentTransaction(String selection) {
-        HashMap<String, CustomFieldType> fields = getCustomFields();
+        HashMap<String, FieldType> fields = getCustomFields();
+        FieldType fieldType = fields.getOrDefault(selection, FieldType.BOOLEAN);
+        CustomFieldTemplate fragment = CustomFieldTemplate.newInstance(fieldType);
 
-        Log.i("TAG", fields.keySet().toString());
-        Log.i("TAG", selection);
-        CustomFieldType fieldType = fields.getOrDefault(selection, CustomFieldType.BOOLEAN);
-        CustomFieldTemplate fragment;
-        Toast.makeText(getApplicationContext(), "Field type: " + fieldType.customFieldName, Toast.LENGTH_SHORT).show();
-        switch (fieldType) {
-            case BOOLEAN:
-                fragment = CustomFieldTemplate.newInstance(CustomFieldType.BOOLEAN);
-                break;
-
-            case FREE_FORM:
-            case MULTI_SELECT:
-            case SINGLE_SELECT:
-                fragment = CustomFieldTemplate.newInstance(CustomFieldType.MULTI_SELECT);
-                break;
-
-            default:
-                return null;
-        }
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.fragment_linear_layout, fragment);
         transaction.commit();
@@ -84,16 +65,12 @@ public class CustomFieldForm extends AppCompatActivity {
     }
 
     private void setDropdownArrayAdapter(AutoCompleteTextView dropdown) {
-        HashMap<String, CustomFieldType> fields = getCustomFields();
+        HashMap<String, FieldType> fields = getCustomFields();
         String[] dropdownOptions = fields.keySet().toArray(new String[0]);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>
                 (getApplicationContext(), R.layout.dropdown_menu_popup_item, dropdownOptions);
 
         dropdown.setAdapter(adapter);
-    }
-
-    public CustomFieldFormViewModel getViewModel() {
-        return viewModel;
     }
 }

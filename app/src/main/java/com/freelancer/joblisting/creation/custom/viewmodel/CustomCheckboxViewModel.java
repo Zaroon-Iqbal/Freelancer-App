@@ -1,26 +1,20 @@
 package com.freelancer.joblisting.creation.custom.viewmodel;
 
-import android.util.Log;
-
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.freelancer.joblisting.creation.custom.CustomFieldType;
+import com.freelancer.joblisting.creation.custom.FieldType;
+import com.freelancer.joblisting.creation.custom.model.BooleanCustomFieldModel;
 
 public class CustomCheckboxViewModel extends ViewModel {
-    private MutableLiveData<String> customCheckboxTitle;
-    private CustomFieldType customFieldType;
+    private final BooleanCustomFieldModel model;
+    private FieldType fieldType;
 
     public CustomCheckboxViewModel() {
-        customFieldType = CustomFieldType.BOOLEAN;
-        customCheckboxTitle = new MutableLiveData<>();
+        fieldType = FieldType.BOOLEAN;
+        model = new BooleanCustomFieldModel();
     }
 
-    public void erase() {
-        Log.i("BOOL VM", "Erased");
-    }
-
-    public MutableLiveData<String> getCustomCheckboxTitle() {
-        return customCheckboxTitle;
+    public BooleanCustomFieldModel getModel() {
+        return model;
     }
 }

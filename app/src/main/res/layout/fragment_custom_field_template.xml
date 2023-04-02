@@ -110,33 +110,7 @@
                     android:id="@+id/linear_layout_insertion"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/additional_cost_checkbox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/additional_cost" />
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/custom_checkbox_additional_cost_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:helperText="* Required">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/additional_cost_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Additional cost"
-                            android:inputType="numberDecimal|number"
-                            android:minHeight="48dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

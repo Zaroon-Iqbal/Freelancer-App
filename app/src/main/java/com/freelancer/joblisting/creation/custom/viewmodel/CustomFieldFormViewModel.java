@@ -19,25 +19,15 @@ public class CustomFieldFormViewModel extends AndroidViewModel {
         customFields = new ArrayList<>();
     }
 
-    public ArrayList<CustomFieldModel> getCustomFields() {
-        return customFields;
-    }
-
     public void printModels() {
         Log.i("PRINT", Arrays.toString(customFields.toArray()));
     }
 
     public void addCustomField(CustomFieldModel customFieldModel) {
         customFields.add(customFieldModel);
-        Log.i("FORM VM ADD", "custom field count: " + customFields.size());
     }
 
     public void removeCustomField(CustomFieldModel customFieldModel) {
         customFields.remove(customFieldModel);
-        Log.i("FORM VM RM", "custom field count: " + customFields.size());
-    }
-
-    public int customFieldCount() {
-        return customFields.size();
     }
 }
