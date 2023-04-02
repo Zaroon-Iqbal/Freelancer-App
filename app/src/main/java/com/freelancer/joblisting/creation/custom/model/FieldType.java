@@ -1,4 +1,4 @@
-package com.freelancer.joblisting.creation.custom;
+package com.freelancer.joblisting.creation.custom.model;
 
 public enum FieldType {
     MULTI_SELECT("Multiple selection"),

@@ -11,25 +11,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
-import com.freelancer.joblisting.creation.custom.FieldType;
-import com.freelancer.joblisting.creation.custom.viewmodel.CustomFieldFormViewModel;
+import com.freelancer.joblisting.creation.custom.model.FieldType;
+import com.freelancer.joblisting.creation.custom.viewmodel.FieldFormViewModel;
 import com.freelancer.joblisting.creation.custom.viewmodel.SelectionFieldViewModel;
-import com.freelancer.joblisting.creation.custom.viewmodel.factory.CustomSelectionFieldFactory;
+import com.freelancer.joblisting.creation.custom.viewmodel.factory.SelectionFieldViewModelFactory;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CustomSelectionField#newInstance} factory method to
+ * Use the {@link SelectionFieldFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomSelectionField extends Fragment {
+public class SelectionFieldFragment extends Fragment {
     private SelectionFieldViewModel viewModel;
 
     private FieldType fieldType;
 
-    public CustomSelectionField(FieldType fieldType) {
+    public SelectionFieldFragment(FieldType fieldType) {
         this.fieldType = fieldType;
         // Required empty public constructor
     }
@@ -41,14 +41,14 @@ public class CustomSelectionField extends Fragment {
      * @return A new instance of fragment CustomCheckboxField.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomSelectionField newInstance(FieldType fieldType) {
-        CustomSelectionField fragment = new CustomSelectionField(fieldType);
+    public static SelectionFieldFragment newInstance(FieldType fieldType) {
+        SelectionFieldFragment fragment = new SelectionFieldFragment(fieldType);
         Bundle args = new Bundle();
         fragment.setArguments(args);
 
         return fragment;
     }
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +63,10 @@ public class CustomSelectionField extends Fragment {
         }
 
         viewModel = new ViewModelProvider(requireParentFragment(),
-                new CustomSelectionFieldFactory(fieldType))
+                new SelectionFieldViewModelFactory(fieldType))
                 .get(SelectionFieldViewModel.class);
 
-        CustomFieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(CustomFieldFormViewModel.class);
+        FieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
         parentViewModel.addCustomField(viewModel.getCustomFieldModel());
 
         ChipGroup chipGroup = view.findViewById(R.id.chip_group);

@@ -1,10 +1,8 @@
 package com.freelancer.joblisting.creation.custom.model;
 
-import com.freelancer.joblisting.creation.custom.FieldType;
-
 import java.util.ArrayList;
 
-public class SelectionFieldModel extends CustomFieldModel {
+public class SelectionFieldModel extends TemplateFieldModel {
     private final ArrayList<String> options;
 
     public SelectionFieldModel(SelectionType selectionType) {

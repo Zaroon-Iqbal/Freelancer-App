@@ -23,29 +23,29 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
-import com.freelancer.joblisting.creation.custom.FieldType;
-import com.freelancer.joblisting.creation.custom.model.CustomFieldModel;
-import com.freelancer.joblisting.creation.custom.viewmodel.CustomCheckboxViewModel;
-import com.freelancer.joblisting.creation.custom.viewmodel.CustomFieldFormViewModel;
+import com.freelancer.joblisting.creation.custom.model.FieldType;
+import com.freelancer.joblisting.creation.custom.model.TemplateFieldModel;
+import com.freelancer.joblisting.creation.custom.viewmodel.CheckboxFieldViewModel;
+import com.freelancer.joblisting.creation.custom.viewmodel.FieldFormViewModel;
 import com.freelancer.joblisting.creation.custom.viewmodel.FreeformFieldViewModel;
 import com.freelancer.joblisting.creation.custom.viewmodel.SelectionFieldViewModel;
-import com.freelancer.joblisting.creation.custom.viewmodel.factory.CustomSelectionFieldFactory;
+import com.freelancer.joblisting.creation.custom.viewmodel.factory.SelectionFieldViewModelFactory;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CustomFieldTemplate#newInstance} factory method to
+ * Use the {@link FieldTemplateFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomFieldTemplate extends Fragment {
+public class FieldTemplateFragment extends Fragment {
     private FieldType fieldType;
     private Fragment customFieldFragment;
 
-    public CustomFieldTemplate() {
+    public FieldTemplateFragment() {
     }
 
-    public CustomFieldTemplate(FieldType fieldType) {
+    public FieldTemplateFragment(FieldType fieldType) {
         this.fieldType = fieldType;
     }
 
@@ -56,22 +56,22 @@ public class CustomFieldTemplate extends Fragment {
      * @return A new instance of fragment CustomCheckboxField.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomFieldTemplate newInstance(FieldType fieldType) {
-        CustomFieldTemplate fragment = new CustomFieldTemplate(fieldType);
+    public static FieldTemplateFragment newInstance(FieldType fieldType) {
+        FieldTemplateFragment fragment = new FieldTemplateFragment(fieldType);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         switch (fieldType) {
             case BOOLEAN:
-                fragment.customFieldFragment = CustomCheckboxField.newInstance();
+                fragment.customFieldFragment = CheckboxFieldFragment.newInstance();
                 break;
 
             case SINGLE_SELECT:
             case MULTI_SELECT:
-                fragment.customFieldFragment = CustomSelectionField.newInstance(fieldType);
+                fragment.customFieldFragment = SelectionFieldFragment.newInstance(fieldType);
                 break;
 
             case FREE_FORM:
-                fragment.customFieldFragment = FreeformField.newInstance();
+                fragment.customFieldFragment = FreeformFieldFragment.newInstance();
                 break;
 
             default:
@@ -95,26 +95,26 @@ public class CustomFieldTemplate extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ViewModel viewModel;
-        CustomFieldModel fieldModel;
+        TemplateFieldModel fieldModel;
         switch (fieldType) {
             case MULTI_SELECT:
                 viewModel = new ViewModelProvider(this,
-                        new CustomSelectionFieldFactory(FieldType.MULTI_SELECT))
+                        new SelectionFieldViewModelFactory(FieldType.MULTI_SELECT))
                         .get(SelectionFieldViewModel.class);
                 fieldModel = ((SelectionFieldViewModel) viewModel).getCustomFieldModel();
                 break;
 
             case SINGLE_SELECT:
                 viewModel = new ViewModelProvider(this,
-                        new CustomSelectionFieldFactory(FieldType.SINGLE_SELECT))
+                        new SelectionFieldViewModelFactory(FieldType.SINGLE_SELECT))
                         .get(SelectionFieldViewModel.class);
                 fieldModel = ((SelectionFieldViewModel) viewModel).getCustomFieldModel();
                 break;
 
 
             case BOOLEAN:
-                viewModel = new ViewModelProvider(this).get(CustomCheckboxViewModel.class);
-                fieldModel = ((CustomCheckboxViewModel) viewModel).getModel();
+                viewModel = new ViewModelProvider(this).get(CheckboxFieldViewModel.class);
+                fieldModel = ((CheckboxFieldViewModel) viewModel).getModel();
                 break;
 
             case FREE_FORM:
@@ -133,7 +133,7 @@ public class CustomFieldTemplate extends Fragment {
 
         ConstraintLayout constraintLayout = view.findViewById(R.id.coordinatorLayout);
         MaterialCardView cardView = view.findViewById(R.id.checkbox_card_view);
-        CustomFieldFormViewModel formViewModel = new ViewModelProvider(requireActivity()).get(CustomFieldFormViewModel.class);
+        FieldFormViewModel formViewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
 
 
         deleteImage.setOnClickListener(onClick -> {
@@ -170,7 +170,7 @@ public class CustomFieldTemplate extends Fragment {
 
         customFieldTitle.setOnKeyListener((v, keyCode, event) -> {
             customFieldHeader.setText(customFieldTitle.getText().toString());
-            fieldModel.getCustomFieldName().setValue(customFieldTitle.getText().toString());
+            fieldModel.getFieldName().setValue(customFieldTitle.getText().toString());
             return false;
         });
     }

@@ -2,9 +2,7 @@ package com.freelancer.joblisting.creation.custom.model;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.freelancer.joblisting.creation.custom.FieldType;
-
-public class FreeformFieldModel extends CustomFieldModel {
+public class FreeformFieldModel extends TemplateFieldModel {
     private final MutableLiveData<String> freeformFieldTitle;
 
     public FreeformFieldModel() {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".joblisting.creation.custom.CustomFieldForm">
+    tools:context=".joblisting.creation.custom.FieldFormActivity">
 
     <LinearLayout
         android:id="@+id/custom_field_form_linear_layout"

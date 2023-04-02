@@ -15,7 +15,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.joblisting.CreateJobListingTabbedActivity;
-import com.freelancer.joblisting.creation.custom.CustomFieldForm;
+import com.freelancer.joblisting.creation.custom.FieldFormActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.custom_field_button:
-                Intent customFieldIntent = new Intent(this, CustomFieldForm.class);
+                Intent customFieldIntent = new Intent(this, FieldFormActivity.class);
                 startActivity(customFieldIntent);
                 break;
 
@@ -116,7 +116,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                         .setAutoCancel(true);
 
                 // notificationId is a unique int for each notification that you must define
-                 
+
                 notificationManager.notify(count++, builder.build());
                 break;
         }

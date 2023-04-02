@@ -9,19 +9,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
-import com.freelancer.joblisting.creation.custom.viewmodel.CustomFieldFormViewModel;
-import com.freelancer.joblisting.creation.custom.viewmodel.FreeformFieldViewModel;
+import com.freelancer.joblisting.creation.custom.viewmodel.CheckboxFieldViewModel;
+import com.freelancer.joblisting.creation.custom.viewmodel.FieldFormViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FreeformField#newInstance} factory method to
+ * Use the {@link CheckboxFieldFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FreeformField extends Fragment {
-    private FreeformFieldViewModel viewModel;
+public class CheckboxFieldFragment extends Fragment {
+    private CheckboxFieldViewModel viewModel;
 
-    public FreeformField() {
+    public CheckboxFieldFragment() {
         // Required empty public constructor
     }
 
@@ -32,8 +32,8 @@ public class FreeformField extends Fragment {
      * @return A new instance of fragment CustomCheckboxField.
      */
     // TODO: Rename and change types and number of parameters
-    public static FreeformField newInstance() {
-        FreeformField fragment = new FreeformField();
+    public static CheckboxFieldFragment newInstance() {
+        CheckboxFieldFragment fragment = new CheckboxFieldFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -48,13 +48,14 @@ public class FreeformField extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_custom_checkbox_field, container, false);
         TextInputEditText textInput = view.findViewById(R.id.custom_checkbox_text_input);
-        viewModel = new ViewModelProvider(requireParentFragment()).get(FreeformFieldViewModel.class);
+        viewModel = new ViewModelProvider(requireParentFragment()).get(CheckboxFieldViewModel.class);
 
-        CustomFieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(CustomFieldFormViewModel.class);
+        FieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
         parentViewModel.addCustomField(viewModel.getModel());
+
         textInput.setOnKeyListener((view1, i, keyEvent) -> {
             if (textInput.getText() != null) {
-                viewModel.getModel().getFreeformFieldTitle().setValue(textInput.getText().toString());
+                viewModel.getModel().getBooleanFieldTitle().setValue(textInput.getText().toString());
                 return false;
             }
             return false;
