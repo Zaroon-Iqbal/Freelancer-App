@@ -15,7 +15,6 @@ import com.freelancer.R;
 import com.freelancer.TestingActivity;
 import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
-import com.freelancer.ui.bottom_nav.BottomNav;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginViewModel.getUserLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
-                startActivity(new Intent(LoginActivity.this, BottomNav.class));
+                startActivity(new Intent(LoginActivity.this, HomePage.class));
             }
         });
 

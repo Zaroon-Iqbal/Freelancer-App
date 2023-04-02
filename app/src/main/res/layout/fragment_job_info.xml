@@ -211,6 +211,47 @@
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <!--Create service button layout-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/chooseImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:minHeight="56dp"
+                    android:text="Select Image"
+                    app:cornerRadius="24dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/fireImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:minHeight="56dp"
+                    app:cornerRadius="24dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/uploadImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:minHeight="56dp"
+                    android:text="Upload"
+                    app:cornerRadius="24dp" />
+            </RelativeLayout>
+
 
             <!--Create service button layout-->
             <RelativeLayout

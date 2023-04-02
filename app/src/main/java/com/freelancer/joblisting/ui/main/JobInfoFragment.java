@@ -1,7 +1,13 @@
 package com.freelancer.joblisting.ui.main;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,13 +18,23 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.freelancer.R;
 import com.freelancer.data.model.FirestoreRepository;
 import com.freelancer.data.viewmodel.CalendarViewModel;
 import com.freelancer.data.viewmodel.JobInfoViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**job info fragment made for displaying and retrieving accurate job listing data from contractors
  *
@@ -37,6 +53,14 @@ public class JobInfoFragment extends Fragment {
 
     //variables used for retrieving and storing data
     Button createService;
+    Button choosePic;
+    Button uploadPic;
+    ImageView image;
+    ActivityResultLauncher<String> tPhoto;
+    StorageReference storage;
+
+    Uri imageU;
+
     EditText title;
     EditText description;
     EditText phone;
@@ -107,11 +131,41 @@ public class JobInfoFragment extends Fragment {
         viewcat = view.findViewById(R.id.category_items);
         viewLoc = view.findViewById(R.id.radius_items);
         viewType = view.findViewById(R.id.location_items);
+        choosePic = view.findViewById(R.id.chooseImage);
+        uploadPic = view.findViewById(R.id.uploadImage);
+        image = view.findViewById(R.id.fireImage);
+        tPhoto = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri result) {
+                        image.setImageURI(result);
+                        imageU = result;
+                    }
+                }
+        );
+
+        choosePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tPhoto.launch("image/*");
+            }
+        });
+
+        uploadPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadPicture();
+            }
+        });
 
         //adding the job listing categories
-        String [] items = {"Accounting/Finance", "Engineering", "Art/Media/Design", "Biotech/Science", "Business", "Customer Service", "Education", "Food/Bev", "General Labor",
-                           "Government", "Human Resources", "Legal", "Manufacturing", "Marketing", "Medical/health", "Nonprofit Sector", "Real Estate", "Wholesale/Retail",
-                           "Salon/Spa/Fitness", "Security", "Skilled Trade", "Software", "Systems/Networks", "Technical Support", "Transport", "Tv/Film", "Web/Info Design", "Writing/Editting", "other"};
+        String [] items = {"Accounting/Finance", "Engineering", "Art/Media/Design", "Biotech/Science", "Business",
+                            "Customer Service", "Education", "Food/Bev", "General Labor",
+                            "Government", "Human Resources", "Legal", "Manufacturing", "Marketing",
+                            "Medical/health", "Nonprofit Sector", "Real Estate", "Wholesale/Retail",
+                            "Salon/Spa/Fitness", "Security", "Skilled Trade", "Software", "Systems/Networks",
+                            "Technical Support", "Transport", "Tv/Film", "Web/Info Design", "Writing/Editting", "other"};
         ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(requireContext(), R.layout.category_list, items);
         viewcat.setAdapter(itemAdapter);//storing them in a dropdown menu
 
@@ -132,6 +186,7 @@ public class JobInfoFragment extends Fragment {
         city = view.findViewById(R.id.contractor_city);
         price = view.findViewById(R.id.contractor_price);
         createService = view.findViewById(R.id.contractor_create_service);
+
 
         //on click listener used to check for button click and retrieve data when done so
         createService.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +222,29 @@ public class JobInfoFragment extends Fragment {
         return view;
     }
 
+    private void uploadPicture() {
+
+        SimpleDateFormat form = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
+        Date current = new Date();
+        String file = form.format(current);
+        storage = FirebaseStorage.getInstance().getReference("images/" + file);
+
+        storage.putFile(imageU).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                image.setImageURI(null);
+                Toast.makeText(viewcat.getContext(), "successfully uploaded image", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(viewcat.getContext(), "Failed to Upload", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
     /**
      * Method used for input validation
      * @param Jtitle, must not be empty
