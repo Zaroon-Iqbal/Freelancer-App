@@ -12,21 +12,22 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
-import com.freelancer.joblisting.creation.custom.fragment.CustomFieldTemplate;
-import com.freelancer.joblisting.creation.custom.viewmodel.CustomFieldFormViewModel;
+import com.freelancer.joblisting.creation.custom.fragment.FieldTemplateFragment;
+import com.freelancer.joblisting.creation.custom.model.FieldType;
+import com.freelancer.joblisting.creation.custom.viewmodel.FieldFormViewModel;
 
 import java.util.HashMap;
 
-public class CustomFieldForm extends AppCompatActivity {
+public class FieldFormActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
-    private CustomFieldFormViewModel viewModel;
+    private FieldFormViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_field_form);
 
-        viewModel = new ViewModelProvider(this).get(CustomFieldFormViewModel.class);
+        viewModel = new ViewModelProvider(this).get(FieldFormViewModel.class);
         fragmentManager = getSupportFragmentManager();
 
         AutoCompleteTextView customFieldTypeDropdown = findViewById(R.id.custom_field_dropdown);
@@ -56,7 +57,7 @@ public class CustomFieldForm extends AppCompatActivity {
     private Fragment addChildFragmentTransaction(String selection) {
         HashMap<String, FieldType> fields = getCustomFields();
         FieldType fieldType = fields.getOrDefault(selection, FieldType.BOOLEAN);
-        CustomFieldTemplate fragment = CustomFieldTemplate.newInstance(fieldType);
+        FieldTemplateFragment fragment = FieldTemplateFragment.newInstance(fieldType);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.fragment_linear_layout, fragment);

@@ -4,14 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.freelancer.joblisting.creation.custom.FieldType;
+import com.freelancer.joblisting.creation.custom.model.FieldType;
 import com.freelancer.joblisting.creation.custom.model.SelectionType;
 import com.freelancer.joblisting.creation.custom.viewmodel.SelectionFieldViewModel;
 
-public class CustomSelectionFieldFactory implements ViewModelProvider.Factory {
+public class SelectionFieldViewModelFactory implements ViewModelProvider.Factory {
     private FieldType fieldType;
 
-    public CustomSelectionFieldFactory(FieldType fieldType) {
+    public SelectionFieldViewModelFactory(FieldType fieldType) {
         this.fieldType = fieldType;
     }
 

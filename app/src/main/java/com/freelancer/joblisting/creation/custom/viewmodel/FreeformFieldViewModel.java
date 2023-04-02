@@ -2,7 +2,7 @@ package com.freelancer.joblisting.creation.custom.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-import com.freelancer.joblisting.creation.custom.FieldType;
+import com.freelancer.joblisting.creation.custom.model.FieldType;
 import com.freelancer.joblisting.creation.custom.model.FreeformFieldModel;
 
 public class FreeformFieldViewModel extends ViewModel {
