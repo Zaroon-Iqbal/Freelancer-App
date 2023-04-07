@@ -1,6 +1,7 @@
 package com.freelancer.joblisting.creation.custom.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +49,10 @@ public class FreeformFieldFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_custom_checkbox_field, container, false);
         TextInputEditText textInput = view.findViewById(R.id.custom_checkbox_text_input);
-        viewModel = new ViewModelProvider(requireParentFragment()).get(FreeformFieldViewModel.class);
+        viewModel = new ViewModelProvider(this).get(FreeformFieldViewModel.class);
 
-        FieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
+        FieldFormViewModel parentViewModel = new ViewModelProvider(requireParentFragment()).get(FieldFormViewModel.class);
+        Log.i("test", "parent: " + parentViewModel);
         parentViewModel.addCustomField(viewModel.getModel());
         textInput.setOnKeyListener((view1, i, keyEvent) -> {
             if (textInput.getText() != null) {

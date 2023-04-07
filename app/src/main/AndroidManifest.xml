@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".joblisting.creation.custom.FieldFormActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.registration.RegistrationSelectionActivity"
             android:exported="false" />
         <activity

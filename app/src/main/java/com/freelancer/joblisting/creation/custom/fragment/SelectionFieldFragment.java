@@ -66,7 +66,7 @@ public class SelectionFieldFragment extends Fragment {
                 new SelectionFieldViewModelFactory(fieldType))
                 .get(SelectionFieldViewModel.class);
 
-        FieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
+        FieldFormViewModel parentViewModel = new ViewModelProvider(requireParentFragment()).get(FieldFormViewModel.class);
         parentViewModel.addCustomField(viewModel.getCustomFieldModel());
 
         ChipGroup chipGroup = view.findViewById(R.id.chip_group);

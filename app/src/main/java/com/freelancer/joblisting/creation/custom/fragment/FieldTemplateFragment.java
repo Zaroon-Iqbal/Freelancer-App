@@ -133,7 +133,7 @@ public class FieldTemplateFragment extends Fragment {
 
         ConstraintLayout constraintLayout = view.findViewById(R.id.coordinatorLayout);
         MaterialCardView cardView = view.findViewById(R.id.checkbox_card_view);
-        FieldFormViewModel formViewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
+        FieldFormViewModel formViewModel = new ViewModelProvider(this).get(FieldFormViewModel.class);
 
 
         deleteImage.setOnClickListener(onClick -> {

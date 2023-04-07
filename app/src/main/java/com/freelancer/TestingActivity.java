@@ -15,7 +15,6 @@ import androidx.core.app.NotificationCompat;
 
 import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.joblisting.CreateJobListingTabbedActivity;
-import com.freelancer.joblisting.creation.custom.FieldFormActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -89,8 +88,8 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.custom_field_button:
-                Intent customFieldIntent = new Intent(this, FieldFormActivity.class);
-                startActivity(customFieldIntent);
+                //Intent customFieldIntent = new Intent(this, FieldFormActivity.class);
+                //startActivity(customFieldIntent);
                 break;
 
             case R.id.notification_button:

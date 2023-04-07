@@ -48,9 +48,9 @@ public class CheckboxFieldFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_custom_checkbox_field, container, false);
         TextInputEditText textInput = view.findViewById(R.id.custom_checkbox_text_input);
-        viewModel = new ViewModelProvider(requireParentFragment()).get(CheckboxFieldViewModel.class);
+        viewModel = new ViewModelProvider(this).get(CheckboxFieldViewModel.class);
 
-        FieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
+        FieldFormViewModel parentViewModel = new ViewModelProvider(requireParentFragment()).get(FieldFormViewModel.class);
         parentViewModel.addCustomField(viewModel.getModel());
 
         textInput.setOnKeyListener((view1, i, keyEvent) -> {

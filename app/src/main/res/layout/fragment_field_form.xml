@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".joblisting.creation.custom.FieldFormActivity">
+    tools:context=".joblisting.CreateJobListingTabbedActivity">
 
     <LinearLayout
         android:id="@+id/custom_field_form_linear_layout"
@@ -59,12 +59,22 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/fragment_linear_layout"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView">
 
+            <LinearLayout
+                android:id="@+id/fragment_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </ScrollView>
     </LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

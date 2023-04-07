@@ -8,15 +8,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.freelancer.FieldFormFragment;
 import com.freelancer.R;
-import com.freelancer.calendar.CalendarListFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  *
  * @TODO: ViewPager and FragmentPagerAdapter are deprecated. Migrate to ViewPager2 and FragmentStateAdapter.
- *
+ * <p>
  * Contributors: Zaroon Iqbal, Spencer Carlson
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -38,8 +38,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        CalendarListFragment cal = new CalendarListFragment();//placeholder fragment
-
+        FieldFormFragment fieldFormFragment = FieldFormFragment.newInstance();
         JobInfoFragment job = new JobInfoFragment();//general listing information fragment
         Fragment choice = new Fragment();//choice of tab
         switch (position) {
@@ -47,7 +46,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 choice = job;
                 break;
             case 1:
-                choice = cal;
+                choice = fieldFormFragment;
                 break;
         }
 

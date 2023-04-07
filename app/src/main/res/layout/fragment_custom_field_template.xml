@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|start"
                     android:padding="8dp"
-                    android:text="Header" />
+                    android:text="@string/header" />
 
                 <ImageView
                     android:id="@+id/edit_title_icon"
