@@ -16,6 +16,8 @@ import com.freelancer.R;
 
 import java.util.ArrayList;
 
+//This creates a checklist that the user can use to keep track of anything.
+//Created by Edward Kuoch
 public class Checklist extends AppCompatActivity {
 
     private ArrayList<String> items;
@@ -28,6 +30,7 @@ public class Checklist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checklist);
 
+        //Connects the button, listviews, and adapters.
         listView = findViewById(R.id.checklistView);
         button = findViewById(R.id.addTaskButton);
 
@@ -38,12 +41,14 @@ public class Checklist extends AppCompatActivity {
             }
         });
 
+        //Adds the items to an arraylist
         items = new ArrayList<>();
         itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         listView.setAdapter(itemsAdapter);
         setUpListViewListner();
     }
 
+    //Deletes the item.
     private void setUpListViewListner(){
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -57,6 +62,8 @@ public class Checklist extends AppCompatActivity {
             }
         });
     }
+
+    //Allows the user to add an item after clicking the button
     private void addItem(View v){
         EditText input = findViewById(R.id.editNewTask);
         String text = input.getText().toString();
