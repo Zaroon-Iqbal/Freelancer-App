@@ -14,6 +14,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -37,6 +40,9 @@ public class BiddingContractorMain extends AppCompatActivity {
         mainAdd = findViewById(R.id.addBid);
         listView = findViewById(R.id.bidListView);
         //TODO sample data, delete after linking to database
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("biddings").document(userID);
         list.add(new ContractorBidInfo(R.drawable.table, "Selling Table", "$100", "Previous customer cancelled their order, selling off this table"));
 
         bidAdapter = new ContractorBidAdapter(this, R.layout.bidding_list_row, list);
