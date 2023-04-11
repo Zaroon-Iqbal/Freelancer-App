@@ -1,10 +1,11 @@
 package com.freelancer.calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.CalendarView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -13,9 +14,13 @@ import androidx.navigation.ui.NavigationUI;
 import com.freelancer.R;
 import com.freelancer.data.viewmodel.CalendarViewModel;
 import com.freelancer.databinding.ActivityCalendarBinding;
+import com.freelancer.placeholder.FavoriteActivityPlaceholder;
+import com.freelancer.placeholder.MessageActivityPlaceholder;
+import com.freelancer.placeholder.ProfileActivityPlaceholder;
+import com.freelancer.ui.login.HomePage;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.time.Instant;
-import java.util.Date;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * The CalendarActivity renders a calendar view, and upcoming appointments for the contractor or
@@ -59,7 +64,45 @@ public class CalendarActivity extends AppCompatActivity {
             viewModel.retrieveAppointment(calendarCollection, calendarDocument, calendarField);//used to test retrieval method.
         });
 
+        //The bottom navigation bar. Added by Edward Kuoch.
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.CalendarNav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
 
+                    //When user clicks on the home icon
+                    case R.id.HomeNav:
+                        startActivity(new Intent(getApplicationContext(), HomePage.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    //When user clicks on the calendar icon
+                    case R.id.CalendarNav:
+                        return true;
+
+                    //When user clicks on the favorites icon
+                    case R.id.FavoriteNav:
+                        startActivity(new Intent(getApplicationContext(), FavoriteActivityPlaceholder.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    //When user clicks on the message icon
+                    case R.id.MessageNav:
+                        startActivity(new Intent(getApplicationContext(), MessageActivityPlaceholder.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    //When user clicks on the profile icon
+                    case R.id.ProfileNav:
+                        startActivity(new Intent(getApplicationContext(), ProfileActivityPlaceholder.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override

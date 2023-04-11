@@ -1,23 +1,26 @@
-package com.freelancer.joblisting.creation.custom;
+package com.freelancer.joblisting.creation.custom.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
+import com.freelancer.joblisting.creation.custom.viewmodel.FieldFormViewModel;
+import com.freelancer.joblisting.creation.custom.viewmodel.FreeformFieldViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CustomCheckboxField#newInstance} factory method to
+ * Use the {@link FreeformFieldFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomCheckboxField extends Fragment {
-    public CustomCheckboxField() {
+public class FreeformFieldFragment extends Fragment {
+    private FreeformFieldViewModel viewModel;
+
+    public FreeformFieldFragment() {
         // Required empty public constructor
     }
 
@@ -28,8 +31,8 @@ public class CustomCheckboxField extends Fragment {
      * @return A new instance of fragment CustomCheckboxField.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomCheckboxField newInstance() {
-        CustomCheckboxField fragment = new CustomCheckboxField();
+    public static FreeformFieldFragment newInstance() {
+        FreeformFieldFragment fragment = new FreeformFieldFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -43,10 +46,11 @@ public class CustomCheckboxField extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_custom_checkbox_field, container, false);
-        TextView textView = view.findViewById(R.id.custom_checkbox_text_view);
-        textView.setOnClickListener(onClick -> {
-            Toast.makeText(view.getContext(), "Tapped on the checkbox thing!", Toast.LENGTH_SHORT).show();
-        });
+        viewModel = new ViewModelProvider(requireParentFragment()).get(FreeformFieldViewModel.class);
+
+        FieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
+        parentViewModel.addCustomField(viewModel.getModel());
+
         return view;
     }
 }
