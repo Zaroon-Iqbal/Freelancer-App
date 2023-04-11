@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.ChatMessaging.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.registration.RegistrationSelectionActivity"
             android:exported="false" />
         <activity
