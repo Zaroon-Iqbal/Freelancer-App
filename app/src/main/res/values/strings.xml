@@ -37,8 +37,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="category_plumbing_electrical"><![CDATA[Category: Plumbing & Electrical]]></string>
     <string name="title_activity_create_job_listing_tabbed">CreateJobListingTabbedActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_1">Basic Info</string>
+    <string name="tab_text_2">Custom Options</string>
+    <string name="tab_text_3">Review</string>
     <string name="use_this_to_continue_through_the_job_listing_creation_process">Use this to continue through the job listing creation process.</string>
     <string name="the_job_listing_creation_process">The job listing creation process</string>
     <string name="a_scrollable_set_of_pages_to_create_a_job_listing">A scrollable set of pages to create a job listing</string>
@@ -81,7 +82,13 @@
     <string name="custom_field_name">Custom field title</string>
     <string name="custom_fields">Custom fields</string>
     <string name="option_name">Option name</string>
-    <string name="done">Done</string>
+    <string name="done">Create Service</string>
     <string name="custom_checkbox_title">Custom checkbox title</string>
     <string name="notifications">Notifications</string>
+    <string name="header">Header</string>
+    <string name="add">Add</string>
+    <string name="multiple_selection">Multi-select</string>
+    <string name="single_selection">Single-select</string>
+    <string name="fab_job_listing_creation_description">A FAB that creates a new custom option during the job listing creation process</string>
+    <string name="post_job_listing">Post job listing</string>
 </resources>

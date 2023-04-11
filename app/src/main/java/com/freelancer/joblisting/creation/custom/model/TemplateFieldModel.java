@@ -2,17 +2,19 @@ package com.freelancer.joblisting.creation.custom.model;
 
 import androidx.lifecycle.MutableLiveData;
 
-public abstract class TemplateFieldModel {
-    private final FieldType fieldType;
-    private final MutableLiveData<String> fieldName;
+import java.io.Serializable;
+
+public abstract class TemplateFieldModel implements Serializable {
+    public FieldType fieldType;
+    public MutableLiveData<String> fieldName;
 
     public TemplateFieldModel(FieldType fieldType) {
         this.fieldType = fieldType;
         this.fieldName = new MutableLiveData<>();
     }
 
-    public MutableLiveData<String> getFieldName() {
-        return fieldName;
+    public void setTitle(String title) {
+        fieldName.setValue(title);
     }
 
     @Override

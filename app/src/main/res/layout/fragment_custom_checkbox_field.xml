@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/custom_checkbox_name_text_layout"
     style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense"
@@ -7,11 +7,4 @@
     android:layout_height="wrap_content"
     app:helperText="* Required">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/custom_checkbox_text_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/custom_checkbox_title"
-        android:minHeight="48dp" />
-    
-</com.google.android.material.textfield.TextInputLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

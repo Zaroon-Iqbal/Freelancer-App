@@ -29,7 +29,6 @@ import com.freelancer.joblisting.creation.custom.viewmodel.CheckboxFieldViewMode
 import com.freelancer.joblisting.creation.custom.viewmodel.FieldFormViewModel;
 import com.freelancer.joblisting.creation.custom.viewmodel.FreeformFieldViewModel;
 import com.freelancer.joblisting.creation.custom.viewmodel.SelectionFieldViewModel;
-import com.freelancer.joblisting.creation.custom.viewmodel.factory.SelectionFieldViewModelFactory;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -65,9 +64,8 @@ public class FieldTemplateFragment extends Fragment {
                 fragment.customFieldFragment = CheckboxFieldFragment.newInstance();
                 break;
 
-            case SINGLE_SELECT:
-            case MULTI_SELECT:
-                fragment.customFieldFragment = SelectionFieldFragment.newInstance(fieldType);
+            case SELECTION:
+                fragment.customFieldFragment = SelectionFieldFragment.newInstance();
                 break;
 
             case FREE_FORM:
@@ -97,20 +95,10 @@ public class FieldTemplateFragment extends Fragment {
         ViewModel viewModel;
         TemplateFieldModel fieldModel;
         switch (fieldType) {
-            case MULTI_SELECT:
-                viewModel = new ViewModelProvider(this,
-                        new SelectionFieldViewModelFactory(FieldType.MULTI_SELECT))
-                        .get(SelectionFieldViewModel.class);
+            case SELECTION:
+                viewModel = new ViewModelProvider(this).get(SelectionFieldViewModel.class);
                 fieldModel = ((SelectionFieldViewModel) viewModel).getCustomFieldModel();
                 break;
-
-            case SINGLE_SELECT:
-                viewModel = new ViewModelProvider(this,
-                        new SelectionFieldViewModelFactory(FieldType.SINGLE_SELECT))
-                        .get(SelectionFieldViewModel.class);
-                fieldModel = ((SelectionFieldViewModel) viewModel).getCustomFieldModel();
-                break;
-
 
             case BOOLEAN:
                 viewModel = new ViewModelProvider(this).get(CheckboxFieldViewModel.class);
@@ -118,8 +106,7 @@ public class FieldTemplateFragment extends Fragment {
                 break;
 
             case FREE_FORM:
-                viewModel
-                        = new ViewModelProvider(this).get(FreeformFieldViewModel.class);
+                viewModel = new ViewModelProvider(this).get(FreeformFieldViewModel.class);
                 fieldModel = ((FreeformFieldViewModel) viewModel).getModel();
                 break;
 
@@ -130,6 +117,8 @@ public class FieldTemplateFragment extends Fragment {
         TextView customFieldHeader = view.findViewById(R.id.custom_field_header);
         TextInputEditText customFieldTitle = view.findViewById(R.id.custom_field_title);
         ImageView deleteImage = view.findViewById(R.id.delete_image_icon);
+
+        customFieldHeader.setText(fieldType.customFieldName);
 
         ConstraintLayout constraintLayout = view.findViewById(R.id.coordinatorLayout);
         MaterialCardView cardView = view.findViewById(R.id.checkbox_card_view);
@@ -168,10 +157,10 @@ public class FieldTemplateFragment extends Fragment {
             formViewModel.removeCustomField(fieldModel);
         });
 
-        customFieldTitle.setOnKeyListener((v, keyCode, event) -> {
-            customFieldHeader.setText(customFieldTitle.getText().toString());
-            fieldModel.getFieldName().setValue(customFieldTitle.getText().toString());
-            return false;
+        customFieldTitle.setOnFocusChangeListener((view1, b) -> {
+            if (customFieldTitle.getText() != null) {
+                fieldModel.setTitle(customFieldTitle.getText().toString());
+            }
         });
     }
 

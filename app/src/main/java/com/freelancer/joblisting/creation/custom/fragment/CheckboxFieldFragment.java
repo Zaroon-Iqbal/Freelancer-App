@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.freelancer.R;
 import com.freelancer.joblisting.creation.custom.viewmodel.CheckboxFieldViewModel;
 import com.freelancer.joblisting.creation.custom.viewmodel.FieldFormViewModel;
-import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,19 +46,10 @@ public class CheckboxFieldFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_custom_checkbox_field, container, false);
-        TextInputEditText textInput = view.findViewById(R.id.custom_checkbox_text_input);
         viewModel = new ViewModelProvider(requireParentFragment()).get(CheckboxFieldViewModel.class);
 
         FieldFormViewModel parentViewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
         parentViewModel.addCustomField(viewModel.getModel());
-
-        textInput.setOnKeyListener((view1, i, keyEvent) -> {
-            if (textInput.getText() != null) {
-                viewModel.getModel().getBooleanFieldTitle().setValue(textInput.getText().toString());
-                return false;
-            }
-            return false;
-        });
 
         return view;
     }

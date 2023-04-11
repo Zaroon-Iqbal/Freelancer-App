@@ -39,21 +39,12 @@
 
                 <TextView
                     android:id="@+id/custom_field_header"
-                    style="@style/TextAppearance.Material3.TitleLarge"
+                    style="@style/TextAppearance.Material3.TitleMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|start"
                     android:padding="8dp"
-                    android:text="Header" />
-
-                <ImageView
-                    android:id="@+id/edit_title_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:minWidth="48dp"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/pencil_edit"
-                    app:tint="?attr/colorPrimary" />
+                    android:text="@string/header" />
 
                 <View
                     android:id="@+id/spacer_view"
@@ -100,17 +91,18 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/custom_field_title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:hint="@string/custom_field_name"
                         android:inputType="text"
-                        android:minHeight="48dp" />
+                        android:maxHeight="40dp"
+                        android:padding="0dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:id="@+id/linear_layout_insertion"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

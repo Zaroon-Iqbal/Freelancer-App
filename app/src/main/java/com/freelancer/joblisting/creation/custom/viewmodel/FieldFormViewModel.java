@@ -19,6 +19,10 @@ public class FieldFormViewModel extends AndroidViewModel {
         customFields = new ArrayList<>();
     }
 
+    public ArrayList<TemplateFieldModel> getCustomFields() {
+        return customFields;
+    }
+
     public void printModels() {
         Log.i("PRINT", Arrays.toString(customFields.toArray()));
     }
@@ -28,6 +32,9 @@ public class FieldFormViewModel extends AndroidViewModel {
     }
 
     public void removeCustomField(TemplateFieldModel templateFieldModel) {
+        Log.i("Field model", "Does the list contain: " + templateFieldModel.toString() + "? "
+                + customFields.contains(templateFieldModel));
+        Log.i("models", Arrays.toString(customFields.toArray()));
         customFields.remove(templateFieldModel);
     }
 }

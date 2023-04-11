@@ -7,11 +7,13 @@ import com.freelancer.joblisting.creation.custom.model.SelectionType;
 
 public class SelectionFieldViewModel extends ViewModel {
     private final SelectionFieldModel customFieldModel;
-    private SelectionType selectionType;
 
-    public SelectionFieldViewModel(SelectionType selectionType) {
-        this.selectionType = selectionType;
-        customFieldModel = new SelectionFieldModel(selectionType);
+    public SelectionFieldViewModel() {
+        customFieldModel = new SelectionFieldModel();
+    }
+
+    public void setSelectionType(SelectionType selectionType) {
+        customFieldModel.setSelectionType(selectionType);
     }
 
     public SelectionFieldModel getCustomFieldModel() {

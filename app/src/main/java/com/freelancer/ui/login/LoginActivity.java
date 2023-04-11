@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.freelancer.R;
 import com.freelancer.TestingActivity;
@@ -28,8 +29,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        loginViewModel = new LoginViewModel(getApplication());
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        //loginViewModel = new LoginViewModel(getApplication());
 
         loginViewModel.getUserLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {

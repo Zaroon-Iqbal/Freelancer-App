@@ -4,11 +4,24 @@ import java.util.ArrayList;
 
 public class SelectionFieldModel extends TemplateFieldModel {
     private final ArrayList<String> options;
+    private SelectionType selectionType;
 
-    public SelectionFieldModel(SelectionType selectionType) {
-        super((selectionType.equals(SelectionType.MULTIPLE)
-                ? FieldType.MULTI_SELECT : FieldType.SINGLE_SELECT));
+    public SelectionFieldModel() {
+        super(FieldType.SELECTION);
         options = new ArrayList<>();
+        selectionType = SelectionType.SINGLE;
+    }
+
+    public SelectionType getSelectionType() {
+        return selectionType;
+    }
+
+    public void setSelectionType(SelectionType selectionType) {
+        this.selectionType = selectionType;
+    }
+
+    public ArrayList<String> getOptions() {
+        return options;
     }
 
     public void addOption(String option) {
@@ -21,8 +34,9 @@ public class SelectionFieldModel extends TemplateFieldModel {
 
     @Override
     public String toString() {
-        return super.toString() + ", SelectionCustomFieldModel{" +
+        return super.toString() + ", SelectionFieldModel{" +
                 "options=" + options +
+                ", selectionType=" + selectionType +
                 '}';
     }
 }
