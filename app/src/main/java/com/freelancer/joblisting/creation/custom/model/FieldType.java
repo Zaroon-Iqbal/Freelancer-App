@@ -1,8 +1,9 @@
 package com.freelancer.joblisting.creation.custom.model;
 
 public enum FieldType {
-    MULTI_SELECT("Multiple selection"),
-    SINGLE_SELECT("Single selection"),
+    SELECTION("Selection"),
+    //SINGLE_SELECT("Single-select"),
+    //MULTI_SELECT("Multi-select"),
     BOOLEAN("Checkbox"),
     FREE_FORM("Free-form");
 

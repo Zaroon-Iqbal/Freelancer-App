@@ -1,80 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".joblisting.CreateJobListingTabbedActivity">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/custom_field_form_linear_layout"
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:gravity="top|center"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!--        app:layout_constraintBottom_toTopOf="@+id/coordinator_layout_bottom_form_bar"-->
 
         <LinearLayout
-            android:id="@+id/custom_field_creation_linear_layout"
+            android:id="@+id/fragment_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top|center"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:weightSum="1">
+            android:orientation="vertical" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/custom_field_dropdown_text_layout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="@string/custom_field_type"
-                android:labelFor="@id/custom_field_dropdown">
+    </ScrollView>
 
-                <AutoCompleteTextView
-                    android:id="@+id/custom_field_dropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:id="@+id/expandable_fab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:efab_layout_expandableFabOpeningAnimationDurationMs="50"
+        app:efab_layout_labelHiddenToVisibleAnimationDurationMs="50">
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/add_custom_field_button"
-                style="@style/ThemeOverlay.Material3.Button.TonalButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/add_custom_field_plus"
-                app:cornerRadius="24dp" />
-
-
-            <Button
-                android:id="@+id/done_button"
-                style="@style/ThemeOverlay.Material3.Button.TonalButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/done"
-                app:cornerRadius="24dp" />
-        </LinearLayout>
-
-
-        <ScrollView
-            android:layout_width="match_parent"
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:id="@+id/expandable_fab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView">
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:efab_orientation="portrait" />
 
-            <LinearLayout
-                android:id="@+id/fragment_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/selection_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_orientation="portrait"
+            app:label_text="Selection" />
 
-        </ScrollView>
-    </LinearLayout>
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/free_form_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_orientation="portrait"
+            app:label_text="Free-form" />
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/checkbox_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_orientation="portrait"
+            app:label_text="Checkbox" />
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

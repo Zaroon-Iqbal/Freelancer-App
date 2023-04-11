@@ -1,26 +1,21 @@
 package com.freelancer;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-
 import com.freelancer.joblisting.creation.custom.fragment.FieldTemplateFragment;
 import com.freelancer.joblisting.creation.custom.model.FieldType;
 import com.freelancer.joblisting.creation.custom.viewmodel.FieldFormViewModel;
-
-import java.util.Arrays;
-import java.util.HashMap;
+import com.nambimobile.widgets.efab.FabOption;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,50 +61,33 @@ public class FieldFormFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_field_form, container, false);
 
-        viewModel = new ViewModelProvider(this).get(FieldFormViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(FieldFormViewModel.class);
         fragmentManager = getParentFragmentManager();
 
-        AutoCompleteTextView customFieldTypeDropdown = view.findViewById(R.id.custom_field_dropdown);
 
-        setDropdownArrayAdapter(customFieldTypeDropdown);
+        FabOption selection = (FabOption) view.findViewById(R.id.selection_fab);
+        FabOption checkbox = (FabOption) view.findViewById(R.id.checkbox_fab);
+        FabOption freeform = (FabOption) view.findViewById(R.id.free_form_fab);
+        //ExpandableFabLayout expandableFabLayout = (ExpandableFabLayout) view.findViewById(R.id.expandable_fab_layout);
+        //ExpandableFab expandableFab = (ExpandableFab) view.findViewById(R.id.expandable_fab);
 
-        Button addCustomField = view.findViewById(R.id.add_custom_field_button);
-        Button done = view.findViewById(R.id.done_button);
+        selection.setOnClickListener(view12 -> {
+            Toast.makeText(getContext(), "Clicked selection!", Toast.LENGTH_SHORT).show();
+            this.addChildFragmentTransaction(FieldType.SELECTION);
+        });
 
-        done.setOnClickListener(v -> viewModel.printModels());
-        addCustomField.setOnClickListener(onClick -> addChildFragmentTransaction(customFieldTypeDropdown.getText().toString()));
-
+        checkbox.setOnClickListener(view123 -> addChildFragmentTransaction(FieldType.BOOLEAN));
+        freeform.setOnClickListener(view13 -> addChildFragmentTransaction(FieldType.FREE_FORM));
         return view;
     }
 
-    private HashMap<String, FieldType> getCustomFields() {
-        HashMap<String, FieldType> customFieldTypeHashMap = new HashMap<>();
-        for (int a = 0; a < FieldType.values().length; a++) {
-            customFieldTypeHashMap.put(FieldType.values()[a].customFieldName, FieldType.values()[a]);
-        }
-
-        return customFieldTypeHashMap;
-    }
-
-    private void addChildFragmentTransaction(String selection) {
-        HashMap<String, FieldType> fields = getCustomFields();
-        FieldType fieldType = fields.getOrDefault(selection, FieldType.BOOLEAN);
+    private void addChildFragmentTransaction(FieldType fieldType) {
         FieldTemplateFragment fragment = FieldTemplateFragment.newInstance(fieldType);
 
+        Log.i("Frag", fragment.toString());
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.fragment_linear_layout, fragment);
         transaction.commit();
-    }
-
-    private void setDropdownArrayAdapter(AutoCompleteTextView dropdown) {
-        HashMap<String, FieldType> fields = getCustomFields();
-        String[] dropdownOptions = fields.keySet().toArray(new String[0]);
-
-        Log.i("Options", "dropdown: " + Arrays.toString(dropdownOptions));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>
-                (getContext(), R.layout.dropdown_menu_popup_item, dropdownOptions);
-
-        dropdown.setAdapter(adapter);
     }
 }
 
