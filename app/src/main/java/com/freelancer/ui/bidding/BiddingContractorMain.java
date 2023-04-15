@@ -30,28 +30,30 @@ import java.util.ArrayList;
 
 //Activity for the Contractor to view and start their bids. Created by Edward Kuoch
 public class BiddingContractorMain extends AppCompatActivity {
-
-    private ArrayList<ContractorBidInfo> list = new ArrayList<>();
+    private boolean read = true;
+    private ArrayList<ContractorBidInfo> list;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private EditText actName, startPrice, desc;
     private Button mainAdd, popAdd, cancel;
     private ListView listView;
     private ContractorBidAdapter bidAdapter;
-    private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference colRef = db.collection("biddings").document("contractorBids").collection(userID);
+    private String userID;
+    private FirebaseFirestore db;
+    private CollectionReference colRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bidding_contractor_main);
-
         //Connects the buttons, the listView, and the adapter
         mainAdd = findViewById(R.id.addBid);
         listView = findViewById(R.id.bidListView);
+        list = new ArrayList<>();
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        db = FirebaseFirestore.getInstance();
+        colRef = db.collection("biddings").document("contractorBids").collection(userID);
         //TODO sample data, delete after linking to database
-
         colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value,
@@ -60,11 +62,15 @@ public class BiddingContractorMain extends AppCompatActivity {
                     Log.w(TAG, "Listen failed.", e);
                     return;
                 }
-                for (QueryDocumentSnapshot doc : value) {
-                    list.add(doc.toObject(ContractorBidInfo.class));
+                if(read) {
+                    for (QueryDocumentSnapshot doc : value) {
+                        //ContractorBidInfo contractor = doc.toObject(ContractorBidInfo.class);
+                        list.add(doc.toObject(ContractorBidInfo.class));
+                    }
                     bidAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "All bids " + list);
+                    read = false;
                 }
-                Log.d(TAG, "All bids " + list);
             }
         });
         bidAdapter = new ContractorBidAdapter(this, R.layout.bidding_list_row, list);
@@ -126,9 +132,10 @@ public class BiddingContractorMain extends AppCompatActivity {
         popAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                list.add(new ContractorBidInfo("https://firebasestorage.googleapis.com/v0/b/freelancer-775c2.appspot.com/o/biddingsImages%2Fhammer.png?alt=media&token=4f51a447-4ef1-43f8-a173-449b62053ff5",
-                        actName.getText().toString(), startPrice.getText().toString(), desc.getText().toString()));
+                ContractorBidInfo newContractor = new ContractorBidInfo("https://firebasestorage.googleapis.com/v0/b/freelancer-775c2.appspot.com/o/biddingsImages%2Fhammer.png?alt=media&token=4f51a447-4ef1-43f8-a173-449b62053ff5",
+                        actName.getText().toString(), startPrice.getText().toString(), desc.getText().toString());
+                colRef.document().set(newContractor);
+                list.add(newContractor);
                 bidAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
