@@ -2,47 +2,51 @@ package com.freelancer.ui.bidding;
 
 //Contractor Info when creating a bidding system.
 public class ContractorBidInfo {
-    private int Image;
-    private String ActivityName;
-    private String StartingPrice;
-    private String Description;
-    public ContractorBidInfo(int image, String activityName, String startingPrice, String description) {
-        Image = image;
-        ActivityName = activityName;
-        StartingPrice = startingPrice;
-        Description = description;
+    private String url;
+    private String activityName;
+    private String startingPrice;
+    private String description;
+
+    public ContractorBidInfo(){
+        //
+    }
+    public ContractorBidInfo(String url, String activityName, String startingPrice, String description) {
+        this.url = url;
+        this.activityName = activityName;
+        this.startingPrice = startingPrice;
+        this.description = description;
     }
 
-    public int getImage() {
-        return Image;
+    public String getURL() {
+        return url;
     }
 
     public String getActivityName() {
-        return ActivityName;
+        return activityName;
     }
 
     public String getStartingPrice() {
-        return StartingPrice;
+        return startingPrice;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
-    public void setImage(int image) {
-        Image = image;
+    public void setURL(String url) {
+        this.url = url;
     }
 
     public void setActivityName(String activityName) {
-        ActivityName = activityName;
+        this.activityName = activityName;
     }
 
     public void setStartingPrice(String startingPrice) {
-        StartingPrice = startingPrice;
+        this.startingPrice = startingPrice;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
 }

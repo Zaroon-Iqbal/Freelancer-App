@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.freelancer.R;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class ContractorBidAdapter extends ArrayAdapter<ContractorBidInfo> {
         ImageView imageView = convertView.findViewById(R.id.bidImageView);
         TextView actName = convertView.findViewById(R.id.bidActivityName);
         TextView startPrice = convertView.findViewById(R.id.bidStartPrice);
-        imageView.setImageResource(getItem(position).getImage());
+        Glide.with(convertView).load(getItem(position).getURL()).into(imageView);
         actName.setText(getItem(position).getActivityName());
         startPrice.setText(getItem(position).getStartingPrice());
         return convertView;

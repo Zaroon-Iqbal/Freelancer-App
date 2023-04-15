@@ -1,8 +1,11 @@
 package com.freelancer.ui.bidding;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -10,13 +13,18 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -30,6 +38,9 @@ public class BiddingContractorMain extends AppCompatActivity {
     private Button mainAdd, popAdd, cancel;
     private ListView listView;
     private ContractorBidAdapter bidAdapter;
+    private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference colRef = db.collection("biddings").document("contractorBids").collection(userID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +51,22 @@ public class BiddingContractorMain extends AppCompatActivity {
         mainAdd = findViewById(R.id.addBid);
         listView = findViewById(R.id.bidListView);
         //TODO sample data, delete after linking to database
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("biddings").document(userID);
-        list.add(new ContractorBidInfo(R.drawable.table, "Selling Table", "$100", "Previous customer cancelled their order, selling off this table"));
 
+        colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                for (QueryDocumentSnapshot doc : value) {
+                    list.add(doc.toObject(ContractorBidInfo.class));
+                    bidAdapter.notifyDataSetChanged();
+                }
+                Log.d(TAG, "All bids " + list);
+            }
+        });
         bidAdapter = new ContractorBidAdapter(this, R.layout.bidding_list_row, list);
         listView.setAdapter(bidAdapter);
 
@@ -104,7 +126,9 @@ public class BiddingContractorMain extends AppCompatActivity {
         popAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list.add(new ContractorBidInfo(R.drawable.hammer, actName.getText().toString(), startPrice.getText().toString(), desc.getText().toString()));
+
+                list.add(new ContractorBidInfo("https://firebasestorage.googleapis.com/v0/b/freelancer-775c2.appspot.com/o/biddingsImages%2Fhammer.png?alt=media&token=4f51a447-4ef1-43f8-a173-449b62053ff5",
+                        actName.getText().toString(), startPrice.getText().toString(), desc.getText().toString()));
                 bidAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
