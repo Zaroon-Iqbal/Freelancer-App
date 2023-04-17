@@ -28,28 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/testData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints="Test Data"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
-            <Button
-                android:id="@+id/testButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/save" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
             android:orientation="vertical">
 
             <Button
@@ -65,17 +43,10 @@
                 android:text="@string/calendar" />
 
             <Button
-                android:id="@+id/custom_field_button"
+                android:id="@+id/job_listing_management_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/custom_fields" />
-
-            <Button
-                android:id="@+id/notification_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/notifications" />
-
+                android:text="@string/job_listing_management" />
 
         </LinearLayout>
     </LinearLayout>

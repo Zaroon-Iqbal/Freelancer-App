@@ -1,10 +1,14 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="AppTheme.Dynamic" parent="Theme.Material3.DynamicColors.DayNight">
+        <item name="android:windowAnimationStyle">@style/SlidingAnimationOnActivityChange</item>
+    </style>
 
+    <style name="AppTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/SlidingAnimationOnActivityChange</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-
+        <item name="android:windowLightStatusBar">false</item>
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>

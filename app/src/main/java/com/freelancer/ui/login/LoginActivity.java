@@ -17,12 +17,13 @@ import com.freelancer.TestingActivity;
 import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static Toast toast;
     private static int count = 0;
     private LoginViewModel loginViewModel;
-    private EditText email;
+    private TextInputEditText email;
     private EditText password;
 
     @Override
@@ -41,8 +42,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        email = binding.username;
-        password = binding.password;
+        email = binding.emailInput;
+        password = binding.passwordInput;
 
         Button signIn = binding.login;
         signIn.setOnClickListener(this);
