@@ -91,4 +91,5 @@
     <string name="single_selection">Single-select</string>
     <string name="fab_job_listing_creation_description">A FAB that creates a new custom option during the job listing creation process</string>
     <string name="post_job_listing">Post job listing</string>
+    <string name="job_listing_management">Job Listing Management</string>
 </resources>
