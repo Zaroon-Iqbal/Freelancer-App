@@ -164,6 +164,30 @@ public class FirestoreRepository {
                 .addOnFailureListener(e -> Toast.makeText(application.getApplicationContext(), "Fail", Toast.LENGTH_LONG).show());
     }
 
+    /**
+     * used to store the users who create an account into the firestore database
+     * Currently it is only storing Contractors because it s being called from the
+     * contractors registration page
+     * @param name
+     * @param uuid
+     * @param email
+     */
+    public void createUsersListing(String name, String uuid, String email)
+    {
+        Map<String, Object> jobListing = new HashMap<>();//Hashmap used to store key value pairs
+
+        jobListing.put("name", name);//storing appropriate data under the correct header
+        jobListing.put("uid",uuid) ;
+        jobListing.put("email", email);
+        db.collection("userListings")
+                .add(jobListing)// Storing the appointment hashmap of data int he database.
+                //Checking to verify if the data was correctly stored or not
+                .addOnSuccessListener(documentReference -> Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_LONG).show())
+                .addOnFailureListener(e -> Toast.makeText(application.getApplicationContext()  ,"Fail", Toast.LENGTH_LONG).show());
+
+    }
+
+
 
     /**
      * This Method is used to retrieve data from the firestore database.

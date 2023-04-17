@@ -6,12 +6,15 @@ import android.widget.Toast;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.freelancer.ui.ChatMessaging.UserModel;
 import com.freelancer.ui.registration.result.AuthFailure;
 import com.freelancer.ui.registration.result.AuthResult;
 import com.freelancer.ui.registration.result.AuthSuccess;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * FirebaseAuthRepository handles all Firebase-related authentication processes.
@@ -41,6 +44,8 @@ public class FirebaseAuthRepository extends LiveData<FirebaseUser> {
     private final MutableLiveData<FirebaseUser> firebaseUserLiveData;
     private final MutableLiveData<Boolean> loggedOutLiveData;
     private final MutableLiveData<AuthResult> authResult;
+
+    private DatabaseReference databaseReference;
 
     public FirebaseAuthRepository(Application application) {
         this.application = application;
@@ -81,6 +86,8 @@ public class FirebaseAuthRepository extends LiveData<FirebaseUser> {
                     if (task.isSuccessful()) {
                         firebaseUserLiveData.postValue(firebaseAuth.getCurrentUser());
                         authResult.postValue(new AuthSuccess(firebaseAuth.getCurrentUser()));
+
+
                     } else {
                         FirebaseAuthException exception = (FirebaseAuthException)task.getException();
                         authResult.postValue(new AuthFailure(exception));
