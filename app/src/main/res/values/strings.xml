@@ -61,13 +61,13 @@
     <string name="pass">*******</string>
     <string name="register1">Register</string>
     <string name="have_an_account">Have an Account?</string>
-    <string name="testingpage">TestingPage</string>
+    <string name="testingpage">Secret Menu</string>
     <string name="save">Save</string>
     <string name="new_listing">New listing</string>
     <string name="calendar">Calendar</string>
-    <string name="what_s_your_job_title1">what\'s your job title?</string>
+    <string name="what_s_your_job_title1">What\'s your job title?</string>
     <string name="job_title">Job Title</string>
-    <string name="well_need_some_additional_information">Well need some additional information.</string>
+    <string name="well_need_some_additional_information">We\'ll need some additional information.</string>
     <string name="job_category">Job Category</string>
     <string name="service_description">Service Description</string>
     <string name="phone_number">Phone Number</string>
@@ -92,4 +92,5 @@
     <string name="fab_job_listing_creation_description">A FAB that creates a new custom option during the job listing creation process</string>
     <string name="post_job_listing">Post job listing</string>
     <string name="job_listing_management">Job Listing Management</string>
+    <string name="not_registered_create_an_account">Not registered? Create an account!</string>
 </resources>
