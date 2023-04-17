@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.freelancer.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -107,6 +108,8 @@ public class BiddingContractorMain extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(BiddingContractorMain.this, BidderList.class);
+                i.putExtra("bID_key", list.get(position).getBID());
                 startActivity(new Intent(BiddingContractorMain.this, BidderList.class));
             }
         });
@@ -132,9 +135,10 @@ public class BiddingContractorMain extends AppCompatActivity {
         popAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContractorBidInfo newContractor = new ContractorBidInfo("https://firebasestorage.googleapis.com/v0/b/freelancer-775c2.appspot.com/o/biddingsImages%2Fhammer.png?alt=media&token=4f51a447-4ef1-43f8-a173-449b62053ff5",
+                DocumentReference newDocRef = colRef.document();
+                ContractorBidInfo newContractor = new ContractorBidInfo(newDocRef.getId(), "https://firebasestorage.googleapis.com/v0/b/freelancer-775c2.appspot.com/o/biddingsImages%2Fhammer.png?alt=media&token=4f51a447-4ef1-43f8-a173-449b62053ff5",
                         actName.getText().toString(), startPrice.getText().toString(), desc.getText().toString());
-                colRef.document().set(newContractor);
+                newDocRef.set(newContractor);
                 list.add(newContractor);
                 bidAdapter.notifyDataSetChanged();
                 dialog.dismiss();
