@@ -42,14 +42,17 @@
         />
 
     <EditText
+        android:id="@+id/comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="88dp"
-        android:text="Write a Review"
+        android:layout_marginTop="96dp"
+        android:hint="Write a Review"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@id/ratingBar"
-        app:layout_constraintTop_toBottomOf="@id/ratingType"
-        android:id="@+id/comment"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingType" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
