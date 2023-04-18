@@ -19,11 +19,6 @@
             android:label="@string/title_activity_review"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ReviewActivity.java"
-            android:exported="false"
-            android:label="@string/title_activity_review_activity.java"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".joblisting.management.JobListingManagementActivity"
             android:exported="false" />
         <activity
