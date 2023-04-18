@@ -33,11 +33,13 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         Button newListing = findViewById(R.id.newListing);
         Button calendar = findViewById(R.id.calendarButton);
         Button management = findViewById(R.id.job_listing_management_button);
+        Button review = findViewById(R.id.review_Button_test);
 
 
         calendar.setOnClickListener(this);
         newListing.setOnClickListener(this);
         management.setOnClickListener(this);
+        review.setOnClickListener(this);
         //when the save button is clicked
 
 
@@ -60,6 +62,10 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.job_listing_management_button:
                 Intent jobManagementIntent = new Intent(this, JobListingManagementActivity.class);
                 startActivity(jobManagementIntent);
+                break;
+            case R.id.review_Button_test:
+                Intent reviewIntent = new Intent(this, ReviewActivity.class);
+                startActivity(reviewIntent);
                 break;
 
             /*case R.id.notification_button:

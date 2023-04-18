@@ -93,4 +93,7 @@
     <string name="post_job_listing">Post job listing</string>
     <string name="job_listing_management">Job Listing Management</string>
     <string name="not_registered_create_an_account">Not registered? Create an account!</string>
+    <string name="leave_a_review">Leave a Review</string>
+    <string name="title_activity_review">ReviewActivity</string>
+    <string name="title_activity_review_activity.java">ReviewActivity.java</string>
 </resources>

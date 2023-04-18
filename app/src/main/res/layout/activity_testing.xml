@@ -47,6 +47,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/job_listing_management" />
+            <Button
+                android:id="@+id/review_Button_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/leave_a_review" />
 
         </LinearLayout>
     </LinearLayout>
