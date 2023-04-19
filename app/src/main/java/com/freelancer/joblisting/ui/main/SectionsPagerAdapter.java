@@ -8,21 +8,22 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.freelancer.FieldFormFragment;
+import com.freelancer.FinalizeJobListing;
 import com.freelancer.R;
-import com.freelancer.calendar.CalendarListFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  *
  * @TODO: ViewPager and FragmentPagerAdapter are deprecated. Migrate to ViewPager2 and FragmentStateAdapter.
- *
+ * <p>
  * Contributors: Zaroon Iqbal, Spencer Carlson
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -38,20 +39,19 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        CalendarListFragment cal = new CalendarListFragment();//placeholder fragment
-
+        FieldFormFragment fieldFormFragment = FieldFormFragment.newInstance();
+        FinalizeJobListing finalizeJobListing = FinalizeJobListing.newInstance();
         JobInfoFragment job = new JobInfoFragment();//general listing information fragment
-        Fragment choice = new Fragment();//choice of tab
+
         switch (position) {
             case 0:
-                choice = job;
-                break;
+                return job;
             case 1:
-                choice = cal;
-                break;
+                return fieldFormFragment;
+            case 2:
+            default:
+                return finalizeJobListing;
         }
-
-        return choice;//return choice according to tab
     }
 
     @Nullable
@@ -63,6 +63,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 2;
+        return TAB_TITLES.length;
     }
 }

@@ -1,22 +1,42 @@
 package com.freelancer.ui.registration;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.freelancer.data.model.FirestoreRepository;
 import com.freelancer.data.validation.ErroneousField;
 import com.freelancer.data.validation.ValidationError;
 import com.freelancer.data.validation.Validator;
 import com.freelancer.data.viewmodel.RegisterContractorViewModel;
 import com.freelancer.databinding.ActivityContractorRegistrationBinding;
+import com.freelancer.ui.ChatMessaging.UserModel;
 import com.freelancer.ui.registration.result.AuthFailure;
 import com.freelancer.ui.registration.result.AuthSuccess;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Set;
 
@@ -36,9 +56,13 @@ public class ContractorRegistrationActivity extends AppCompatActivity {
     private TextInputLayout passwordLayout;
     private TextInputLayout confirmPasswordLayout;
 
+    private static final String TAG = "firestore";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         ActivityContractorRegistrationBinding binding =
                 ActivityContractorRegistrationBinding.inflate(getLayoutInflater());
@@ -59,12 +83,16 @@ public class ContractorRegistrationActivity extends AppCompatActivity {
         firstNameField = binding.contractorFirstName;
         lastNameField = binding.contractorLastName;
 
+
         RegisterContractorViewModel viewModel =
                 new ViewModelProvider(this).get(RegisterContractorViewModel.class);
 
         viewModel.getUserLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
-                Toast.makeText(getApplicationContext(), "Account registration complete", Toast.LENGTH_LONG).show();
+                String id = firebaseUser.getUid();
+                viewModel.firestore(firstNameField.getText().toString(), id, contractorEmailField.getText().toString());
+                Toast.makeText(getApplicationContext(), "Account registration complete" , Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -135,6 +163,18 @@ public class ContractorRegistrationActivity extends AppCompatActivity {
             if(validationErrors.size() == 0) {
                 viewModel.register(email, password);
             }
+
+
+
         });
+        Toast.makeText(getApplicationContext()  ,"HELOOOO", Toast.LENGTH_LONG).show();
+
+
+
+
+
+
+
+
     }
 }

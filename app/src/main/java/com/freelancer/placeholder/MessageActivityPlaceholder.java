@@ -2,22 +2,75 @@ package com.freelancer.placeholder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.freelancer.R;
 import com.freelancer.calendar.CalendarActivity;
+import com.freelancer.databinding.MessagePlaceholderBinding;
+import com.freelancer.ui.ChatMessaging.ChatActivity;
+import com.freelancer.ui.ChatMessaging.UserAdapter;
+import com.freelancer.ui.ChatMessaging.UserModel;
 import com.freelancer.ui.login.HomePage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+
 public class MessageActivityPlaceholder extends AppCompatActivity {
+    private static final String TAG = "firestore";
+    MessagePlaceholderBinding binding;
+    UserAdapter user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.message_placeholder);
+        binding = MessagePlaceholderBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        user = new UserAdapter(getApplicationContext());
+        binding.recyclerUser.setAdapter(user);
+        binding.recyclerUser.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        FirebaseFirestore data = FirebaseFirestore.getInstance();
+        CollectionReference doc = data
+                .collection("userListings");
+        doc.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.w(TAG, "Listen failed.", error);
+                    return;
+                }
+                user.clear();
+                for (DocumentSnapshot document : value.getDocuments()) {
+                    String id = document.getString("uid");
+                    //Toast.makeText(getApplicationContext()  ,id, Toast.LENGTH_LONG).show();
+                    Log.d(TAG, document.getId() + " => " + document.getString("uid"));
+                    if (!id.equals(FirebaseAuth.getInstance().getUid())) {
+                        Log.d(TAG, document.getId() + " THIS => " + document.getString("uid"));
+                        UserModel usersModel = new UserModel(document.getString("name"),
+                                document.getString("uid"), document.getString("email") );
+                        user.add(usersModel);
+
+
+                    }
+
+
+                }
+            }
+        });
+       // setContentView(R.layout.message_placeholder);
+        /*
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.MessageNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -45,6 +98,8 @@ public class MessageActivityPlaceholder extends AppCompatActivity {
 
                     //When user clicks on the message icon
                     case R.id.MessageNav:
+                        startActivity(new Intent(getApplicationContext(), MessagePlaceholderBinding.class));
+                        overridePendingTransition(0,0);
                         return true;
 
                     //When user clicks on the profile icon
@@ -56,5 +111,7 @@ public class MessageActivityPlaceholder extends AppCompatActivity {
                 return false;
             }
         });
+        */
+
     }
 }

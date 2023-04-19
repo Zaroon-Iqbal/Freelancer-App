@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:enableOnBackInvokedCallback="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logotransparent"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logotransparent"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".joblisting.creation.custom.CustomFieldForm"
+            android:name=".joblisting.management.JobListingManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ChatMessaging.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".ui.registration.RegistrationSelectionActivity"
@@ -21,8 +26,7 @@
             android:name=".joblisting.CreateJobListingTabbedActivity"
             android:exported="false"
             android:label="@string/title_activity_create_job_listing_tabbed"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".TestingActivity"
             android:exported="false" />
@@ -62,7 +66,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

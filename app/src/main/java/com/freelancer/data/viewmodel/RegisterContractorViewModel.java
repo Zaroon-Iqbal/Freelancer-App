@@ -8,8 +8,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.freelancer.data.model.FirebaseAuthRepository;
+import com.freelancer.data.model.FirestoreRepository;
 import com.freelancer.data.validation.ValidationError;
 import com.freelancer.data.validation.Validator;
+import com.freelancer.ui.ChatMessaging.UserModel;
 import com.freelancer.ui.registration.result.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.core.ValidationPath;
@@ -37,11 +39,34 @@ import java.util.stream.Collectors;
  */
 public class RegisterContractorViewModel extends AndroidViewModel {
     private final FirebaseAuthRepository firebaseAuthRepository;
+    private final FirestoreRepository fire;
+
+    private String userId,userEmail, userName;
 
     public RegisterContractorViewModel(@NonNull Application application) {
         super(application);
         firebaseAuthRepository = new FirebaseAuthRepository(application);
+        fire = new FirestoreRepository(application);
     }
+
+    public void firestore(String name, String id, String email)
+    {
+        fire.createUsersListing(name, id, email);
+        userId = id;
+        userEmail = email;
+        userName = name;
+    }
+
+    public String getuserName(){
+        return userName;
+    }
+    public String getuserId(){
+        return userId;
+    }
+    public String getUserEmail(){
+        return userEmail;
+    }
+
 
     /**
      * A reference to an observable FirebaseUser LiveData object. See the FirebaseAuthRepository
@@ -73,6 +98,7 @@ public class RegisterContractorViewModel extends AndroidViewModel {
      */
     public Set<ValidationError> getValidationErrors(String firstName, String lastName, String email,
                                                      String password, String passwordConfirm) {
+
         Map<ValidationError, Boolean> validationErrorMap = new HashMap<>();
 
         validationErrorMap.put(ValidationError.INVALID_EMAIL, !Validator.isEmailValid(email));

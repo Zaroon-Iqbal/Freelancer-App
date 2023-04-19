@@ -37,8 +37,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="category_plumbing_electrical"><![CDATA[Category: Plumbing & Electrical]]></string>
     <string name="title_activity_create_job_listing_tabbed">CreateJobListingTabbedActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_1">Basic Info</string>
+    <string name="tab_text_2">Custom Options</string>
+    <string name="tab_text_3">Review</string>
     <string name="use_this_to_continue_through_the_job_listing_creation_process">Use this to continue through the job listing creation process.</string>
     <string name="the_job_listing_creation_process">The job listing creation process</string>
     <string name="a_scrollable_set_of_pages_to_create_a_job_listing">A scrollable set of pages to create a job listing</string>
@@ -60,13 +61,13 @@
     <string name="pass">*******</string>
     <string name="register1">Register</string>
     <string name="have_an_account">Have an Account?</string>
-    <string name="testingpage">TestingPage</string>
+    <string name="testingpage">Secret Menu</string>
     <string name="save">Save</string>
     <string name="new_listing">New listing</string>
     <string name="calendar">Calendar</string>
-    <string name="what_s_your_job_title1">what\'s your job title?</string>
+    <string name="what_s_your_job_title1">What\'s your job title?</string>
     <string name="job_title">Job Title</string>
-    <string name="well_need_some_additional_information">Well need some additional information.</string>
+    <string name="well_need_some_additional_information">We\'ll need some additional information.</string>
     <string name="job_category">Job Category</string>
     <string name="service_description">Service Description</string>
     <string name="phone_number">Phone Number</string>
@@ -81,5 +82,15 @@
     <string name="custom_field_name">Custom field title</string>
     <string name="custom_fields">Custom fields</string>
     <string name="option_name">Option name</string>
-    <string name="done">Done</string>
+    <string name="done">Create Service</string>
+    <string name="custom_checkbox_title">Custom checkbox title</string>
+    <string name="notifications">Notifications</string>
+    <string name="header">Header</string>
+    <string name="add">Add</string>
+    <string name="multiple_selection">Multi-select</string>
+    <string name="single_selection">Single-select</string>
+    <string name="fab_job_listing_creation_description">A FAB that creates a new custom option during the job listing creation process</string>
+    <string name="post_job_listing">Post job listing</string>
+    <string name="job_listing_management">Job Listing Management</string>
+    <string name="not_registered_create_an_account">Not registered? Create an account!</string>
 </resources>
