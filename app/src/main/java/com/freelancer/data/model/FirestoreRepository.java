@@ -245,4 +245,17 @@ public class FirestoreRepository {
             }
         });
     }
+    public void createJobReview(String comment, int numStars) {
+        Map<String, Object> jobReview = new HashMap<>();//Hashmap used to store key value pairs
+
+        jobReview.put("Comment", comment);//storing appropriate data under the correct header
+        jobReview.put("starRating", numStars);
+
+        db.collection("jobReviews")
+                .add(jobReview)// Storing the appointment hashmap of data int he database.
+                //Checking to verify if the data was correctly stored or not
+                .addOnSuccessListener(documentReference -> Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_LONG).show())
+                .addOnFailureListener(e -> Toast.makeText(application.getApplicationContext(), "Fail", Toast.LENGTH_LONG).show());
+
+    }
 }

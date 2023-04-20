@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * job info fragment made for displaying and retrieving accurate job listing data from contractors
@@ -62,6 +64,10 @@ public class JobInfoFragment extends Fragment {
     AutoCompleteTextView jobLocationDropdown;
 
     JobInfoViewModel jobInfoViewModel;
+
+    String fileFormat;
+
+    String imageURL;
 
     /**
      * required constructor
@@ -111,17 +117,43 @@ public class JobInfoFragment extends Fragment {
         choosePic = view.findViewById(R.id.chooseImage);
         uploadPic = view.findViewById(R.id.uploadImage);
         image = view.findViewById(R.id.fireImage);
-        tPhoto = registerForActivityResult(
-                new ActivityResultContracts.GetContent(),
-                result -> {
-                    image.setImageURI(result);
-                    imageU = result;
-                }
-        );
 
         choosePic.setOnClickListener(view12 -> tPhoto.launch("image/*"));
+        tPhoto = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                image.setImageURI(result);
+                imageU = result;
 
-        uploadPic.setOnClickListener(view13 -> uploadPicture());
+            }
+        });
+        uploadPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SimpleDateFormat form = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
+                Date current = new Date();
+                fileFormat = form.format(current);
+                storage = FirebaseStorage.getInstance().getReference("images/" + fileFormat);
+
+                storage.putFile(imageU).addOnSuccessListener((OnSuccessListener<UploadTask.TaskSnapshot>) taskSnapshot -> {
+                    storage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            imageURL = uri.toString();
+                            Log.i("ImageURL: ", imageURL);
+                        }
+                    });
+                    image.setImageURI(null);
+                    Toast.makeText(categoryDropdown.getContext(), "successfully uploaded image", Toast.LENGTH_SHORT).show();
+
+                }).addOnFailureListener((OnFailureListener) e -> Toast.makeText(categoryDropdown.getContext(), "Failed to Upload", Toast.LENGTH_SHORT).show());
+
+
+            }
+        });
+
+
+
 
         //adding the job listing categories
         String[] categories = {"Accounting/Finance", "Engineering", "Art/Media/Design", "Biotech/Science", "Business",
@@ -181,6 +213,7 @@ public class JobInfoFragment extends Fragment {
                 String category = categoryDropdown.getText().toString();
                 String location = jobRadiusDropdown.getText().toString();
                 String type = jobLocationDropdown.getText().toString();
+                String imageReference = imageURL;//This is where the link to the recent image link is
 
                 jobInfoViewModel.updateJobListing(jobTitle, jobDescription, jobPhone, jobCity, jobPrice, category, location, type);
                 Log.i("Update complete", "Updated the model!");
@@ -191,20 +224,22 @@ public class JobInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
-
-    private void uploadPicture() {
+/*
+    private StorageReference uploadPicture() {
         SimpleDateFormat form = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
         Date current = new Date();
-        String file = form.format(current);
-        storage = FirebaseStorage.getInstance().getReference("images/" + file);
+        fileFormat = form.format(current);
+        storage = FirebaseStorage.getInstance().getReference("images/" + fileFormat);
 
         storage.putFile(imageU).addOnSuccessListener((OnSuccessListener<UploadTask.TaskSnapshot>) taskSnapshot -> {
             image.setImageURI(null);
             Toast.makeText(categoryDropdown.getContext(), "successfully uploaded image", Toast.LENGTH_SHORT).show();
 
         }).addOnFailureListener((OnFailureListener) e -> Toast.makeText(categoryDropdown.getContext(), "Failed to Upload", Toast.LENGTH_SHORT).show());
-    }
 
+        return storage;
+    }
+*/
     /**
      * Method used for input validation
      *
