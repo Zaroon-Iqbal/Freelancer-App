@@ -15,6 +15,7 @@ import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.placeholder.FavoriteActivityPlaceholder;
 import com.freelancer.placeholder.MessageActivityPlaceholder;
 import com.freelancer.placeholder.ProfileActivityPlaceholder;
+import com.freelancer.ui.bidding.BiddingContractorMain;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomePage extends AppCompatActivity {
@@ -64,7 +65,7 @@ public class HomePage extends AppCompatActivity {
 
                     //When user clicks on the favorites icon
                     case R.id.FavoriteNav:
-                        startActivity(new Intent(getApplicationContext(), FavoriteActivityPlaceholder.class));
+                        startActivity(new Intent(getApplicationContext(), BiddingContractorMain.class));
                         overridePendingTransition(0, 0);
                         return true;
 

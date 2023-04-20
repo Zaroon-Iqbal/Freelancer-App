@@ -51,10 +51,12 @@ public class BiddingContractorMain extends AppCompatActivity {
         mainAdd = findViewById(R.id.addBid);
         listView = findViewById(R.id.bidListView);
         list = new ArrayList<>();
+
+        //Connects to the database
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
         colRef = db.collection("biddings").document("contractorBids").collection(userID);
-        //TODO sample data, delete after linking to database
+
         colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value,
@@ -65,7 +67,6 @@ public class BiddingContractorMain extends AppCompatActivity {
                 }
                 if(read) {
                     for (QueryDocumentSnapshot doc : value) {
-                        //ContractorBidInfo contractor = doc.toObject(ContractorBidInfo.class);
                         list.add(doc.toObject(ContractorBidInfo.class));
                     }
                     bidAdapter.notifyDataSetChanged();
@@ -110,7 +111,7 @@ public class BiddingContractorMain extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(BiddingContractorMain.this, BidderList.class);
                 i.putExtra("bID_key", list.get(position).getBID());
-                startActivity(new Intent(BiddingContractorMain.this, BidderList.class));
+                startActivity(i);
             }
         });
     }
@@ -136,7 +137,7 @@ public class BiddingContractorMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DocumentReference newDocRef = colRef.document();
-                ContractorBidInfo newContractor = new ContractorBidInfo(newDocRef.getId(), "https://firebasestorage.googleapis.com/v0/b/freelancer-775c2.appspot.com/o/biddingsImages%2Fhammer.png?alt=media&token=4f51a447-4ef1-43f8-a173-449b62053ff5",
+                ContractorBidInfo newContractor = new ContractorBidInfo(userID, newDocRef.getId(), "https://firebasestorage.googleapis.com/v0/b/freelancer-775c2.appspot.com/o/biddingsImages%2Fhammer.png?alt=media&token=4f51a447-4ef1-43f8-a173-449b62053ff5",
                         actName.getText().toString(), startPrice.getText().toString(), desc.getText().toString());
                 newDocRef.set(newContractor);
                 list.add(newContractor);

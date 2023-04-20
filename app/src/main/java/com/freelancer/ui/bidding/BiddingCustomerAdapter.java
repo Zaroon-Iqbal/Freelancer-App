@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.freelancer.R;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class BiddingCustomerAdapter extends ArrayAdapter<BiddingCustomerInfo> {
         ImageView imageView = convertView.findViewById(R.id.bidderImageView);
         TextView userName = convertView.findViewById(R.id.bidderUserName);
         TextView bidPrice = convertView.findViewById(R.id.bidderPrice);
-        imageView.setImageResource(getItem(position).getImage());
+        Glide.with(convertView).load(getItem(position).getImage()).into(imageView);
         userName.setText(getItem(position).getUserName());
         bidPrice.setText(getItem(position).getBidPrice());
         return convertView;

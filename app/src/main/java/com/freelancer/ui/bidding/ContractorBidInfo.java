@@ -2,6 +2,7 @@ package com.freelancer.ui.bidding;
 
 //Contractor Info when creating a bidding system.
 public class ContractorBidInfo {
+    private String contractorID;
     private String bID;
     private String url;
     private String activityName;
@@ -11,12 +12,21 @@ public class ContractorBidInfo {
     public ContractorBidInfo(){
         //
     }
-    public ContractorBidInfo(String bID, String url, String activityName, String startingPrice, String description) {
+    public ContractorBidInfo(String contractorID, String bID, String url, String activityName, String startingPrice, String description) {
+        this.contractorID = contractorID;
         this.bID = bID;
         this.url = url;
         this.activityName = activityName;
         this.startingPrice = startingPrice;
         this.description = description;
+    }
+
+    public String getContractorID() {
+        return contractorID;
+    }
+
+    public void setContractorID(String contractorID) {
+        this.contractorID = contractorID;
     }
 
     public String getBID() {return bID;}
