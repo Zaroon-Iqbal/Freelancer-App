@@ -2,6 +2,7 @@ package com.freelancer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import com.freelancer.data.model.FirestoreRepository;
 
 public class ReviewActivity extends AppCompatActivity {
-    public int rating;
+    public float rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class ReviewActivity extends AppCompatActivity {
         bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                rating = (int) v;
+                rating = v;
                 if(v <= 1){
                     txtScore.setText("Horrible! :(");
                 }
@@ -50,6 +51,8 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fire.createJobReview(comment.getText().toString(), rating );
+                Intent intent = new Intent(getApplicationContext(), ReviewList.class);
+                startActivity(intent);
             }
         });
     }

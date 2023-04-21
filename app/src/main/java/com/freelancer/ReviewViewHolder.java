@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ReviewViewHolder extends RecyclerView.ViewHolder {
 
     ImageView image;
-    TextView name;
+    TextView name, comment;
     RatingBar rate;
     public ReviewViewHolder(@NonNull View itemView) {
         super(itemView);
         image = itemView.findViewById(R.id.imageReview);
         name = itemView.findViewById(R.id.reviewName);
         rate = itemView.findViewById(R.id.reviewRating);
+        comment = itemView.findViewById(R.id.reviewComment);
     }
 }
