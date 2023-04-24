@@ -15,6 +15,9 @@ import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.placeholder.FavoriteActivityPlaceholder;
 import com.freelancer.placeholder.MessageActivityPlaceholder;
 import com.freelancer.placeholder.ProfileActivityPlaceholder;
+import com.freelancer.ui.Checklist;
+import com.freelancer.ui.bidding.BiddingContractorMain;
+import com.freelancer.ui.bidding.Customer.CustomerBidMain;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomePage extends AppCompatActivity {

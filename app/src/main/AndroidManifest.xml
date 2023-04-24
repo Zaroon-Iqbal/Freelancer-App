@@ -68,6 +68,16 @@
             android:name=".ui.Checklist"
             android:exported="false" />
         <activity
+            android:name=".ui.bidding.Customer.CustomerBidMain"
+            android:exported="false" />
+        <activity
+            android:name=".ui.bidding.Customer.CustomerBidActivities"
+            android:exported="false" />
+        <activity android:name=".ui.bidding.BiddingContractorMain"
+            android:exported="false" />
+        <activity android:name=".ui.bidding.BidderList"
+            android:exported="false" />
+        <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
