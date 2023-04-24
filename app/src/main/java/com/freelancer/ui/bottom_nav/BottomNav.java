@@ -17,11 +17,15 @@ import com.freelancer.ui.profile.ConsumerProfile;
 import com.freelancer.ui.profile.ContractorProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 /*
 The Backend of the Bottom Navigation Bar which takes the user to the
 corresponding page. By Edward Kuoch.
   */
 public class BottomNav extends AppCompatActivity {
+    FirebaseUser user;
     FrameLayout frameLayout;
     BottomNavigationView bottomNavigationView;
     @Override
@@ -30,6 +34,7 @@ public class BottomNav extends AppCompatActivity {
         setContentView(R.layout.activity_bottom_nav);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         frameLayout = findViewById(R.id.frameLayout);
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         //Makes the first fragment the homepage
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -74,9 +79,13 @@ public class BottomNav extends AppCompatActivity {
                     case R.id.ProfileNav:
 //                        getSupportFragmentManager().beginTransaction()
 //                                .replace(R.id.frameLayout, new ProfileFragment()).commit();
-//                        ConsumerProfile consumer = new ConsumerProfile();
-//                        consumer.show(getSupportFragmentManager(),"Consumer Profile");
-                        startActivity(new Intent(getApplicationContext(), ContractorProfile.class));
+
+                        //
+                            startActivity(new Intent(getApplicationContext(), ContractorProfile.class));
+                        //else{
+                            //ConsumerProfile consumer = new ConsumerProfile();
+                            //consumer.show(getSupportFragmentManager(),"Consumer Profile");
+                        //}
                         return true;
                 }
                 return false;

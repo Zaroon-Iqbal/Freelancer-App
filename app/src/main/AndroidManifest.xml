@@ -14,6 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.booking.PickListingDate"
+            android:exported="false"/>
+        <activity
+            android:name=".ui.profile.EditContractorProfile"
+            android:exported="false"/>
         <activity
             android:name=".ui.profile.ContractorProfile"
             android:exported="false"/>

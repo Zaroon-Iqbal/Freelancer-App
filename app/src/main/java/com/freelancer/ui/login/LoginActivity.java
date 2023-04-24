@@ -3,6 +3,7 @@ package com.freelancer.ui.login;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +16,21 @@ import com.freelancer.TestingActivity;
 import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
+import com.freelancer.ui.booking.PickListingDate;
 import com.freelancer.ui.bottom_nav.BottomNav;
+import com.freelancer.ui.profile.EditContractorProfile;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.sql.Timestamp;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Formatter;
+import java.util.GregorianCalendar;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private LoginViewModel loginViewModel;
@@ -65,8 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 count++;
                 if(count == 5)//by clicking on the freelancer name 5 times you will be navigated
                 {
-                    startActivity(new Intent(LoginActivity.this, TestingActivity.class));
-
+                    startActivity(new Intent(LoginActivity.this, PickListingDate.class));
                 }
             }
         });

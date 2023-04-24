@@ -47,6 +47,7 @@ public class ConsumerProfile extends BottomSheetDialogFragment {
         Button edit = v.findViewById(R.id.editButton);
         Button message = v.findViewById(R.id.messageButton);
         TextView name = (TextView) v.findViewById(R.id.name);
+        TextView rating = v.findViewById(R.id.consumerRating);
         ShapeableImageView profilePic = v.findViewById(R.id.profilePic);
         user = FirebaseAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -70,6 +71,7 @@ public class ConsumerProfile extends BottomSheetDialogFragment {
             }
             if(document != null && document.exists()){
                 name.setText(document.getString("Name"));
+                rating.setText(document.getString("Rating"));
                 if(document.contains("ProfilePic")){
                     StorageReference imageRef = storageReference.child(document.getString("ProfilePic"));
                     imageRef.getDownloadUrl().addOnSuccessListener(uri -> {

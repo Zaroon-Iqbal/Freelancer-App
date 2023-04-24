@@ -14,7 +14,7 @@
         android:layout_marginTop="20dp">
 
         <ImageView
-            android:id="@+id/profilePic"
+            android:id="@+id/businessPic"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/user_icon"/>
@@ -22,17 +22,15 @@
             android:id="@+id/businessName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Business Name"
             android:textSize="30sp"
-            android:layout_toRightOf="@id/profilePic"
+            android:layout_toRightOf="@id/businessPic"
             android:layout_marginLeft="10dp"/>
         <TextView
-            android:id="@+id/address"
+            android:id="@+id/businessAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1011 fake st, LA, CA"
             android:textSize="15sp"
-            android:layout_toRightOf="@id/profilePic"
+            android:layout_toRightOf="@id/businessPic"
             android:layout_below="@id/businessName"
             android:layout_marginLeft="10dp"/>
         <Button
@@ -45,9 +43,10 @@
             android:textSize="12sp"
             android:paddingVertical="5dp"
             android:paddingHorizontal="15dp"
-            android:layout_toRightOf="@id/profilePic"
-            android:layout_below="@id/address"/>
+            android:layout_toRightOf="@id/businessPic"
+            android:layout_below="@id/businessAddress"/>
         <Button
+            android:id="@+id/appointmentButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Appointment"
@@ -55,14 +54,14 @@
             android:paddingVertical="5dp"
             android:paddingHorizontal="15dp"
             android:layout_toRightOf="@id/messageButton"
-            android:layout_below="@id/address"/>
+            android:layout_below="@id/businessAddress"/>
 
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="how is this going to work when its an entire paragraph.does this work properly?"
         android:textSize="17sp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="20dp"/>
@@ -78,41 +77,14 @@
         android:text="Portfolio"
         android:textSize="15sp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:textAppearance="?attr/textAppearanceHeadline4"/>
 
-    <HorizontalScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/horizontalPortfolioPreview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
-        android:scrollbars="none">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:src="@drawable/freelancerlogo"
-                android:layout_marginRight="20dp"/>
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:src="@drawable/freelancerlogo"
-                android:layout_marginRight="20dp"/>
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:src="@drawable/freelancerlogo"
-                android:layout_marginRight="20dp"/>
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:src="@drawable/freelancerlogo"
-                android:layout_marginRight="20dp"/>
-
-        </LinearLayout>
-    </HorizontalScrollView>
+        android:layout_marginBottom="30dp"/>
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
@@ -151,12 +123,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Title"
-                        android:textAppearance="?attr/textAppearanceTitleMedium"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display4" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rating"
-                        android:textAppearance="?attr/textAppearanceTitleSmall"/>
+                        android:textAppearance="?attr/textAppearanceHeadline5"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -180,12 +152,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Title"
-                        android:textAppearance="?attr/textAppearanceTitleMedium"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display4" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rating"
-                        android:textAppearance="?attr/textAppearanceTitleSmall"/>
+                        android:textAppearance="?attr/textAppearanceHeadline5"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -235,5 +207,21 @@
         android:text="Socials"
         android:textSize="15sp"
         android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/social1"
+        android:layout_marginBottom="15dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/social2"
+        android:layout_marginBottom="15dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/social3"
+        android:layout_marginBottom="15dp"/>
 
 </LinearLayout>

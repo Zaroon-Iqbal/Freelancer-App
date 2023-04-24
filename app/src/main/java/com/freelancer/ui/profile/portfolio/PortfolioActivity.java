@@ -68,8 +68,6 @@ public class PortfolioActivity extends AppCompatActivity implements RecyclerView
 
     @Override
     public void onItemClicked(int pos) {
-        Log.i("CLICKED-------", "Position: " + String.valueOf(pos));
-        Log.i("SIZE-------", String.valueOf(list.size()));
         Intent intent = new Intent(PortfolioActivity.this, EnlargeImage.class);
         intent.putExtra("URI",list.get(pos));
         startActivity(intent);
