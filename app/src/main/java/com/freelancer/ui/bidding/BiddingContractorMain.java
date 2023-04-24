@@ -13,14 +13,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -28,20 +34,27 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 //Activity for the Contractor to view and start their bids. Created by Edward Kuoch
 public class BiddingContractorMain extends AppCompatActivity {
     private boolean read = true;
     private ArrayList<ContractorBidInfo> list;
+    private ArrayList<BiddingCustomerInfo> bidderList;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private EditText actName, startPrice, desc;
     private Button mainAdd, popAdd, cancel;
     private ListView listView;
     private ContractorBidAdapter bidAdapter;
+    private BiddingCustomerAdapter bidderAdapter;
     private String userID;
     private FirebaseFirestore db;
     private CollectionReference colRef;
+    private int actCount;
+    private int pendCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,31 +64,15 @@ public class BiddingContractorMain extends AppCompatActivity {
         mainAdd = findViewById(R.id.addBid);
         listView = findViewById(R.id.bidListView);
         list = new ArrayList<>();
+        bidderList = new ArrayList<>();
 
         //Connects to the database
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
-        colRef = db.collection("biddings").document("contractorBids").collection(userID);
+        colRef = db.collection("biddingContractor").document(userID).collection("bids");
 
-        colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
-                if(read) {
-                    for (QueryDocumentSnapshot doc : value) {
-                        list.add(doc.toObject(ContractorBidInfo.class));
-                    }
-                    bidAdapter.notifyDataSetChanged();
-                    Log.d(TAG, "All bids " + list);
-                    read = false;
-                }
-            }
-        });
         bidAdapter = new ContractorBidAdapter(this, R.layout.bidding_list_row, list);
+        bidderAdapter = new BiddingCustomerAdapter(this, R.layout.bidder_list_row, bidderList);
         listView.setAdapter(bidAdapter);
 
         //Creates a pop up menu when clicking the creating bid button.
@@ -89,15 +86,46 @@ public class BiddingContractorMain extends AppCompatActivity {
         viewBidders();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (read) {
+                    for (QueryDocumentSnapshot doc : value) {
+                        list.add(doc.toObject(ContractorBidInfo.class));
+                    }
+                    bidAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "All bids " + list);
+                    read = false;
+                }
+            }
+        });
+    }
+
     //Deletes a bidding activity.
-    private void deleteBid(){
+    private void deleteBid() {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String biddingID = list.get(position).getBID();
+                DocumentReference contractorBid = colRef.document(biddingID);
+                DocumentReference biddingActivity = db.collection("biddingActivities")
+                        .document(biddingID);
+                        //.collection("bidderList");
+                CollectionReference consumerPending = db.collection("biddingConsumer");
+
                 Context context = getApplicationContext();
                 Toast.makeText(context, "Bidding Removed", Toast.LENGTH_LONG).show();
                 list.remove(position);
                 bidAdapter.notifyDataSetChanged();
+                deleteDoc(contractorBid);
                 return true;
             }
         });
@@ -105,7 +133,7 @@ public class BiddingContractorMain extends AppCompatActivity {
 
     //Clicking on the listView item takes the user to
     //a different activity where they can see the bidders.
-    private void viewBidders(){
+    private void viewBidders() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -117,7 +145,7 @@ public class BiddingContractorMain extends AppCompatActivity {
     }
 
     //Creates a dialog box to create a bid.
-    public void createNewBidDialog(){
+    public void createNewBidDialog() {
         dialogBuilder = new AlertDialog.Builder(this);
         final View createBidView = getLayoutInflater().inflate(R.layout.bidding_create_popup, null);
 
@@ -136,10 +164,12 @@ public class BiddingContractorMain extends AppCompatActivity {
         popAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CollectionReference bidActivity = db.collection("biddingActivities");
                 DocumentReference newDocRef = colRef.document();
                 ContractorBidInfo newContractor = new ContractorBidInfo(userID, newDocRef.getId(), "https://firebasestorage.googleapis.com/v0/b/freelancer-775c2.appspot.com/o/biddingsImages%2Fhammer.png?alt=media&token=4f51a447-4ef1-43f8-a173-449b62053ff5",
                         actName.getText().toString(), startPrice.getText().toString(), desc.getText().toString());
                 newDocRef.set(newContractor);
+                bidActivity.document(newDocRef.getId()).set(newContractor);
                 list.add(newContractor);
                 bidAdapter.notifyDataSetChanged();
                 dialog.dismiss();
@@ -153,5 +183,22 @@ public class BiddingContractorMain extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    //Deletes a document
+    public void deleteDoc(DocumentReference dr) {
+        dr.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
 }

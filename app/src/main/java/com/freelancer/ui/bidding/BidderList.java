@@ -3,6 +3,7 @@ package com.freelancer.ui.bidding;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,10 +17,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -40,6 +45,7 @@ public class BidderList extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference colRef;
     private boolean read = true;
+    private int selected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +64,36 @@ public class BidderList extends AppCompatActivity {
         if(extras != null) {
             bid_activity = extras.getString("bID_key");
         }
-        colRef = db.collection("biddings").document("contractorBids")
-                .collection(userID).document(bid_activity).collection("bidderList");
+        colRef = db.collection("biddingActivities").document(bid_activity)
+                .collection("bidderList");
 
-        //Converts everything into a view list
+        bcAdapter = new BiddingCustomerAdapter(this, R.layout.bidder_list_row, list);
+        listView.setAdapter(bcAdapter);
+        //Shows the visible selection after tapping.
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                for(int i = 0; i < listView.getCount(); i++) {
+                    if(!list.get(position).isSelected() && i == position){
+                        view.setBackgroundResource(R.color.md_theme_dark_inversePrimary);
+                        list.get(position).setSelected(true);
+                        selected = position;
+                    }
+                    else {
+                        listView.getChildAt(i).setBackgroundResource(R.color.md_theme_dark_inverseSurface);
+                        list.get(i).setSelected(false);
+                    }
+                }
+            }
+        });
+        deleteBidder();
+        acceptBidder();
+    }
+
+    //Converts everything into a view list
+    @Override
+    protected void onStart() {
+        super.onStart();
         colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value,
@@ -80,27 +112,6 @@ public class BidderList extends AppCompatActivity {
                 }
             }
         });
-
-        bcAdapter = new BiddingCustomerAdapter(this, R.layout.bidder_list_row, list);
-        listView.setAdapter(bcAdapter);
-        //Shows the visible selection after tapping.
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for(int i = 0; i < listView.getCount(); i++) {
-                    if(!list.get(position).isSelected() && i == position){
-                        view.setBackgroundResource(R.color.md_theme_dark_inversePrimary);
-                        list.get(position).setSelected(true);
-                    }
-                    else {
-                        listView.getChildAt(i).setBackgroundResource(R.color.md_theme_dark_inverseSurface);
-                        list.get(i).setSelected(false);
-                    }
-                }
-            }
-        });
-        deleteBidder();
-        acceptBidder();
     }
 
     //Deletes a bidder
@@ -108,19 +119,10 @@ public class BidderList extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                colRef.document(list.get(position).getBidID()).delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error deleting document", e);
-                            }
-                        });
+                String bidID = list.get(position).getBidID();
+                DocumentReference pending = db.collection("biddingConsumer").document(bidID).collection("Pending").document(bid_activity);
+                deleteDoc(colRef.document(bidID));
+                deleteDoc(pending);
                 Context context = getApplicationContext();
                 Toast.makeText(context, "Bidding Removed", Toast.LENGTH_LONG).show();
                 list.remove(position);
@@ -132,6 +134,39 @@ public class BidderList extends AppCompatActivity {
 
     //After selecting a bidder, accepts their offer.
     private void acceptBidder(){
-        //TODO accepts the bid and closes the activity
+        acceptBid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String bidderID = list.get(selected).getBidID();
+                String auctionID = list.get(selected).getAuctionID();
+                DocumentReference bidInfo = db.collection("biddingContractor").document(userID).collection("bids").document(bid_activity);
+                final DocumentReference docRef = db.collection("biddingConsumer").document(bidderID).collection("Winning").document(auctionID);
+                bidInfo.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            docRef.set(document.toObject(ContractorBidInfo.class));
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void deleteDoc(DocumentReference dr){
+        dr.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
 }
