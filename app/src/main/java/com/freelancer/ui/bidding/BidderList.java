@@ -138,18 +138,57 @@ public class BidderList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String bidderID = list.get(selected).getBidID();
-                String auctionID = list.get(selected).getAuctionID();
-                DocumentReference bidInfo = db.collection("biddingContractor").document(userID).collection("bids").document(bid_activity);
-                final DocumentReference docRef = db.collection("biddingConsumer").document(bidderID).collection("Winning").document(auctionID);
-                bidInfo.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                //String auctionID = list.get(selected).getAuctionID();
+                //final DocumentReference contractorBid = db.collection("biddingContractor").document(userID).collection("bids").document(bid_activity);
+                final DocumentReference biddingActivity = db.collection("biddingActivities")
+                        .document(bid_activity);
+                final CollectionReference consumerPending = db.collection("biddingConsumer");
+                final DocumentReference winningBidInfo = db.collection("biddingContractor").document(userID).collection("bids").document(bid_activity);
+                final DocumentReference winningConsumer = db.collection("biddingConsumer").document(bidderID).collection("Winning").document(bid_activity);
+                winningBidInfo.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
                             DocumentSnapshot document = task.getResult();
-                            docRef.set(document.toObject(ContractorBidInfo.class));
+                            winningConsumer.set(document.toObject(ContractorBidInfo.class));
+                            deleteDoc(winningBidInfo);
                         }
                     }
                 });
+
+                biddingActivity.collection("bidderList").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    deleteDoc(biddingActivity.collection("bidderList").document(document.getId()));
+                                }
+                                deleteDoc(biddingActivity);
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+                consumerPending.get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    //consumerPending.document(document.getId());
+                                    deleteDoc(consumerPending.document(document.getId()).collection("Pending").document(bid_activity));
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+
+                finish();
+
             }
         });
     }

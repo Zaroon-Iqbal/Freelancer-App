@@ -24,7 +24,6 @@ public class FavoriteActivityPlaceholder extends AppCompatActivity {
         setContentView(R.layout.favorites_placeholder);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.FavoriteNav);
-        setContentView(R.layout.favorites_placeholder);
         Button customer = findViewById(R.id.testCustomer);
         Button contractor = findViewById(R.id.testContractor);
         customer.setOnClickListener(new View.OnClickListener() {

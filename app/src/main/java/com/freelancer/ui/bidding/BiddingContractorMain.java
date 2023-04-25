@@ -42,19 +42,15 @@ import java.util.Map;
 public class BiddingContractorMain extends AppCompatActivity {
     private boolean read = true;
     private ArrayList<ContractorBidInfo> list;
-    private ArrayList<BiddingCustomerInfo> bidderList;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private EditText actName, startPrice, desc;
     private Button mainAdd, popAdd, cancel;
     private ListView listView;
     private ContractorBidAdapter bidAdapter;
-    private BiddingCustomerAdapter bidderAdapter;
     private String userID;
     private FirebaseFirestore db;
     private CollectionReference colRef;
-    private int actCount;
-    private int pendCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +60,6 @@ public class BiddingContractorMain extends AppCompatActivity {
         mainAdd = findViewById(R.id.addBid);
         listView = findViewById(R.id.bidListView);
         list = new ArrayList<>();
-        bidderList = new ArrayList<>();
 
         //Connects to the database
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -72,7 +67,6 @@ public class BiddingContractorMain extends AppCompatActivity {
         colRef = db.collection("biddingContractor").document(userID).collection("bids");
 
         bidAdapter = new ContractorBidAdapter(this, R.layout.bidding_list_row, list);
-        bidderAdapter = new BiddingCustomerAdapter(this, R.layout.bidder_list_row, bidderList);
         listView.setAdapter(bidAdapter);
 
         //Creates a pop up menu when clicking the creating bid button.
@@ -115,16 +109,44 @@ public class BiddingContractorMain extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String biddingID = list.get(position).getBID();
-                DocumentReference contractorBid = colRef.document(biddingID);
-                DocumentReference biddingActivity = db.collection("biddingActivities")
+                final DocumentReference contractorBid = colRef.document(biddingID);
+                final DocumentReference biddingActivity = db.collection("biddingActivities")
                         .document(biddingID);
-                        //.collection("bidderList");
-                CollectionReference consumerPending = db.collection("biddingConsumer");
+                final CollectionReference consumerPending = db.collection("biddingConsumer");
 
                 Context context = getApplicationContext();
                 Toast.makeText(context, "Bidding Removed", Toast.LENGTH_LONG).show();
                 list.remove(position);
                 bidAdapter.notifyDataSetChanged();
+                biddingActivity.collection("bidderList").get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        deleteDoc(biddingActivity.collection("bidderList").document(document.getId()));
+                                    }
+                                    deleteDoc(biddingActivity);
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+                consumerPending.get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        deleteDoc(consumerPending.document(document.getId()).collection("Pending").document(biddingID));
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
                 deleteDoc(contractorBid);
                 return true;
             }
