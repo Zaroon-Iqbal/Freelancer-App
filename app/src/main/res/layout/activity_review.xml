@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This is the page for consumer to leave their review-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -18,7 +19,7 @@
         android:id="@+id/titleRating"
 
         />
-
+    <!--the star rating that will be changed on click-->
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
         android:progressTint="@color/dark_orange"
 
         android:rating="3"/>
+    <!--Small description of what the rating represents-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +42,7 @@
         app:layout_constraintRight_toRightOf="@id/ratingBar"
         android:id="@+id/ratingType"
         />
-
+    <!--Additional comments someone wants to leave-->
     <EditText
         android:id="@+id/comment"
         android:layout_width="wrap_content"
@@ -52,7 +54,7 @@
         app:layout_constraintLeft_toLeftOf="@id/ratingBar"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ratingType" />
-
+    <!--Used to save the review in the database and display later-->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
