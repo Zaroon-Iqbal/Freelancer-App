@@ -73,10 +73,12 @@ public class ConsumerProfile extends BottomSheetDialogFragment {
                 name.setText(document.getString("Name"));
                 rating.setText(document.getString("Rating"));
                 if(document.contains("ProfilePic")){
-                    StorageReference imageRef = storageReference.child(document.getString("ProfilePic"));
-                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        Glide.with(ConsumerProfile.this).load(uri).into(profilePic);
-                    });
+//                    StorageReference imageRef = storageReference.child(document.getString("ProfilePic"));
+//                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+//                        Glide.with(ConsumerProfile.this).load(uri).into(profilePic);
+
+                    //});
+                Glide.with(ConsumerProfile.this).load(document.getString("ProfilePic")).into(profilePic);
                 }
             }
             else Log.d(TAG, "No such document");

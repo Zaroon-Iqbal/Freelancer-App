@@ -109,9 +109,10 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
                 if (document.exists()) {
                     nameText.setText(document.getString("Name"));
                     if(document.contains("ProfilePic")) {
-                        previousPhoto = document.getString("ProfilePic");
-                        StorageReference imageRef = storageReference.child(previousPhoto);
-                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(EditConsumerProfile.this).load(uri).into(photo));
+                        previousPhoto = document.getString("PicLocation");
+//                        StorageReference imageRef = storageReference.child(previousPhoto);
+//                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(EditConsumerProfile.this).load(uri).into(photo));
+                        Glide.with(EditConsumerProfile.this).load(document.getString("ProfilePic")).into(photo);
                         photoExists = true;
                     }
                 } else {
@@ -137,16 +138,20 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
                     location = user.getUid() + UUID.randomUUID().toString();
                     StorageReference imageRef = storageReference.child(location);
                     imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
-                        if (photoExists) {
-                            deletePrevious();
-                            write.update(userDocRef, "ProfilePic", location);
-                            commitChanges();
-                        } else {
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("ProfilePic", location);
-                            write.set(userDocRef, map, SetOptions.merge());
-                            commitChanges();
-                        }
+                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            if (photoExists) {
+                                deletePrevious();
+                                write.update(userDocRef, "PicLocation", location);
+                                write.update(userDocRef,"ProfilePic",uri);
+                                commitChanges();
+                            } else {
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("PicLocation", location);
+                                map.put("ProfilePic",uri);
+                                write.set(userDocRef, map, SetOptions.merge());
+                                commitChanges();
+                            }
+                        });
                     });
                 }
                 finish();
@@ -177,11 +182,6 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
     }
 
     public void commitChanges(){
-        write.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(EditConsumerProfile.this,"Profile updated",Toast.LENGTH_SHORT).show();
-            }
-        });
+        write.commit().addOnCompleteListener(task -> Toast.makeText(EditConsumerProfile.this,"Profile updated",Toast.LENGTH_SHORT).show());
     }
 }
