@@ -245,6 +245,12 @@ public class FirestoreRepository {
             }
         });
     }
+
+    /**
+     * This method is used to store a review of a service in the firestore database
+     * @param comment, the comment left
+     * @param numStars, the rating given
+     */
     public void createJobReview(String comment, float numStars) {
         Map<String, Object> jobReview = new HashMap<>();//Hashmap used to store key value pairs
 

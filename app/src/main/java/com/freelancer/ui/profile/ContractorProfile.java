@@ -84,7 +84,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
         fillList(list);
         fireStore = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        userDocRef = fireStore.collection("UsersExample").document("ConsumersExample").collection("ConsumerData")
+        userDocRef = fireStore.collection("UsersExample").document("ContractorsExample").collection("ContractorData")
                 .document(user.getUid());
         fillBusinessInfo();
 
@@ -109,10 +109,11 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
                 address.setText(document.getString("Location"));
                 about.setText(document.getString("About"));
                 if (document.contains("ProfilePic")) {
-                    StorageReference imageRef = storageRef.child(document.getString("ProfilePic"));
-                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        Glide.with(ContractorProfile.this).load(uri).into(pic);
-                    });
+                    //StorageReference imageRef = storageRef.child(document.getString("ProfilePic"));
+//                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+//                        Glide.with(ContractorProfile.this).load(uri).into(pic);
+//                    });
+                    Glide.with(ContractorProfile.this).load(document.getString("ProfilePic")).into(pic);
                 }
             } else Log.d("FAILED---", "No such document");
         });

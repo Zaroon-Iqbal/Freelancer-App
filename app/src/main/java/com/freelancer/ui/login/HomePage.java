@@ -18,11 +18,22 @@ import com.freelancer.placeholder.ProfileActivityPlaceholder;
 import com.freelancer.ui.Checklist;
 import com.freelancer.ui.bidding.BiddingContractorMain;
 import com.freelancer.ui.bidding.Customer.CustomerBidMain;
+import com.freelancer.ui.profile.ConsumerProfile;
+import com.freelancer.ui.profile.ContractorProfile;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomePage extends AppCompatActivity {
     private static int count = 0;
     private static Toast toast;
+    String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +43,29 @@ public class HomePage extends AppCompatActivity {
         //The bottom navigation bar
 
         ImageView imageView = findViewById(R.id.freelancerlogo2);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("UsersExample");
+
+        DocumentReference consumer = collectionReference.document("ConsumersExample").collection("ConsumerData").document(user.getUid());
+        DocumentReference contractor = collectionReference.document("ContractorsExample").collection("ContractorData").document(user.getUid());
+
+        consumer.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists())
+                    type = "consumer";
+            }
+        });
+
+        contractor.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists())
+                    type = "contractor";
+            }
+        });
+
 
         imageView.setOnClickListener(view -> {
             count++;
@@ -79,8 +113,16 @@ public class HomePage extends AppCompatActivity {
 
                     //When user clicks on the profile icon
                     case R.id.ProfileNav:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivityPlaceholder.class));
-                        overridePendingTransition(0, 0);
+                        if(type.equalsIgnoreCase("contractor"))
+                            startActivity(new Intent(getApplicationContext(), ContractorProfile.class));
+                        else if (type.equalsIgnoreCase("consumer")) {
+                            ConsumerProfile consumer = new ConsumerProfile();
+                            consumer.show(getSupportFragmentManager(),"Consumer Profile");
+                        }
+                        else {
+                            startActivity(new Intent(getApplicationContext(), ProfileActivityPlaceholder.class));
+                            overridePendingTransition(0, 0);
+                        }
                         return true;
                 }
                 return false;

@@ -20,6 +20,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+This file is used to populate the UI with the reviews that were made for a service
+ */
 public class ReviewList extends AppCompatActivity {
     String comment;
     int count;
@@ -28,11 +31,11 @@ public class ReviewList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_list);
-        List<Review> reviewList = new ArrayList<Review>();
+        List<Review> reviewList = new ArrayList<Review>();//list to be displayed of reviews
 
 
         RecyclerView recycler = findViewById(R.id.ReviewList);
-        Button refresh = findViewById(R.id.Refresh);
+        Button refresh = findViewById(R.id.Refresh);//used to update after creating a new review
         FirebaseFirestore fire = FirebaseFirestore.getInstance();
         count = 0;
 
@@ -61,11 +64,7 @@ public class ReviewList extends AppCompatActivity {
                         });
             }
         });
-
-       // Log.i("comment323:", comment);
-
-      //  reviewList.add(new Review("Zackeria James", 5, comment,R.drawable.reviewa ));
-
+        //Temporary data sued to display in the reviews section,
         reviewList.add(new Review("Zac Khan", 3, "The Detailer did an alright job",R.drawable.reviewa ));
         reviewList.add(new Review("Tom Holland", 4, "He did a pretty good Job",R.drawable.reviewb ));
         reviewList.add(new Review("Susan Smith", 3, "Alright job",R.drawable.reviewc ));
@@ -74,7 +73,7 @@ public class ReviewList extends AppCompatActivity {
 
 
 
-       recycler.setLayoutManager(new LinearLayoutManager(this));
-       recycler.setAdapter(new ReviewAdapter(getApplicationContext(), reviewList));
+       recycler.setLayoutManager(new LinearLayoutManager(this));//set the layout
+       recycler.setAdapter(new ReviewAdapter(getApplicationContext(), reviewList));//set the adapter
     }
 }

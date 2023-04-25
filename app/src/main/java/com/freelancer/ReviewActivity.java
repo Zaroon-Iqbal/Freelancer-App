@@ -11,7 +11,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.freelancer.data.model.FirestoreRepository;
-
+/*
+This class is used for consumers to leave a review for their service
+ */
 public class ReviewActivity extends AppCompatActivity {
     public float rating;
 
@@ -25,11 +27,11 @@ public class ReviewActivity extends AppCompatActivity {
         Button submit = findViewById(R.id.submitReview);
         FirestoreRepository fire = new FirestoreRepository(getApplication());
 
-
+        //This is to add a small description according to the rating that is selected
         bar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                rating = v;
+                rating = v;//v is the rating number
                 if(v <= 1){
                     txtScore.setText("Horrible! :(");
                 }
@@ -47,7 +49,7 @@ public class ReviewActivity extends AppCompatActivity {
                 }
             }
         });
-        submit.setOnClickListener(new View.OnClickListener() {
+        submit.setOnClickListener(new View.OnClickListener() { //stores the review in firestore
             @Override
             public void onClick(View view) {
                 fire.createJobReview(comment.getText().toString(), rating );

@@ -1,5 +1,8 @@
 package com.freelancer;
 
+/*
+this class is used for the attributes of a single review object
+ */
 public class Review {
 
 
@@ -9,6 +12,10 @@ public class Review {
 
     int image;
 
+    /**
+     * returns the image ID that was set
+     * @return
+     */
     public int getImage() {
         return image;
     }

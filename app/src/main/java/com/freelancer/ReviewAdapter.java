@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * this file is used to bind the data to the view in the recycler view
+ */
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
     Context context;
     List<Review> reviews;
@@ -25,7 +28,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
     @Override
     //used to return the view holder that was created
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_view, parent, false);//inflate the review layout
         return new ReviewViewHolder(view);
 
     }
@@ -33,7 +36,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
     @Override
     //binding the variable data
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-        holder.name.setText(reviews.get(position).getName());
+        holder.name.setText(reviews.get(position).getName());//bind the properties together
         holder.rate.setRating(reviews.get(position).getRating());
         holder.comment.setText(reviews.get(position).getComment());
         holder.image.setImageResource(reviews.get(position).getImage());
