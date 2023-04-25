@@ -43,6 +43,7 @@ public class PickListingDate extends AppCompatActivity implements RecyclerViewIn
     Calendar calendar;
     Date date1;
     Date date2;
+    Date current;
 
     ListingRecyclerViewAdpater adapter;
     @Override
@@ -67,29 +68,19 @@ public class PickListingDate extends AppCompatActivity implements RecyclerViewIn
         fillRecycler(date1,date2);
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             //view does not update
-            LocalTime localTime = LocalTime.now();
-            calendar = Calendar.getInstance();
-            calendar.set(year,month,dayOfMonth,localTime.getHour(),localTime.getMinute());
+            if(calendar.get(Calendar.DAY_OF_MONTH)!= dayOfMonth){
+                calendar.set(year,month,dayOfMonth,0,0);
+            }
+            else {
+                calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+            }
             date1 = calendar.getTime();
-            Log.i("DATE 1-----",date1.toString());
             calendar.set(Calendar.HOUR_OF_DAY,23);
             calendar.set(Calendar.MINUTE,59);
             date2 = calendar.getTime();
-            Log.i("DATE 2------",date2.toString());
+
             fillRecycler(date1,date2);
-        });
-        testMaps();
-    }
-
-    private void testMaps() {
-        DocumentReference documentReference = firestore.collection("jobListings").document("vu2GfJHqQVRkGLBu3TLW");
-        documentReference.get().addOnSuccessListener(documentSnapshot -> {
-            if(documentSnapshot.exists()){
-                HashMap map = (HashMap) documentSnapshot.get("customOptions");
-
-                Map<String,Object> check = documentSnapshot.getData();
-
-            }
         });
     }
 
