@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CircleImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="SlidingAnimationOnActivityChange" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_out_exit</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_in_exit</item>
+
+        <item name="android:fragmentOpenEnterAnimation">@anim/slide_in</item>
+        <item name="android:fragmentOpenExitAnimation">@anim/slide_out</item>
+        <item name="android:fragmentCloseEnterAnimation">@anim/slide_out_exit</item>
+        <item name="android:fragmentCloseExitAnimation">@anim/slide_in_exit</item>
+    </style>
+</resources>

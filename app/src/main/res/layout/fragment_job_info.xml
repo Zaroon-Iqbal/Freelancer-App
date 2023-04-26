@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?><!-- job listing info fragment-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.registration.ContractorRegistrationActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        app:layout_constraintTop_toTopOf="parent"></com.google.android.material.appbar.AppBarLayout>
+    <!--scrollable view-->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".joblisting.ui.main.JobInfoFragment"
+        tools:showIn="@layout/fragment_job_info">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="24dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".MainActivity">
+            <!-- title question-->
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/what_s_your_job_title1" />
+
+            <!--title input layout-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/job_title"
+                app:helperText="* Required">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contractor_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <View
+                android:id="@+id/contractor_job_divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/listDivider" />
+            <!-- additional statement-->
+
+            <TextView
+                android:id="@+id/informational_text_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/well_need_some_additional_information" />
+
+            <!--Category Dropdown menu layout-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/category_menu"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/job_category"
+                app:helperText="* Required">
+
+                <AutoCompleteTextView
+                    android:id="@+id/category_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--job description input layout-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_description_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/service_description"
+                app:counterEnabled="true"
+                app:counterMaxLength="500"
+                app:helperText="* Required">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contractor_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:maxLength="500"
+                    android:minHeight="48dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Phone number input layout-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_phone_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/phone_number"
+                app:helperText="* Required"
+                app:prefixText="+1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contractor_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|phone"
+                    android:maxLength="500"
+                    android:minHeight="48dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--city input layout-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_city_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/city"
+                android:orientation="vertical"
+                app:helperText="* Required">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contractor_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textAutoComplete"
+                    android:minHeight="48dp" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Radius drop down menu selection layout-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/menu_radius"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/radius"
+                app:helperText="* Required">
+
+                <AutoCompleteTextView
+                    android:id="@+id/radius_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Business location type drop down menu selection layout-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/menu_location"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="@string/location"
+                app:helperText="* Required">
+
+                <AutoCompleteTextView
+                    android:id="@+id/location_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Price input layout-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contractor_price_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/base_price"
+                app:helperText="* Required"
+                app:prefixText="$">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contractor_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|numberDecimal"
+                    android:minHeight="48dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--Create service button layout-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/chooseImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:minHeight="56dp"
+                    android:text="Select Image"
+                    app:cornerRadius="24dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/fireImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:minHeight="56dp"
+                    app:cornerRadius="24dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/uploadImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:minHeight="56dp"
+                    android:text="Upload"
+                    app:cornerRadius="24dp" />
+            </RelativeLayout>
+
+
+            <!--Create service button layout-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/contractor_create_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:minHeight="56dp"
+                    android:text="@string/create_service"
+                    app:cornerRadius="24dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

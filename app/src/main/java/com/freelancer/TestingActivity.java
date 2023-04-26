@@ -1,87 +1,99 @@
 package com.freelancer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import com.freelancer.data.model.FirestoreRepository;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import java.util.HashMap;
-import java.util.Map;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.freelancer.calendar.CalendarActivity;
+import com.freelancer.joblisting.CreateJobListingTabbedActivity;
+import com.freelancer.joblisting.management.JobListingManagementActivity;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /*
 This activity was creating mainly for testing database funcitonality
 Contributors: Zaroon Iqbal, Spencer Carlson
  */
-public class TestingActivity extends AppCompatActivity {
-
-    private FirestoreRepository fdb;
-
-    private Button testButton;
-
-    private EditText testData;
-
+public class TestingActivity extends AppCompatActivity implements View.OnClickListener {
+    private static int count = 0;
     private FirebaseFirestore firestoreDatabase;
-
-    private FirestoreRepository firestoreDatabaseModel;//used to get functions from our Firestore java class
-
+    private EditText testData;
     private String data;
-
-    private String calDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
-        firestoreDatabaseModel = new FirestoreRepository(getApplication());
         //git test
         firestoreDatabase = FirebaseFirestore.getInstance();
-        testData = findViewById(R.id.testData);//get desired inputs from text box
-        testButton = findViewById(R.id.testButton);
-        calDate = "01";
+        Button newListing = findViewById(R.id.newListing);
+        Button calendar = findViewById(R.id.calendarButton);
+        Button management = findViewById(R.id.job_listing_management_button);
+        Button review = findViewById(R.id.review_Button_test);
 
+
+        calendar.setOnClickListener(this);
+        newListing.setOnClickListener(this);
+        management.setOnClickListener(this);
+        review.setOnClickListener(this);
         //when the save button is clicked
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Map<String, Object> calendar = new HashMap<>();
-                data = testData.getText().toString();//turn the edittext data into a string
-                calendar.put("02", data);//storing hashmap
-                /*
-                This method of storing to database works correctly
-                 */
-                firestoreDatabase.collection("appointments")
-                                .add(calendar)//adding data to the appointments collection of database
-                                        . addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            //Check if the data was successfully stored or not
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Toast.makeText(TestingActivity.this, "The Data was stored", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(TestingActivity.this, "The Data was not stored:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
 
 
+    }
 
-             //   fdb.saveAppointment(calDate, data);  // not sure why getting a null object referenc error when trying to use this
-            }
-        });
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.newListing:
+                Intent listingIntent = new Intent(this, CreateJobListingTabbedActivity.class);
+                startActivity(listingIntent);
+                break;
 
+            case R.id.calendarButton:
+                Intent calendarIntent = new Intent(this, CalendarActivity.class);
+                startActivity(calendarIntent);
+                break;
 
+            case R.id.job_listing_management_button:
+                Intent jobManagementIntent = new Intent(this, JobListingManagementActivity.class);
+                startActivity(jobManagementIntent);
+                break;
+            case R.id.review_Button_test:
+                Intent reviewIntent = new Intent(this, ReviewActivity.class);
+                startActivity(reviewIntent);
+                break;
+
+            /*case R.id.notification_button:
+                // Create the NotificationChannel, but only on API 26+ because
+                // the NotificationChannel class is new and not in the support library
+                CharSequence name = "Hello";
+                String description = "Description";
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel channel = new NotificationChannel("freelancer channel", name, importance);
+                channel.setDescription(description);
+                // Register the channel with the system; you can't change the importance
+                // or other notification behaviors after this
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "freelancer channel")
+                        .setSmallIcon(R.drawable.user_icon)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        // Set the intent that will fire when the user taps the notification
+                        //.setContentIntent()
+                        .setAutoCancel(true);
+
+                // notificationId is a unique int for each notification that you must define
+
+                notificationManager.notify(count++, builder.build());
+                break;*/
+        }
     }
 }
