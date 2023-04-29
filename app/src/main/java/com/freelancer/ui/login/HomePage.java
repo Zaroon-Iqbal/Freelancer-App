@@ -18,6 +18,7 @@ import com.freelancer.placeholder.ProfileActivityPlaceholder;
 import com.freelancer.ui.Checklist;
 import com.freelancer.ui.bidding.BiddingContractorMain;
 import com.freelancer.ui.bidding.Customer.CustomerBidMain;
+import com.freelancer.ui.map.MapActivity;
 import com.freelancer.ui.profile.ConsumerProfile;
 import com.freelancer.ui.profile.ContractorProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -101,7 +102,7 @@ public class HomePage extends AppCompatActivity {
 
                     //When user clicks on the favorites icon
                     case R.id.FavoriteNav:
-                        startActivity(new Intent(getApplicationContext(), FavoriteActivityPlaceholder.class));
+                        startActivity(new Intent(getApplicationContext(), MapActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
 

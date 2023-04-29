@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -16,6 +18,9 @@
         android:roundIcon="@drawable/logotransparent"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCo0h09NsMI8Kmj6t-T6RCPRo6pMXfHLnQ" />
         <activity android:name=".ui.booking.PickListingDate"
             android:exported="false"/>
         <activity
@@ -94,9 +99,14 @@
         <activity
             android:name=".ui.bidding.Customer.CustomerBidActivities"
             android:exported="false" />
-        <activity android:name=".ui.bidding.BiddingContractorMain"
+        <activity
+            android:name=".ui.bidding.BiddingContractorMain"
             android:exported="false" />
-        <activity android:name=".ui.bidding.BidderList"
+        <activity
+            android:name=".ui.bidding.BidderList"
+            android:exported="false" />
+        <activity
+            android:name=".ui.map.MapActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"

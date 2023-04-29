@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -26,7 +27,7 @@ This is the activity responsible for accessing the Google Map API and displaying
 location the of the user. Currently it only shows the location of the user and not the
 location of the contractor as well. Worked on by Edward Kuoch
  */
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     FrameLayout map;
     Location currentLocation;
     FusedLocationProviderClient fusedClient;
