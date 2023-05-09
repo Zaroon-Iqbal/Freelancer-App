@@ -18,7 +18,15 @@ import com.freelancer.placeholder.FavoriteActivityPlaceholder;
 import com.freelancer.placeholder.MessageActivityPlaceholder;
 import com.freelancer.placeholder.ProfileActivityPlaceholder;
 import com.freelancer.ui.login.HomePage;
+import com.freelancer.ui.profile.ConsumerProfile;
+import com.freelancer.ui.profile.ContractorProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -36,6 +44,7 @@ public class CalendarActivity extends AppCompatActivity {
     private String calendarDocument;//used for specified document in firestore database
 
     private String calendarField;//used for the specifed field desired in the database
+    private String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +71,28 @@ public class CalendarActivity extends AppCompatActivity {
         calendar.setOnDateChangeListener((calendarView, year, month, day) -> {
             viewModel.createAppointment();
             viewModel.retrieveAppointment(calendarCollection, calendarDocument, calendarField);//used to test retrieval method.
+        });
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("UsersExample");
+
+        DocumentReference consumer = collectionReference.document("ConsumersExample").collection("ConsumerData").document(user.getUid());
+        DocumentReference contractor = collectionReference.document("ContractorsExample").collection("ContractorData").document(user.getUid());
+
+        consumer.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists())
+                    type = "consumer";
+            }
+        });
+
+        contractor.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists())
+                    type = "contractor";
+            }
         });
 
         //The bottom navigation bar. Added by Edward Kuoch.
@@ -96,8 +127,16 @@ public class CalendarActivity extends AppCompatActivity {
 
                     //When user clicks on the profile icon
                     case R.id.ProfileNav:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivityPlaceholder.class));
-                        overridePendingTransition(0,0);
+                        if(type.equalsIgnoreCase("contractor"))
+                            startActivity(new Intent(getApplicationContext(), ContractorProfile.class));
+                        else if (type.equalsIgnoreCase("consumer")) {
+                            ConsumerProfile consumer = new ConsumerProfile();
+                            consumer.show(getSupportFragmentManager(),"Consumer Profile");
+                        }
+                        else {
+                            startActivity(new Intent(getApplicationContext(), ProfileActivityPlaceholder.class));
+                            overridePendingTransition(0, 0);
+                        }
                         return true;
                 }
                 return false;
