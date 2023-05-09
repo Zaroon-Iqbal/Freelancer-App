@@ -83,8 +83,12 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
 
     ActivityResultLauncher<Intent> pickPhoto = registerForActivityResult(new StartActivityForResult(),uri ->{
         if(uri != null){
-            imageUri = uri.getData().getData();
-            photo.setImageURI(imageUri);
+            Intent intent = uri.getData();
+            if(intent != null)
+            {
+                imageUri = intent.getData();
+                photo.setImageURI(imageUri);
+            }
         }
     });
 

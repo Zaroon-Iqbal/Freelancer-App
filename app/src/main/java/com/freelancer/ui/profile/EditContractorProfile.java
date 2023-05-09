@@ -62,8 +62,12 @@ public class EditContractorProfile extends AppCompatActivity {
     ActivityResultLauncher<Intent> pickPhoto = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), uri -> {
         if (uri != null) {
             changed = true;
-            imageUri = uri.getData().getData();
-            image.setImageURI(imageUri);
+            Intent intent = uri.getData();
+            if(intent != null)
+            {
+                imageUri = intent.getData();
+                image.setImageURI(imageUri);
+            }
         }
     });
     @Override
