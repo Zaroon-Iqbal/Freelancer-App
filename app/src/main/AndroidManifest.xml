@@ -33,7 +33,8 @@
             android:exported="false"/>
         <activity
             android:name=".ui.profile.portfolio.PortfolioActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:parentActivityName=".ui.profile.ContractorProfile"/>
         <activity
             android:name=".ui.profile.EnlargeImage"
             android:exported="false"/>

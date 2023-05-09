@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -35,6 +37,7 @@ public class PortfolioActivity extends AppCompatActivity implements RecyclerView
     RecyclerView recyclerView;
     ArrayList<ImageInfo> list;
     PortfolioRecyclerview adapter;
+    MaterialToolbar toolbar;
 
     ProgressBar progress;
 
@@ -48,10 +51,13 @@ public class PortfolioActivity extends AppCompatActivity implements RecyclerView
 
         recyclerView = binding.recycler;
         progress = binding.progressPortfolio;
+        toolbar = binding.topAppBar;
         progress.setVisibility(View.VISIBLE);
         list = new ArrayList<>();
         fillList(list);
         recyclerView.setLayoutManager(new GridLayoutManager(PortfolioActivity.this,2));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void fillList(ArrayList<ImageInfo> list){

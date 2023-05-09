@@ -50,6 +50,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
     TextView address;
     TextView about;
     ImageView pic;
+    ImageView back;
     TextView link;
     Button message;
     Button appt;
@@ -84,6 +85,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
         message = binding.messageButton;
         appt = binding.appointmentButton;
         edit = binding.editButton;
+        back = binding.back;
         recycler = binding.horizontalPortfolioPreview;
         recycler.setLayoutManager(new LinearLayoutManager(ContractorProfile.this, LinearLayoutManager.HORIZONTAL, false));
         list = new ArrayList<>();
@@ -110,6 +112,8 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
             intent.putExtra("Location",picLocation);
             startActivity(intent);
         });
+
+        back.setOnClickListener(v -> finish());
 
         //appt.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.youtube.com/@HairHood"))));
     }
@@ -147,7 +151,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
                     if(!document.getString("ProfilePic").isEmpty())
                     {
                         profilePic = document.getString("ProfilePic");
-                        Glide.with(ContractorProfile.this).load(profilePic).into(pic);
+                        Glide.with(getApplicationContext()).load(profilePic).into(pic);
                     }
                 }
                 if(document.contains("PicLocation")){

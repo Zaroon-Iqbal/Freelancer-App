@@ -17,6 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="?attr/actionModeCloseDrawable"
+            android:layout_marginLeft="5dp"/>
+
         <Button
             android:id="@+id/editButton"
             android:layout_width="50dp"
@@ -30,7 +37,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/user_icon"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="30dp"/>
         <TextView
             android:id="@+id/businessName"
             android:layout_width="wrap_content"

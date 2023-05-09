@@ -17,6 +17,7 @@ import com.freelancer.databinding.ActivityEnlargedImageBinding;
 
 public class EnlargeImage extends AppCompatActivity {
     ImageView image;
+    ImageView exit;
 
     String uri;
 
@@ -28,6 +29,9 @@ public class EnlargeImage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         image = binding.enlargeImage;
+        exit = binding.close;
+        exit.setOnClickListener(v -> finish());
+
         uri = getIntent().getStringExtra("URI");
 
         Glide.with(this).load(uri).fitCenter().into(image);
