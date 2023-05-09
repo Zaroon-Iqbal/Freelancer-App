@@ -2,6 +2,7 @@ package com.freelancer.ui.profile;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,7 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.activity.result.contract.ActivityResultContracts.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +44,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -64,6 +70,7 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
     String previousPhoto;
 
     boolean photoExists = false;
+    boolean nameExists = false;
 
     ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new RequestPermission(), isGranted->{
         if(isGranted)
@@ -80,6 +87,7 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
             photo.setImageURI(imageUri);
         }
     });
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,11 +115,15 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    nameText.setText(document.getString("Name"));
+                    if(document.contains("Name")) {
+                        if(!document.getString("Name").isEmpty())
+                        {
+                            nameText.setText(document.getString("Name"));
+                            nameExists = true;
+                        }
+                    }
                     if(document.contains("ProfilePic")) {
                         previousPhoto = document.getString("PicLocation");
-//                        StorageReference imageRef = storageReference.child(previousPhoto);
-//                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(EditConsumerProfile.this).load(uri).into(photo));
                         Glide.with(EditConsumerProfile.this).load(document.getString("ProfilePic")).into(photo);
                         photoExists = true;
                     }
@@ -132,7 +144,8 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.submitBtn:
                 if(nameText.getText().toString().trim().length() > 0){
-                    write.update(userDocRef,"Name",nameText.getText().toString());
+                    System.out.println("updating name");
+                    userDocRef.update("Name",nameText.getText().toString());
                 }
                 if(imageUri != null) {
                     location = user.getUid() + UUID.randomUUID().toString();
@@ -168,7 +181,8 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
     }
 
     public void photoPicker(){
-        pickPhoto.launch(new Intent(MediaStore.ACTION_PICK_IMAGES));
+        Intent i = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        pickPhoto.launch(i);
     }
 
     public void requestPermission(){

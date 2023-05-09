@@ -43,7 +43,6 @@ public class PickListingDate extends AppCompatActivity implements RecyclerViewIn
     Calendar calendar;
     Date date1;
     Date date2;
-    Date current;
 
     ListingRecyclerViewAdpater adapter;
     @Override
@@ -93,6 +92,7 @@ public class PickListingDate extends AppCompatActivity implements RecyclerViewIn
                     if(!queryDocumentSnapshots.isEmpty()){
                         for(DocumentSnapshot documents:queryDocumentSnapshots.getDocuments()){
                             Map<String,Object> map = documents.getData();
+                            map.put("Job Listing ID", documents.getId());
                             list.add(new JobListing(map,"Elite Barber","1011 fake st, LA, CA"));
                         }
                         adapter = new ListingRecyclerViewAdpater(list,this);
@@ -107,7 +107,7 @@ public class PickListingDate extends AppCompatActivity implements RecyclerViewIn
     }
 
     @Override
-    public void onItemClicked(int pos) {
+    public void onItemClicked(int pos, ArrayList<?> otherList) {
         BookListing listing = new BookListing(list.get(pos));
         listing.show(getSupportFragmentManager(),"Appointment Booking");
     }
@@ -157,7 +157,7 @@ class ListingRecyclerViewAdpater extends RecyclerView.Adapter<ListingRecyclerVie
                     int pos = getBindingAdapterPosition();
 
                     if(pos != RecyclerView.NO_POSITION)
-                        click.onItemClicked(pos);
+                        click.onItemClicked(pos,listings);
                 }
             });
         }

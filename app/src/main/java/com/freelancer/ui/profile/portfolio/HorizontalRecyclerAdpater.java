@@ -53,7 +53,7 @@ public class HorizontalRecyclerAdpater extends RecyclerView.Adapter<HorizontalRe
                     int pos = getBindingAdapterPosition();
 
                     if(pos != RecyclerView.NO_POSITION)
-                        click.onItemClicked(pos);
+                        click.onItemClicked(pos,gallery);
                 }
             });
         }

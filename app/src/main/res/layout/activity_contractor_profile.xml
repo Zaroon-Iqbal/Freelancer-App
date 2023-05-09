@@ -1,30 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_gravity="center"
-    android:layout_marginHorizontal="20dp"
     tools:context=".ui.profile.ContractorProfile">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:text="Edit"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_alignParentEnd="true"/>
 
         <ImageView
             android:id="@+id/businessPic"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/user_icon"/>
+            android:src="@drawable/user_icon"
+            android:layout_marginTop="20dp"/>
         <TextView
             android:id="@+id/businessName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:layout_toRightOf="@id/businessPic"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"/>
         <TextView
             android:id="@+id/businessAddress"
             android:layout_width="wrap_content"
@@ -45,16 +59,18 @@
             android:paddingHorizontal="15dp"
             android:layout_toRightOf="@id/businessPic"
             android:layout_below="@id/businessAddress"/>
+
         <Button
             android:id="@+id/appointmentButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/businessAddress"
+            android:layout_toRightOf="@id/messageButton"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="5dp"
             android:text="Appointment"
             android:textSize="12sp"
-            android:paddingVertical="5dp"
-            android:paddingHorizontal="15dp"
-            android:layout_toRightOf="@id/messageButton"
-            android:layout_below="@id/businessAddress"/>
+            app:strokeColor="#5895A5" />
 
     </RelativeLayout>
 
@@ -74,7 +90,7 @@
         android:id="@+id/portfolioLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Portfolio"
+        android:text="Portfolio >"
         android:textSize="15sp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
@@ -123,12 +139,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Title"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display4" />
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rating"
-                        android:textAppearance="?attr/textAppearanceHeadline5"/>
+                        android:textAppearance="?attr/textAppearanceHeadline6"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -152,12 +168,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Title"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display4" />
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rating"
-                        android:textAppearance="?attr/textAppearanceHeadline5"/>
+                        android:textAppearance="?attr/textAppearanceHeadline6"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -207,21 +223,5 @@
         android:text="Socials"
         android:textSize="15sp"
         android:layout_marginBottom="20dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/social1"
-        android:layout_marginBottom="15dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/social2"
-        android:layout_marginBottom="15dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/social3"
-        android:layout_marginBottom="15dp"/>
-
 </LinearLayout>
+</ScrollView>

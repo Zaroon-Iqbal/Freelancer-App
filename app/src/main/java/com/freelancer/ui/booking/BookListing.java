@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.app.Activity;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +20,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.freelancer.R;
+import com.freelancer.ui.profile.EditConsumerProfile;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class BookListing extends BottomSheetDialogFragment {
@@ -35,6 +46,8 @@ public class BookListing extends BottomSheetDialogFragment {
     RecyclerView recyclerView;
     ArrayList<Map<String,Object>> optionList;
     OptionsRecyclerViewAdapter adapter;
+    HashSet<String> selection = new HashSet<>();
+    HashMap<String,Integer> choice = new HashMap<>();
 
     public BookListing(JobListing listing){
         this.listing = listing;
@@ -61,17 +74,11 @@ public class BookListing extends BottomSheetDialogFragment {
         if(listing.map.containsKey("customOptions")) {
             createOptionsList();
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new OptionsRecyclerViewAdapter(optionList);
+            adapter = new OptionsRecyclerViewAdapter(optionList,selection,choice);
             recyclerView.setAdapter(adapter);
         }
-
-        //cancel.setOnClickListener(v1 -> finish());
-        book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bookAppointment();
-            }
-        });
+        book.setOnClickListener(v1 -> bookAppointment());
+        cancel.setOnClickListener(v12 -> dismiss());
         return v;
     }
 
@@ -83,14 +90,34 @@ public class BookListing extends BottomSheetDialogFragment {
     }
 
     private void bookAppointment() {
+        CollectionReference collection = FirebaseFirestore.getInstance().collection("bookings");
+        Map<String,Object> data = new HashMap<>();
+        ArrayList<String> arr = new ArrayList<>(selection);
+        data.put("Selection choices",arr);
+        data.put("Boolean choices",choice);
+        data.put("Contractor ID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        data.put("Consumer ID","DHsQ6UhQMLPqthv5us9Y4ByIN4u1");
+        data.put("Book Time",new Date());
+        data.put("Job Listing ID", listing.map.get("Job Listing ID"));
+        collection.add(data).addOnSuccessListener(documentReference -> {
+            Toast.makeText(getContext(),"Job Listing booked",Toast.LENGTH_SHORT).show();
+            dismiss();
+        }).addOnFailureListener(e -> {
+            Toast.makeText(getContext(),"Job Listing could not be booked",Toast.LENGTH_SHORT).show();
+            dismiss();
+        });
     }
 
 }
 
 class OptionsRecyclerViewAdapter extends RecyclerView.Adapter<OptionsRecyclerViewAdapter.OptionsViewHolder>{
     ArrayList<Map<String,Object>> list;
+    HashMap<String,Integer> choice;
+    HashSet<String> selection;
 
-    public OptionsRecyclerViewAdapter(ArrayList<Map<String,Object>> list){
+    public OptionsRecyclerViewAdapter(ArrayList<Map<String,Object>> list,HashSet<String> selection,HashMap<String,Integer> choice){
+        this.selection = selection;
+        this.choice = choice;
         this.list = list;
     }
 
@@ -134,14 +161,14 @@ class OptionsRecyclerViewAdapter extends RecyclerView.Adapter<OptionsRecyclerVie
             String type = (String) list.get(pos).get("fieldType");
             if(type.equalsIgnoreCase( "BOOLEAN")){
                 String key = (String) list.get(pos).get("fieldName");
-                list.get(pos).put(key,-1);
+                choice.put(key,-1);
                 radioGroup.setVisibility(View.VISIBLE);
                 radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
                     RadioButton radioButton = itemView.findViewById(checkedId);
                     if(radioButton.getText().toString().equalsIgnoreCase("Yes"))
-                        list.get(pos).replace((String) list.get(pos).get("fieldName"),1);
+                        choice.replace((String) list.get(pos).get("fieldName"),1);
                     else
-                        list.get(pos).replace((String) list.get(pos).get("fieldName"),0);
+                        choice.replace((String) list.get(pos).get("fieldName"),0);
                     System.out.println(radioButton.getText() + " button was selected!!");
                 });
                 modified = true;
@@ -154,7 +181,14 @@ class OptionsRecyclerViewAdapter extends RecyclerView.Adapter<OptionsRecyclerVie
                 for(int i = 0; i < size; i++){
                     checkBox = new CheckBox(itemView.getContext());
                     checkBox.setText(choices.get(i));
-                    checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> System.out.println(buttonView.getText() + " was selected"));
+                    checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                        if(isChecked) {
+                            System.out.println(buttonView.getText() + " was selected");
+                            selection.add(buttonView.getText().toString());
+                        }
+                        else
+                            selection.remove(buttonView.getText().toString());
+                    });
                     layout.addView(checkBox,params);
                 }
                 modified = true;

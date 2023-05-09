@@ -1,12 +1,15 @@
 package com.freelancer.ui.profile;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -38,6 +41,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -49,6 +53,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
     TextView link;
     Button message;
     Button appt;
+    Button edit;
     RecyclerView recycler;
     ArrayList<String> list;
     HorizontalRecyclerAdpater adapter;
@@ -56,21 +61,21 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
     FirebaseFirestore fireStore;
     DocumentReference userDocRef;
     FirebaseUser user;
-    Task<Uri> task = null;
-
-    TextView social1;
-    TextView social2;
-    TextView social3;
+    String businessName = "";
+    String aboutBusiness = "";
+    String businessAddress = "";
+    String profilePic = "";
+    String picLocation = "";
+    LinearLayout linearLayout;
+    ArrayList<TextView> textViews;
 
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         ActivityContractorProfileBinding binding = ActivityContractorProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        social1 = binding.social1;
-        social2 = binding.social2;
-        social3 = binding.social3;
 
+        linearLayout = binding.linearLayout;
         name = binding.businessName;
         address = binding.businessAddress;
         about = binding.about;
@@ -78,9 +83,11 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
         link = binding.portfolioLink;
         message = binding.messageButton;
         appt = binding.appointmentButton;
+        edit = binding.editButton;
         recycler = binding.horizontalPortfolioPreview;
         recycler.setLayoutManager(new LinearLayoutManager(ContractorProfile.this, LinearLayoutManager.HORIZONTAL, false));
         list = new ArrayList<>();
+
         fillList(list);
         fireStore = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -94,6 +101,16 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
             startActivity(new Intent(getApplicationContext(), PortfolioActivity.class));
         });
 
+        edit.setOnClickListener(v -> {
+            Intent intent = new Intent(ContractorProfile.this, EditContractorProfile.class);
+            intent.putExtra("Name",businessName);
+            intent.putExtra("Address",businessAddress);
+            intent.putExtra("About",aboutBusiness);
+            intent.putExtra("Uri",profilePic);
+            intent.putExtra("Location",picLocation);
+            startActivity(intent);
+        });
+
         //appt.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.youtube.com/@HairHood"))));
     }
 
@@ -105,34 +122,77 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
             }
             if (document != null && document.exists()) {
                 storageRef = FirebaseStorage.getInstance().getReference();
-                name.setText(document.getString("BusinessName"));
-                address.setText(document.getString("Location"));
-                about.setText(document.getString("About"));
+                if(document.contains("BusinessName")) {
+                    if(!document.getString("BusinessName").isEmpty())
+                    {
+                        businessName = document.getString("BusinessName");
+                        name.setText(businessName);
+                    }
+                }
+                if(document.contains("Location")) {
+                    if(!document.getString("Location").isEmpty())
+                    {
+                        businessAddress = document.getString("Location");
+                        address.setText(businessAddress);
+                    }
+                }
+                if(document.contains("About")) {
+                    if(!document.getString("About").isEmpty())
+                    {
+                        aboutBusiness = document.getString("About");
+                        about.setText(aboutBusiness);
+                    }
+                }
                 if (document.contains("ProfilePic")) {
-                    //StorageReference imageRef = storageRef.child(document.getString("ProfilePic"));
-//                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-//                        Glide.with(ContractorProfile.this).load(uri).into(pic);
-//                    });
-                    Glide.with(ContractorProfile.this).load(document.getString("ProfilePic")).into(pic);
+                    if(!document.getString("ProfilePic").isEmpty())
+                    {
+                        profilePic = document.getString("ProfilePic");
+                        Glide.with(ContractorProfile.this).load(profilePic).into(pic);
+                    }
+                }
+                if(document.contains("PicLocation")){
+                    if(!document.getString("PicLocation").isEmpty()){
+                        picLocation = document.getString("PicLocation");
+                    }
                 }
             } else Log.d("FAILED---", "No such document");
         });
 
         CollectionReference collection = userDocRef.collection("Socials");
-        collection.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error != null){
-                    Log.e("ERROR","Listen failed",error);
-                    return;
-                }
-                if(value != null){
-                    List<DocumentSnapshot> list = value.getDocuments();
-//                    social1.setText(list.get(0).getString("URL"));
-//                    social2.setText(list.get(1).getString("URL"));
-//                    social3.setText(list.get(2).getString("URL"));
+        collection.addSnapshotListener((value, error) -> {
+            if(error != null){
+                Log.e("ERROR","Listen failed",error);
+                return;
+            }
+            if(value != null && !value.isEmpty()){
+                DocumentSnapshot snap = value.getDocuments().get(0);
+                Map<String,Object> data = (Map<String, Object>) snap.get("Links");
+                if(!data.isEmpty())
+                {
+                    Set<String> keys = data.keySet();
+
+                    if(textViews.size() > 0){
+                        for(int i = 0; i < textViews.size(); i++){
+                            linearLayout.removeView(textViews.get(i));
+                        }
+                    }
+                    textViews = new ArrayList<>();
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(20, 0, 0, 15);
+                    for (String title : keys) {
+                        TextView view = new TextView(this);
+                        view.setText(title);
+                        view.setTextColor(Color.parseColor("#5895A5"));
+                        view.setOnClickListener(v -> {
+                            System.out.println(data.get(title).toString());
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(data.get(title).toString())));
+                        });
+                        linearLayout.addView(view, params);
+                        textViews.add(view);
                     }
                 }
+            }
         });
     }
 
@@ -155,7 +215,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
     }
 
     @Override
-    public void onItemClicked(int pos) {
+    public void onItemClicked(int pos, ArrayList<?> otherList) {
         Intent intent = new Intent(ContractorProfile.this, EnlargeImage.class);
         intent.putExtra("URI",list.get(pos));
         startActivity(intent);

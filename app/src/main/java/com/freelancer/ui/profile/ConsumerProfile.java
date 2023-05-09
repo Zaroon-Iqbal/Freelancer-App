@@ -70,14 +70,13 @@ public class ConsumerProfile extends BottomSheetDialogFragment {
                 return;
             }
             if(document != null && document.exists()){
-                name.setText(document.getString("Name"));
-                rating.setText(document.getString("Rating"));
+                if(document.contains("Name")) {
+                    if(!document.getString("Name").isEmpty())
+                        name.setText(document.getString("Name"));
+                }
+                if(document.contains("Rating"))
+                    rating.setText(document.getString("Rating"));
                 if(document.contains("ProfilePic")){
-//                    StorageReference imageRef = storageReference.child(document.getString("ProfilePic"));
-//                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-//                        Glide.with(ConsumerProfile.this).load(uri).into(profilePic);
-
-                    //});
                 Glide.with(ConsumerProfile.this).load(document.getString("ProfilePic")).into(profilePic);
                 }
             }

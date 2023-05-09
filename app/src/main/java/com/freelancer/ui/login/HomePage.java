@@ -20,6 +20,8 @@ import com.freelancer.ui.bidding.BiddingContractorMain;
 import com.freelancer.ui.bidding.Customer.CustomerBidMain;
 import com.freelancer.ui.profile.ConsumerProfile;
 import com.freelancer.ui.profile.ContractorProfile;
+import com.freelancer.ui.profile.EditContractorProfile;
+import com.freelancer.ui.profile.portfolio.EditPortfolio;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -74,7 +76,7 @@ public class HomePage extends AppCompatActivity {
             }
             if (count == 3) { //by clicking on the freelancer name 5 times you will be navigated
                 count = 0;
-                startActivity(new Intent(this.getApplicationContext(), TestingActivity.class));
+                startActivity(new Intent(this.getApplicationContext(), EditPortfolio.class));
                 toast = Toast.makeText(getApplicationContext(), "Welcome to the secret menu \uD83D\uDE0E \uD83D\uDD25", Toast.LENGTH_SHORT);
                 toast.show();
                 return;

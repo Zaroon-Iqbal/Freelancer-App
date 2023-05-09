@@ -14,11 +14,12 @@ import com.freelancer.R;
 import java.util.ArrayList;
 
 public class PortfolioRecyclerview extends RecyclerView.Adapter<PortfolioRecyclerview.PortfolioViewHolder>{
-    ArrayList<String> gallery;
+    ArrayList<ImageInfo> gallery;
 
     RecyclerViewInterface click;
+    public boolean delete = false;
 
-    public PortfolioRecyclerview(ArrayList<String> list, RecyclerViewInterface click){
+    public PortfolioRecyclerview(ArrayList<ImageInfo> list, RecyclerViewInterface click){
         gallery = list;
         this.click = click;
     }
@@ -33,7 +34,17 @@ public class PortfolioRecyclerview extends RecyclerView.Adapter<PortfolioRecycle
 
     @Override
     public void onBindViewHolder(@NonNull PortfolioViewHolder holder, int position) {
-        Glide.with(holder.itemView.getContext()).load(gallery.get(position)).into(holder.imageView);
+        Glide.with(holder.itemView.getContext()).load(gallery.get(position).uri).into(holder.imageView);
+        if(delete)
+            holder.circle.setVisibility(View.VISIBLE);
+        else{
+            holder.circle.setVisibility(View.GONE);
+            gallery.get(position).selected = false;
+        }
+        if(gallery.get(position).selected)
+            holder.check.setVisibility(View.VISIBLE);
+        else
+            holder.check.setVisibility(View.GONE);
     }
 
     @Override
@@ -43,17 +54,21 @@ public class PortfolioRecyclerview extends RecyclerView.Adapter<PortfolioRecycle
 
     public class PortfolioViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
+        ImageView circle;
+        ImageView check;
 
         public PortfolioViewHolder(@NonNull View v){
             super(v);
-            imageView = (ImageView) v.findViewById(R.id.galleryImage);
+            imageView = v.findViewById(R.id.galleryImage);
+            circle = v.findViewById(R.id.circle);
+            check = v.findViewById(R.id.checkmark);
 
             v.setOnClickListener(v1 -> {
                 if(click != null){
                     int pos = getBindingAdapterPosition();
 
                     if(pos != RecyclerView.NO_POSITION)
-                        click.onItemClicked(pos);
+                        click.onItemClicked(pos,gallery);
                 }
             });
         }

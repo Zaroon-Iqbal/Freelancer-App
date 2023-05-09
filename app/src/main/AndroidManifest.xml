@@ -16,7 +16,14 @@
         android:roundIcon="@drawable/logotransparent"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.booking.PickListingDate"
+        <activity android:name=".ui.profile.portfolio.EditPortfolio"
+            android:exported="false"
+            android:parentActivityName=".ui.profile.EditContractorProfile"/>
+        <activity
+            android:name=".ui.profile.portfolio.EditSocialLinks"
+            android:exported="false"/>
+        <activity
+            android:name=".ui.booking.PickListingDate"
             android:exported="false"/>
         <activity
             android:name=".ui.profile.EditContractorProfile"
