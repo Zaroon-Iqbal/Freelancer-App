@@ -23,7 +23,7 @@
             android:name=".ui.profile.portfolio.EditSocialLinks"
             android:exported="false"/>
         <activity
-            android:name=".ui.booking.PickListingDate"
+            android:name= ".ui.booking.BookListing"
             android:exported="false"/>
         <activity
             android:name=".ui.profile.EditContractorProfile"

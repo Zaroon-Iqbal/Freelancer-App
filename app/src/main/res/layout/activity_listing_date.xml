@@ -6,20 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".ui.booking.PickListingDate">
 
-    <CalendarView
-        android:id="@+id/jobCalendar"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Job Listings"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"/>
+
+    <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minDate="04/05/2023"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="15dp"/>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/jobListing"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/jobListing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </ScrollView>
+        android:layout_height="wrap_content"/>
+
 
 </LinearLayout>

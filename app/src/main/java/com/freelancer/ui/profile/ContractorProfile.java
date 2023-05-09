@@ -97,7 +97,11 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
                 .document(user.getUid());
         fillBusinessInfo();
 
-        appt.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), PickListingDate.class)));
+        appt.setOnClickListener(v -> {
+            //startActivity(new Intent(getApplicationContext(), PickListingDate.class));
+            PickListingDate pick = new PickListingDate();
+            pick.show(getSupportFragmentManager(),"Pick Listing");
+        });
 
         link.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(), PortfolioActivity.class));

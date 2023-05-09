@@ -25,35 +25,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp">
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time:"
-                android:textSize="17sp" />
+
             <TextView
                 android:id="@+id/reason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reason:"
-                android:textSize="17sp"
-                android:layout_below="@+id/time"
-                android:layout_marginTop="20dp"/>
+                android:text="Description:"
+                android:textSize="14sp" />
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price:"
-                android:textSize="17sp"
+                android:textSize="14sp"
                 android:layout_below="@+id/reason"
+                android:layout_marginTop="15dp"/>
+            <TextView
+                android:id="@+id/business"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business:"
+                android:textSize="14sp"
+                android:layout_below="@+id/location"
                 android:layout_marginTop="15dp"/>
             <TextView
                 android:id="@+id/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/price"
                 android:text="Location:"
-                android:textSize="17sp"
-                android:layout_below="@+id/price"
                 android:layout_marginTop="15dp"/>
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -79,6 +79,7 @@
         android:id="@+id/customOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/details"/>
+        android:layout_below="@id/details"
+        android:layout_marginBottom="35dp"/>
     </RelativeLayout>
 </ScrollView>

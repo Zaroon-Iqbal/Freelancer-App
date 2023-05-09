@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,12 +36,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class BookListing extends BottomSheetDialogFragment {
+public class BookListing extends AppCompatActivity {
     JobListing listing;
     TextView time;
     TextView reason;
     TextView price;
     TextView location;
+    TextView business;
     Button cancel;
     Button book;
     RecyclerView recyclerView;
@@ -49,42 +51,43 @@ public class BookListing extends BottomSheetDialogFragment {
     HashSet<String> selection = new HashSet<>();
     HashMap<String,Integer> choice = new HashMap<>();
 
-    public BookListing(JobListing listing){
-        this.listing = listing;
-        optionList  = new ArrayList<>();
-    }
+//    public BookListing(JobListing listing){
+//        this.listing = listing;
+//
+//    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.fragment_book_listing,container,false);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_book_listing);
+        listing = getIntent().getParcelableExtra("Job Listing", JobListing.class);
 
-        time = v.findViewById(R.id.time);
-        reason = v.findViewById(R.id.reason);
-        price = v.findViewById(R.id.price);
-        location = v.findViewById(R.id.location);
-        cancel = v.findViewById(R.id.cancelButton);
-        book = v.findViewById(R.id.bookButton);
-        recyclerView = v.findViewById(R.id.customOptions);
+        reason = findViewById(R.id.reason);
+        price = findViewById(R.id.price);
+        location = findViewById(R.id.location);
+        business = findViewById(R.id.business);
+        cancel = findViewById(R.id.cancelButton);
+        book = findViewById(R.id.bookButton);
+        recyclerView = findViewById(R.id.customOptions);
 
-        time.setText("Time: "+listing.timestamp);
-        reason.setText("Reason: "+listing.content);
-        price.setText("Price: "+listing.price);
-        location.setText("Location: \n"+listing.businessName+"\n"+listing.address);
+        reason.setText("Description: " + listing.jobInfo.get("description"));
+        price.setText("Price: " + listing.jobInfo.get("basePrice"));
+        location.setText("Location: " + listing.jobInfo.get("jobLocation"));
+        business.setText("Business: \n" + listing.businessName + "\n" + listing.address);
 
-        if(listing.map.containsKey("customOptions")) {
+        if (!listing.customOptions.isEmpty()) {
             createOptionsList();
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new OptionsRecyclerViewAdapter(optionList,selection,choice);
+            recyclerView.setLayoutManager(new LinearLayoutManager(BookListing.this));
+            adapter = new OptionsRecyclerViewAdapter(optionList, selection, choice);
             recyclerView.setAdapter(adapter);
         }
         book.setOnClickListener(v1 -> bookAppointment());
-        cancel.setOnClickListener(v12 -> dismiss());
-        return v;
+        cancel.setOnClickListener(v12 -> finish());
     }
 
     private void createOptionsList() {
-        Map<String,Object> options = (Map<String, Object>) listing.map.get("customOptions");
-        for(Object obj:options.values()){
+        optionList  = new ArrayList<>();
+        for(Object obj: listing.customOptions.values()){
             optionList.add((Map<String, Object>) obj);
         }
     }
@@ -100,11 +103,11 @@ public class BookListing extends BottomSheetDialogFragment {
         data.put("Book Time",new Date());
         data.put("Job Listing ID", listing.map.get("Job Listing ID"));
         collection.add(data).addOnSuccessListener(documentReference -> {
-            Toast.makeText(getContext(),"Job Listing booked",Toast.LENGTH_SHORT).show();
-            dismiss();
+            Toast.makeText(this,"Job Listing booked",Toast.LENGTH_SHORT).show();
+            finish();
         }).addOnFailureListener(e -> {
-            Toast.makeText(getContext(),"Job Listing could not be booked",Toast.LENGTH_SHORT).show();
-            dismiss();
+            Toast.makeText(this,"Job Listing could not be booked",Toast.LENGTH_SHORT).show();
+            finish();
         });
     }
 
