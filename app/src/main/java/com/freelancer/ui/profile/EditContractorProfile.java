@@ -27,6 +27,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -55,10 +56,13 @@ public class EditContractorProfile extends AppCompatActivity {
     TextInputLayout stateError;
     TextInputLayout aboutError;
     boolean changed = false;
-    boolean infoExists = false;
-    boolean picExists = false;
     Uri imageUri;
     HashMap<String,String> data;
+    String userName;
+    String email;
+    String type;
+    String profilePic = "";
+    String picLocation = "";
     ActivityResultLauncher<Intent> pickPhoto = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), uri -> {
         if (uri != null) {
             changed = true;
@@ -98,11 +102,10 @@ public class EditContractorProfile extends AppCompatActivity {
 
         data = new HashMap<>();
 
-        fillInFields();
+        reference = FirebaseFirestore.getInstance().collection("userListings")
+                .document(getIntent().getStringExtra("documentId"));
 
-        reference = FirebaseFirestore.getInstance().collection("UsersExample")
-                .document("ContractorsExample").collection("ContractorData")
-                .document(user.getUid());
+        fillInFields();
 
         submit.setOnClickListener(v -> {
             if(storeText()){
@@ -114,13 +117,13 @@ public class EditContractorProfile extends AppCompatActivity {
 
         portfolio.setOnClickListener(v -> {
             Intent intent = new Intent(EditContractorProfile.this, EditPortfolio.class);
-            intent.putExtra("businessID", user.getUid());
+            intent.putExtra("documentId", getIntent().getStringExtra("documentId"));
             startActivity(intent);
         });
 
         socials.setOnClickListener(v -> {
             Intent intent = new Intent(EditContractorProfile.this, EditSocialLinks.class);
-            intent.putExtra("businessID", user.getUid());
+            intent.putExtra("documentId", getIntent().getStringExtra("documentId"));
             startActivity(intent);
         });
 
@@ -132,21 +135,24 @@ public class EditContractorProfile extends AppCompatActivity {
 
     private void storeImage() {
         if(changed){
-            StorageReference storage = FirebaseStorage.getInstance().getReference().child("PortfolioEx");
+            StorageReference storage = FirebaseStorage.getInstance().getReference();
             String uid = UUID.randomUUID().toString();
             storage.child(uid).putFile(imageUri).addOnSuccessListener(taskSnapshot ->
                     storage.child(uid).getDownloadUrl().addOnSuccessListener(uri ->
                     {
                         data.put("ProfilePic",uri.toString());
                         data.put("PicLocation",uid);
-                        reference.set(data);
-                        if(!getIntent().getStringExtra("Location").isEmpty())
+                        if(!picLocation.isEmpty())
                             deletePrevious();
+                        reference.set(data);
+                        Toast.makeText(this, "Profile Updated",Toast.LENGTH_SHORT).show();
+                        finish();
+
             }));
         }
         else{
-            data.put("ProfilePic",getIntent().getStringExtra("Uri"));
-            data.put("PicLocation",getIntent().getStringExtra("Location"));
+            data.put("ProfilePic",profilePic);
+            data.put("PicLocation",picLocation);
             reference.set(data);
             Toast.makeText(this, "Profile Updated",Toast.LENGTH_SHORT).show();
             finish();
@@ -154,39 +160,50 @@ public class EditContractorProfile extends AppCompatActivity {
     }
 
     private void deletePrevious(){
-        StorageReference storage = FirebaseStorage.getInstance().getReference().child("PortfolioEx")
-                .child(getIntent().getStringExtra("Locatoin"));
+        StorageReference storage = FirebaseStorage.getInstance().getReference().child(picLocation);
         storage.delete();
-        Toast.makeText(this, "Profile Updated",Toast.LENGTH_SHORT).show();
-        finish();
     }
 
     private void fillInFields() {
-        String name = getIntent().getStringExtra("Name");
-        String address = getIntent().getStringExtra("Address");
-        String[] addressComponents;
-        if(!address.isEmpty())
-            addressComponents = address.split(",");
-        else
-            addressComponents = new String[3];
-        String about = getIntent().getStringExtra("About");
-        String uri = getIntent().getStringExtra("Uri");
+        reference.get().addOnSuccessListener(documentSnapshot -> {
+            type = documentSnapshot.getString("type");
+            email = documentSnapshot.getString("email");
+            userName = documentSnapshot.getString("name");
+            if(documentSnapshot.contains("BusinessName")) {
+                if(!documentSnapshot.getString("BusinessName").isEmpty())
+                {
+                    name.setText(documentSnapshot.getString("BusinessName"));
+                }
+            }
+            if(documentSnapshot.contains("Location")) {
+                if(!documentSnapshot.getString("Location").isEmpty())
+                {
+                    String[] addressComponents = documentSnapshot.getString("Location").split(", ");
+                    streetText.setText(addressComponents[0].trim());
+                    cityText.setText(addressComponents[1].trim());
+                    stateText.setText(addressComponents[2].trim());
+                }
+            }
+            if(documentSnapshot.contains("About")) {
+                if(!documentSnapshot.getString("About").isEmpty())
+                {
+                    about.setText(documentSnapshot.getString("About"));
 
-        if(!name.isEmpty()) {
-            this.name.setText(name);
-            infoExists = true;
-        }
-        if(!about.isEmpty())
-            this.about.setText(about);
-        if(!uri.isEmpty()) {
-            Glide.with(EditContractorProfile.this).load(uri).into(image);
-            picExists = true;
-        }
-        if(addressComponents.length > 0){
-            streetText.setText(addressComponents[0].trim());
-            cityText.setText(addressComponents[1].trim());
-            stateText.setText(addressComponents[2].trim());
-        }
+                }
+            }
+            if (documentSnapshot.contains("ProfilePic")) {
+                if(!documentSnapshot.getString("ProfilePic").isEmpty())
+                {
+                    profilePic = documentSnapshot.getString("ProfilePic");
+                    Glide.with(EditContractorProfile.this).load(profilePic).into(image);
+                }
+            }
+            if(documentSnapshot.contains("PicLocation")){
+                if(!documentSnapshot.getString("PicLocation").isEmpty()){
+                    picLocation = documentSnapshot.getString("PicLocation");
+                }
+            }
+        });
     }
 
     private boolean storeText(){
@@ -222,6 +239,10 @@ public class EditContractorProfile extends AppCompatActivity {
             data.put("BusinessName",name);
             data.put("Location",street + ", " + city + ", " + state);
             data.put("About",about);
+            data.put("email",email);
+            data.put("name",userName);
+            data.put("type",type);
+            data.put("uid",user.getUid());
         }
         return cont;
     }

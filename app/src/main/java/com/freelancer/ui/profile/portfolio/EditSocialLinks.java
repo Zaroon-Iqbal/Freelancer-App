@@ -32,6 +32,8 @@ public class EditSocialLinks extends AppCompatActivity {
     Button done;
     Button cancel;
     TextView add;
+    View left;
+    View right;
     CollectionReference socials;
     ArrayList<SocialLinks> list;
     LinkRecyclerAdapter adapter;
@@ -48,10 +50,12 @@ public class EditSocialLinks extends AppCompatActivity {
         done = binding.done;
         add = binding.addLink;
         cancel = binding.cancel;
+        left = binding.left;
+        right = binding.right;
         list = new ArrayList<>();
 
-        socials = FirebaseFirestore.getInstance().collection("UsersExample").document("ContractorsExample").collection("ContractorData")
-                .document(getIntent().getStringExtra("businessID")).collection("Socials");
+        socials = FirebaseFirestore.getInstance().collection("userListings")
+                .document(getIntent().getStringExtra("documentId")).collection("Socials");
 
         LinearLayoutManager manager = new LinearLayoutManager(this){
             @Override
@@ -67,6 +71,7 @@ public class EditSocialLinks extends AppCompatActivity {
         add.setOnClickListener(v -> {
             list.add(new SocialLinks());
             adapter.notifyItemInserted(list.size()-1);
+            updateAddLink();
         });
 
         done.setOnClickListener(v -> saveLinks());
@@ -109,22 +114,37 @@ public class EditSocialLinks extends AppCompatActivity {
                         list.add(new SocialLinks(entry.getKey(),entry.getValue().toString()));
                     }
                 }
-                adapter = new LinkRecyclerAdapter(list);
+                adapter = new LinkRecyclerAdapter(list,this);
                 recyclerView.setAdapter(adapter);
             }
             else{
                 empty = true;
-                adapter = new LinkRecyclerAdapter(list);
+                adapter = new LinkRecyclerAdapter(list,this);
                 recyclerView.setAdapter(adapter);
             }
         });
+    }
+
+    void updateAddLink(){
+        if(adapter.getItemCount() == 5){
+            add.setVisibility(View.GONE);
+            right.setVisibility(View.GONE);
+            left.setVisibility(View.GONE);
+        }
+        else{
+            add.setVisibility(View.VISIBLE);
+            right.setVisibility(View.VISIBLE);
+            left.setVisibility(View.VISIBLE);
+        }
     }
 }
 
 class LinkRecyclerAdapter extends RecyclerView.Adapter<LinkRecyclerAdapter.LinkViewHolder>{
     ArrayList<SocialLinks> list;
+    EditSocialLinks edit;
 
-    public LinkRecyclerAdapter(ArrayList list){
+    public LinkRecyclerAdapter(ArrayList list, EditSocialLinks edit){
+        this.edit = edit;
         this.list = list;
     }
     @NonNull
@@ -161,6 +181,7 @@ class LinkRecyclerAdapter extends RecyclerView.Adapter<LinkRecyclerAdapter.LinkV
             delete.setOnClickListener(v -> {
                 list.remove(getBindingAdapterPosition());
                 notifyItemRemoved(getBindingAdapterPosition());
+                edit.updateAddLink();
             });
         }
     }

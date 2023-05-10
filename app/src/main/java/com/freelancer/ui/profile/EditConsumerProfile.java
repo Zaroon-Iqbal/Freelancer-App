@@ -112,17 +112,18 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
         submit.setOnClickListener(this);
         updatePic.setOnClickListener(this);
 
-        userDocRef = db.collection("UsersExample").document("ConsumersExample").collection("ConsumerData")
-                .document(user.getUid());
+//        userDocRef = db.collection("UsersExample").document("ConsumersExample").collection("ConsumerData")
+//                .document(user.getUid());
+        userDocRef = db.collection("userListings").document(getIntent().getStringExtra("documentId"));
 
         userDocRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    if(document.contains("Name")) {
-                        if(!document.getString("Name").isEmpty())
+                    if(document.contains("name")) {
+                        if(!document.getString("name").isEmpty())
                         {
-                            nameText.setText(document.getString("Name"));
+                            nameText.setText(document.getString("name"));
                             nameExists = true;
                         }
                     }
@@ -148,11 +149,12 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.submitBtn:
                 if(nameText.getText().toString().trim().length() > 0){
-                    System.out.println("updating name");
-                    userDocRef.update("Name",nameText.getText().toString());
+                    userDocRef.update("name",nameText.getText().toString());
+                    if(imageUri == null)
+                        finish();
                 }
                 if(imageUri != null) {
-                    location = user.getUid() + UUID.randomUUID().toString();
+                    location = UUID.randomUUID().toString();
                     StorageReference imageRef = storageReference.child(location);
                     imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
                         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -171,7 +173,6 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
                         });
                     });
                 }
-                finish();
                 break;
             case R.id.updatePicBtn:
                 if (ContextCompat.checkSelfPermission(EditConsumerProfile.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -200,6 +201,9 @@ public class EditConsumerProfile extends AppCompatActivity implements View.OnCli
     }
 
     public void commitChanges(){
-        write.commit().addOnCompleteListener(task -> Toast.makeText(EditConsumerProfile.this,"Profile updated",Toast.LENGTH_SHORT).show());
+        write.commit().addOnCompleteListener(task -> {
+            Toast.makeText(EditConsumerProfile.this, "Profile updated", Toast.LENGTH_SHORT).show();
+            finish();
+        });
     }
 }

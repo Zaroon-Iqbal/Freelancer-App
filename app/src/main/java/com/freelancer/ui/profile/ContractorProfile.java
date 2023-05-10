@@ -65,8 +65,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
     String businessName = "";
     String aboutBusiness = "";
     String businessAddress = "";
-    String profilePic = "";
-    String picLocation = "";
+    String userId;
     LinearLayout linearLayout;
     ArrayList<TextView> textViews;
 
@@ -75,6 +74,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
         super.onCreate(savedInstance);
         ActivityContractorProfileBinding binding = ActivityContractorProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         linearLayout = binding.linearLayout;
         name = binding.businessName;
@@ -89,22 +89,30 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
         recycler = binding.horizontalPortfolioPreview;
         recycler.setLayoutManager(new LinearLayoutManager(ContractorProfile.this, LinearLayoutManager.HORIZONTAL, false));
         list = new ArrayList<>();
+        textViews = new ArrayList<>();
+
+        fireStore = FirebaseFirestore.getInstance();
+
+//        userDocRef = fireStore.collection("UsersExample").document("ContractorsExample").collection("ContractorData")
+//                .document(user.getUid());
+        userDocRef = fireStore.collection("userListings").document(getIntent().getStringExtra("documentId"));
+        fillBusinessInfo();
 
         fillList(list);
-        fireStore = FirebaseFirestore.getInstance();
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        userDocRef = fireStore.collection("UsersExample").document("ContractorsExample").collection("ContractorData")
-                .document(user.getUid());
-        fillBusinessInfo();
 
         appt.setOnClickListener(v -> {
             //startActivity(new Intent(getApplicationContext(), PickListingDate.class));
+            Bundle bundle = new Bundle();
+            bundle.putString("documentId", getIntent().getStringExtra("documentId"));
             PickListingDate pick = new PickListingDate();
+            pick.setArguments(bundle);
             pick.show(getSupportFragmentManager(),"Pick Listing");
         });
 
         link.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), PortfolioActivity.class));
+            Intent intent = new Intent(getApplicationContext(), PortfolioActivity.class);
+            intent.putExtra("documentId", getIntent().getStringExtra("documentId"));
+            startActivity(intent);
         });
 
         edit.setOnClickListener(v -> {
@@ -112,8 +120,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
             intent.putExtra("Name",businessName);
             intent.putExtra("Address",businessAddress);
             intent.putExtra("About",aboutBusiness);
-            intent.putExtra("Uri",profilePic);
-            intent.putExtra("Location",picLocation);
+            intent.putExtra("documentId", getIntent().getStringExtra("documentId"));
             startActivity(intent);
         });
 
@@ -129,7 +136,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
                 return;
             }
             if (document != null && document.exists()) {
-                storageRef = FirebaseStorage.getInstance().getReference();
+                //storageRef = FirebaseStorage.getInstance().getReference();
                 if(document.contains("BusinessName")) {
                     if(!document.getString("BusinessName").isEmpty())
                     {
@@ -154,15 +161,10 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
                 if (document.contains("ProfilePic")) {
                     if(!document.getString("ProfilePic").isEmpty())
                     {
-                        profilePic = document.getString("ProfilePic");
-                        Glide.with(getApplicationContext()).load(profilePic).into(pic);
+                        Glide.with(ContractorProfile.this).load(document.getString("ProfilePic")).into(pic);
                     }
                 }
-                if(document.contains("PicLocation")){
-                    if(!document.getString("PicLocation").isEmpty()){
-                        picLocation = document.getString("PicLocation");
-                    }
-                }
+                userId = document.getString("uid");
             } else Log.d("FAILED---", "No such document");
         });
 
@@ -172,19 +174,18 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
                 Log.e("ERROR","Listen failed",error);
                 return;
             }
+            if(textViews.size() > 0){
+                for(int i = 0; i < textViews.size(); i++){
+                    linearLayout.removeView(textViews.get(i));
+                }
+                textViews.clear();
+            }
             if(value != null && !value.isEmpty()){
                 DocumentSnapshot snap = value.getDocuments().get(0);
                 Map<String,Object> data = (Map<String, Object>) snap.get("Links");
                 if(!data.isEmpty())
                 {
                     Set<String> keys = data.keySet();
-
-                    if(textViews.size() > 0){
-                        for(int i = 0; i < textViews.size(); i++){
-                            linearLayout.removeView(textViews.get(i));
-                        }
-                    }
-                    textViews = new ArrayList<>();
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     params.setMargins(20, 0, 0, 15);
@@ -205,19 +206,19 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
     }
 
     private void fillList(ArrayList<String> list) {
-        storageRef = FirebaseStorage.getInstance().getReference().child("PortfolioEx");
-        AtomicInteger index = new AtomicInteger();
+        storageRef = FirebaseStorage.getInstance().getReference().child(user.getUid());
 
-        storageRef.list(7).addOnSuccessListener(listResult -> {
-            for(StorageReference item: listResult.getItems()) {
-                item.getDownloadUrl().addOnSuccessListener(uri -> {
-                    list.add(uri.toString());
-                    if (index.get() == listResult.getItems().size() - 1) {
-                        adapter = new HorizontalRecyclerAdpater(list, this);
-                        recycler.setAdapter(adapter);
-                    }
-                    index.getAndIncrement();
-                });
+        CollectionReference reference = userDocRef.collection("Portfolio");
+        reference.addSnapshotListener((value, error) -> {
+            if(value != null && !value.isEmpty()){
+                list.clear();
+                List<DocumentSnapshot> pictures = value.getDocuments();
+                int length = Math.min((pictures.size()), 5);
+                for(int i = 0; i < length; i++){
+                    list.add(pictures.get(i).get("ProfilePhoto").toString());
+                }
+                adapter = new HorizontalRecyclerAdpater(list, this);
+                recycler.setAdapter(adapter);
             }
         });
     }

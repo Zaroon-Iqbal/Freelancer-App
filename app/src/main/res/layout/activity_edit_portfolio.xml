@@ -36,6 +36,14 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/images"
         android:layout_width="match_parent"

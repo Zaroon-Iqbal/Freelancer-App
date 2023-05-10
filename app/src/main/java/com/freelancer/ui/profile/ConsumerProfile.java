@@ -59,10 +59,17 @@ public class ConsumerProfile extends BottomSheetDialogFragment {
 //            }
 //        });
 
-        edit.setOnClickListener(v1 -> startActivity(new Intent(getActivity(), EditConsumerProfile.class)));
+        //edit.setOnClickListener(v1 -> startActivity(new Intent(getActivity(), EditConsumerProfile.class)));
+        edit.setOnClickListener(v1 -> {
+            Intent intent = new Intent(getActivity(), EditConsumerProfile.class);
+            intent.putExtra("documentId",getArguments().getString("documentId"));
+            startActivity(intent);
+        });
 
-        DocumentReference userDocRef = db.collection("UsersExample").document("ConsumersExample").collection("ConsumerData")
-                .document(user.getUid());
+//        DocumentReference userDocRef = db.collection("UsersExample").document("ConsumersExample").collection("ConsumerData")
+//                .document(user.getUid());
+
+        DocumentReference userDocRef = db.collection("userListings").document(getArguments().getString("documentId"));
 
         userDocRef.addSnapshotListener((document, e) -> {
             if(e != null){
@@ -70,9 +77,9 @@ public class ConsumerProfile extends BottomSheetDialogFragment {
                 return;
             }
             if(document != null && document.exists()){
-                if(document.contains("Name")) {
-                    if(!document.getString("Name").isEmpty())
-                        name.setText(document.getString("Name"));
+                if(document.contains("name")) {
+                    if(!document.getString("name").isEmpty())
+                        name.setText(document.getString("name"));
                 }
                 if(document.contains("Rating"))
                     rating.setText(document.getString("Rating"));

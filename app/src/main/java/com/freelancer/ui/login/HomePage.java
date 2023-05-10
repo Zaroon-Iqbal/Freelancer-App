@@ -23,6 +23,7 @@ import com.freelancer.ui.profile.ContractorProfile;
 import com.freelancer.ui.profile.EditContractorProfile;
 import com.freelancer.ui.profile.portfolio.EditPortfolio;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,11 +32,13 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class HomePage extends AppCompatActivity {
     private static int count = 0;
     private static Toast toast;
-    String type = "";
+    String type;
+    String documentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,27 +50,15 @@ public class HomePage extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.freelancerlogo2);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("UsersExample");
-
-        DocumentReference consumer = collectionReference.document("ConsumersExample").collection("ConsumerData").document(user.getUid());
-        DocumentReference contractor = collectionReference.document("ContractorsExample").collection("ContractorData").document(user.getUid());
-
-        consumer.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists())
-                    type = "consumer";
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("userListings");
+        collectionReference.whereEqualTo("uid",user.getUid()).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            if(!queryDocumentSnapshots.isEmpty()){
+                for(DocumentSnapshot document: queryDocumentSnapshots.getDocuments()){
+                    type = document.getString("type");
+                    documentId  = document.getId();
+                }
             }
         });
-
-        contractor.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists())
-                    type = "contractor";
-            }
-        });
-
 
         imageView.setOnClickListener(view -> {
             count++;
@@ -76,7 +67,7 @@ public class HomePage extends AppCompatActivity {
             }
             if (count == 3) { //by clicking on the freelancer name 5 times you will be navigated
                 count = 0;
-                startActivity(new Intent(this.getApplicationContext(), EditPortfolio.class));
+                startActivity(new Intent(this.getApplicationContext(), TestingActivity.class));
                 toast = Toast.makeText(getApplicationContext(), "Welcome to the secret menu \uD83D\uDE0E \uD83D\uDD25", Toast.LENGTH_SHORT);
                 toast.show();
                 return;
@@ -115,10 +106,16 @@ public class HomePage extends AppCompatActivity {
 
                     //When user clicks on the profile icon
                     case R.id.ProfileNav:
-                        if(type.equalsIgnoreCase("contractor"))
-                            startActivity(new Intent(getApplicationContext(), ContractorProfile.class));
+                        if(type.equalsIgnoreCase("contractor")) {
+                            Intent intent = new Intent(getApplicationContext(), ContractorProfile.class);
+                            intent.putExtra("documentId",documentId);
+                            startActivity(intent);
+                        }
                         else if (type.equalsIgnoreCase("consumer")) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("documentId",documentId);
                             ConsumerProfile consumer = new ConsumerProfile();
+                            consumer.setArguments(bundle);
                             consumer.show(getSupportFragmentManager(),"Consumer Profile");
                         }
                         else {

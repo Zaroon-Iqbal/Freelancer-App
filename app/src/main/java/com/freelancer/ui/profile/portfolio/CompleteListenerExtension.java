@@ -22,27 +22,35 @@ import java.util.HashMap;
 public class CompleteListenerExtension implements OnSuccessListener<Uri> {
 
     int position;
+    static int tracker = -1;
     String[] uids;
     Date[] dates;
+    CollectionReference collection;
+    EditPortfolio edit;
 
-    public CompleteListenerExtension(String[] uids, Date[] dates, int pos){
+    public CompleteListenerExtension(CollectionReference collection, EditPortfolio edit, String[] uids, Date[] dates, int pos){
         position = pos;
         this.uids = uids;
         this.dates = dates;
+        this.collection = collection;
+        if(tracker == -1)
+            tracker = uids.length;
+        this.edit = edit;
     }
 
     @Override
     public void onSuccess(Uri uri) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        CollectionReference portfolio = FirebaseFirestore.getInstance().collection("UsersExample")
-                .document("ContractorsExample").collection("ContractorData")
-                .document(user.getUid()).collection("Portfolio");
         HashMap<String,Object> data = new HashMap<>();
 
         data.put("ProfilePhoto",uri);
         data.put("Timestamp",dates[position]);
 
-        portfolio.document(uids[position]).set(data).addOnFailureListener(e ->
-                Log.e("ERROR---","Could not create reference for an image"));
+        collection.document(uids[position]).set(data).addOnCompleteListener(task -> {
+            --tracker;
+            if (!task.isSuccessful())
+                Log.e("ERROR---","Could not create reference for an image");
+            if (tracker == 0)
+                edit.displayPortfolio();
+        });
     }
 }

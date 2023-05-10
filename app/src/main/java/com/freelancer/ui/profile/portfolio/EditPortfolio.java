@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -24,6 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -57,15 +60,23 @@ public class EditPortfolio extends AppCompatActivity implements RecyclerViewInte
     HashMap<String,Object> data;
     StorageReference storageReference;
     int numOfPics;
+    FirebaseUser user;
+    ProgressBar progressBar;
 
 
     ActivityResultLauncher<Intent> pickPhotos = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), uri -> {
         if(uri != null)
         {
             Intent i = uri.getData();
-            ClipData uris = i.getClipData();
+            if(i != null)
+            {
+                progressBar.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                toolbar.setVisibility(View.GONE);
+                ClipData uris = i.getClipData();
 
-            uploadImages(uris);
+                uploadImages(uris);
+            }
         }
     });
 
@@ -75,17 +86,20 @@ public class EditPortfolio extends AppCompatActivity implements RecyclerViewInte
         ActivityEditPortfolioBinding binding = ActivityEditPortfolioBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         toolbar = binding.topAppBar;
         deletebar = binding.contextAppBar;
         recyclerView = binding.images;
+        progressBar = binding.progress;
 
         toolbar.setVisibility(View.VISIBLE);
 
-        storageReference = FirebaseStorage.getInstance().getReference().child("PortfolioEx");
+        storageReference = FirebaseStorage.getInstance().getReference().child(user.getUid());
 
-        collection = FirebaseFirestore.getInstance().collection("UsersExample")
-                .document("ContractorsExample").collection("ContractorData")
-                .document(getIntent().getStringExtra("businessID")).collection("Portfolio");
+        collection = FirebaseFirestore.getInstance().collection("userListings")
+                .document(getIntent().getStringExtra("documentId")).collection("Portfolio");
+
         displayPortfolio();
 
         recyclerView.setLayoutManager(new GridLayoutManager(EditPortfolio.this,2));
@@ -141,7 +155,7 @@ public class EditPortfolio extends AppCompatActivity implements RecyclerViewInte
 
 
         for(int x = 0; x< uris.getItemCount(); x++) {
-            StorageReference ref = storageReference.child(uids[x]);
+            StorageReference ref = storageReference.child(uids[uris.getItemCount() - x - 1]);
             ref.putFile(uris.getItemAt(x).getUri()).addOnCompleteListener(task -> {
                 --numOfPics;
                 if(numOfPics == 0)
@@ -153,7 +167,7 @@ public class EditPortfolio extends AppCompatActivity implements RecyclerViewInte
     private void createReferences(){
         for(int x = 0; x < uids.length; x++){
             StorageReference ref = storageReference.child(uids[x]);
-            ref.getDownloadUrl().addOnSuccessListener(new CompleteListenerExtension(uids,dates,x));
+            ref.getDownloadUrl().addOnSuccessListener(new CompleteListenerExtension(collection,this,uids,dates,x));
         }
     }
 
@@ -175,29 +189,52 @@ public class EditPortfolio extends AppCompatActivity implements RecyclerViewInte
     private void deleteImages() {
         DocumentReference document;
         ArrayList<ImageInfo> copy = new ArrayList<>(list);
+        numOfPics = set.size() * 2;
         System.out.println(set);
         for(Integer i: set){
             document = collection.document(copy.get(i).path);
-            document.delete().addOnFailureListener(e ->
-                    Log.e("ERROR----","Could not delete an image from Firestore", e));
-            storageReference.child(copy.get(i).path).delete().addOnFailureListener(e ->
-                    Log.e("ERROR----","Could not delete an image from Storage", e));
+            document.delete().addOnCompleteListener(task -> {
+                --numOfPics;
+                if(!task.isSuccessful()){
+                    Log.e("ERROR----","Could not delete an image from Firestore", task.getException());
+                }
+                if(numOfPics == 0){
+                    displayPortfolio();
+                }
+            });
+            storageReference.child(copy.get(i).path).delete().addOnCompleteListener(task -> {
+                --numOfPics;
+                if(!task.isSuccessful()){
+                    Log.e("ERROR----","Could not delete an image from Storage", task.getException());
+                }
+                if(numOfPics == 0)
+                    displayPortfolio();
+            });
         }
         deletebar.setVisibility(View.GONE);
         toolbar.setVisibility(View.VISIBLE);
     }
 
-    private void displayPortfolio() {
-        collection.orderBy("Timestamp", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
-            list = new ArrayList<>();
-            if(error != null)
-                Log.e("ERROR----","Could not get collection info",error);
-            else if (value != null && !value.isEmpty()) {
+    void displayPortfolio() {
+        list = new ArrayList<>();
+
+        collection.orderBy("Timestamp", Query.Direction.DESCENDING).get().addOnSuccessListener(value -> {
+            if(!value.isEmpty()){
                 for(DocumentSnapshot documents:value.getDocuments()){
-                list.add(new ImageInfo(documents.getString("ProfilePhoto"),documents.getId()));
+                    list.add(new ImageInfo(documents.getString("ProfilePhoto"),documents.getId()));
+                }
+                adapter = new PortfolioRecyclerview(list,EditPortfolio.this);
+                recyclerView.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                toolbar.setVisibility(View.VISIBLE);
             }
-            adapter = new PortfolioRecyclerview(list,EditPortfolio.this);
-            recyclerView.setAdapter(adapter);
+            else{
+                adapter = new PortfolioRecyclerview(list,EditPortfolio.this);
+                recyclerView.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                toolbar.setVisibility(View.VISIBLE);
             }
         });
     }
