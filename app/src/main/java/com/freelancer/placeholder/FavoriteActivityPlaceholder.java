@@ -74,8 +74,6 @@ public class FavoriteActivityPlaceholder extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.FavoriteNav);
-        Button customerButton = findViewById(R.id.testCustomer);
-        Button contractorButton = findViewById(R.id.testContractor);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("UsersExample");
@@ -98,18 +96,7 @@ public class FavoriteActivityPlaceholder extends AppCompatActivity {
                     type = "contractor";
             }
         });
-        customerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FavoriteActivityPlaceholder.this, CustomerBidMain.class));
-            }
-        });
-        contractorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FavoriteActivityPlaceholder.this, BiddingContractorMain.class));
-            }
-        });
+        
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
