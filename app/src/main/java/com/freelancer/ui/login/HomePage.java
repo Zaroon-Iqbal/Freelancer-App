@@ -140,7 +140,7 @@ public class HomePage extends AppCompatActivity {
             if (count == 3) { //by clicking on the freelancer name 5 times you will be navigated
                 count = 0;
                 Intent intent = new Intent(getApplicationContext(), ContractorProfile.class);
-                intent.putExtra("uid","D6QSDVdSuObAGtBWKrY7wtMsM7U2");
+                intent.putExtra("uid","VnLSptq4oTQuVhhPztbjvTzu0xz2");
                 startActivity(intent);
                 //startActivity(new Intent(this.getApplicationContext(), TestingActivity.class));
 //                Bundle bundle = new Bundle();

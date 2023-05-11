@@ -30,9 +30,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, HomePage.class));
-        }
+//        if (firebaseAuth.getCurrentUser() != null) {
+//            startActivity(new Intent(LoginActivity.this, HomePage.class));
+//        }
         super.onCreate(savedInstanceState);
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
