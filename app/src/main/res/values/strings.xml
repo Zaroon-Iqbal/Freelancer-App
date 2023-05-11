@@ -2,7 +2,7 @@
 <!--contributors: Zaroon, Spencer, Edward, anthony-->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Freelancer</string>
-    <string name="admob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713 </string>
+    <string name="admob_app_id" translatable="false">ca-app-pub-7873583459963929~4306789284 </string>
     <string name="admob_banner_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
