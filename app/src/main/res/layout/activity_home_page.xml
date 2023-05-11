@@ -27,7 +27,7 @@
         android:text="@string/popular_near_you"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,120 +52,79 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                <!--The Hair Styling Button-->
-                <Button
-                    android:id="@+id/business_placeholder1"
-                    android:layout_width="157dp"
-                    android:layout_height="151dp"
-                    android:text="@string/hair_styling"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <ImageButton
+                    android:id="@+id/iconContractor1"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
 
-                <!--The Towing Button-->
-                <Button
-                    android:id="@+id/business_placeholder2"
-                    android:layout_width="157dp"
-                    android:layout_height="151dp"
-                    android:layout_marginStart="32dp"
-                    android:text="@string/towing"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toEndOf="@+id/business_placeholder1"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <ImageButton
+                    android:id="@+id/iconContractor2"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/calendar_icons" />
 
-                <!--The Home Repair Button-->
-                <Button
-                    android:id="@+id/business_placeholder3"
-                    android:layout_width="157dp"
-                    android:layout_height="151dp"
-                    android:layout_marginStart="32dp"
-                    android:text="@string/home_repair"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toEndOf="@+id/business_placeholder2"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageButton
+                    android:id="@+id/iconContractor3"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/calendar_icons" />
+
+                <ImageButton
+                    android:id="@+id/iconContractor4"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/calendar_icons" />
+
+                <ImageButton
+                    android:id="@+id/iconContractor5"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/calendar_icons" />
+            </LinearLayout>
         </HorizontalScrollView>
 
     </ScrollView>
 
     <!--Paid Promotion scroll section by Zaroon Iqbal-->
     <TextView
-        android:id="@+id/PaidPromotion"
+        android:id="@+id/mapText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/promotions"
+        android:text="Map"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scroll1" />
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="198dp"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PaidPromotion"
-        app:layout_constraintVertical_bias="0.026">
-
-        <!--Makes the scrolling animation occur horizontally-->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <!--Towing Discount Button-->
-                <Button
-                    android:id="@+id/paidpromotion1"
-                    android:layout_width="157dp"
-                    android:layout_height="151dp"
-                    android:text="@string/discount_on_towing"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <!--Detailing Discount Button-->
-                <Button
-                    android:id="@+id/paidpromotion2"
-                    android:layout_width="157dp"
-                    android:layout_height="151dp"
-                    android:layout_marginStart="32dp"
-                    android:text="@string/discount_on_detailing"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toEndOf="@+id/paidpromotion1"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <!--Haircut Discount Button-->
-                <Button
-                    android:id="@+id/paidpromotion3"
-                    android:layout_width="157dp"
-                    android:layout_height="151dp"
-                    android:layout_marginStart="32dp"
-                    android:text="@string/discount_on_haircuts"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toEndOf="@+id/paidpromotion2"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </HorizontalScrollView>
-
-    </ScrollView>
-
     <!--Bottom Navigation Bar added by Edward Kuoch-->
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="110dp"
+        android:text="Bidding"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scroll1"
+        app:layout_constraintVertical_bias="0.0" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
@@ -203,5 +162,29 @@
         tools:ignore="MissingClass,MissingConstraints"
         tools:layout_editor_absoluteX="45dp"
         tools:layout_editor_absoluteY="679dp"></com.google.android.gms.ads.AdView>
+
+    <ImageButton
+        android:id="@+id/mapHomeButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="166dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scroll1"
+        app:srcCompat="@android:drawable/ic_dialog_map" />
+
+    <ImageButton
+        android:id="@+id/biddingHomeButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="165dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scroll1"
+        app:srcCompat="@drawable/calendar_icons" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
