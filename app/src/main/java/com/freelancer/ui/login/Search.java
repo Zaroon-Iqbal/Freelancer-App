@@ -17,6 +17,7 @@ import com.freelancer.joblisting.creation.model.JobInfoModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.core.View;
@@ -81,12 +82,19 @@ public class Search extends Activity {
                         List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot snapshot : snapshotList) {
                             Log.d(TAG, "onSuccess: " + snapshot.getData().toString());
-                            String temp = snapshot.getString("title") + "\n" + snapshot.getString("description") + "\t\t$" + snapshot.getDouble("basePrice") + "\t\t" + snapshot.getDouble("radius") + "mi";
+                            String temp = snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "title"))) + "\n" +
+                                    snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "description")))+ "\t\t\n$" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "basePrice"))) + "\t\t" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "radius"))) + " mi";
 
-                            JobInfoModel jobInfoModel = snapshot.get("jobInfo", JobInfoModel.class);
-                            Log.i("Job info", "Data: " + jobInfoModel);
+                            // JobInfoModel jobInfoModel = snapshot.get("jobInfo", JobInfoModel.class);
+                            // Log.i("Job info", "Data: " + jobInfoModel);
 
+                            Log.d(TAG, "onSuccess: " + temp);
                             arr.add(temp);
+                            //if (snapshot.getString("name") != null) {
+                            //arr.add(temp);
+                            //}
                             Log.d(TAG, "onSuccess: " + arr);
                         }
                     }
@@ -106,7 +114,7 @@ public class Search extends Activity {
         listView.setAdapter(adapter);
         FirebaseFirestore.getInstance()
                 .collection("jobListings")
-                .whereGreaterThanOrEqualTo("basePrice", 100)
+                .whereGreaterThanOrEqualTo(FieldPath.of("jobInfo", "basePrice"), 100)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -114,7 +122,11 @@ public class Search extends Activity {
                         List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot snapshot : snapshotList) {
                             Log.d(TAG, "onSuccess: " + snapshot.getData().toString());
-                            String temp = snapshot.getString("title") + "\n" + snapshot.getString("description") + "\t\t$" + snapshot.getDouble("basePrice") + "\t\t" + snapshot.getDouble("radius") + "mi";
+                            String temp = snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "title"))) + "\n" +
+                                    snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "description")))+ "\t\t\n$" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "basePrice"))) + "\t\t" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "radius"))) + " mi";
+                            Log.d(TAG, "onSuccess: " + temp);
                             arr.add(temp);
                             Log.d(TAG, "onSuccess: " + arr);
                         }
@@ -136,7 +148,7 @@ public class Search extends Activity {
         listView.setAdapter(adapter);
         FirebaseFirestore.getInstance()
                 .collection("jobListings")
-                .whereLessThan("basePrice", 100)
+                .whereLessThan(FieldPath.of("jobInfo", "basePrice"), 100)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -144,7 +156,11 @@ public class Search extends Activity {
                         List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot snapshot : snapshotList) {
                             Log.d(TAG, "onSuccess: " + snapshot.getData().toString());
-                            String temp = snapshot.getString("title") + "\n" + snapshot.getString("description") + "\t\t$" + snapshot.getDouble("basePrice") + "\t\t" + snapshot.getDouble("radius") + "mi";
+                            String temp = snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "title"))) + "\n" +
+                                    snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "description")))+ "\t\t\n$" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "basePrice"))) + "\t\t" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "radius"))) + " mi";
+                            Log.d(TAG, "onSuccess: " + temp);
                             arr.add(temp);
                             Log.d(TAG, "onSuccess: " + arr);
                         }
@@ -165,7 +181,7 @@ public class Search extends Activity {
         listView.setAdapter(adapter);
         FirebaseFirestore.getInstance()
                 .collection("jobListings")
-                .whereLessThan("basePrice", 50)
+                .whereLessThan(FieldPath.of("jobInfo", "basePrice"), 50)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -173,7 +189,11 @@ public class Search extends Activity {
                         List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot snapshot : snapshotList) {
                             Log.d(TAG, "onSuccess: " + snapshot.getData().toString());
-                            String temp = snapshot.getString("title") + "\n" + snapshot.getString("description") + "\t\t$" + snapshot.getDouble("basePrice") + "\t\t" + snapshot.getDouble("radius") + "mi";
+                            String temp = snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "title"))) + "\n" +
+                                    snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "description")))+ "\t\t\n$" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "basePrice"))) + "\t\t" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "radius"))) + " mi";
+                            Log.d(TAG, "onSuccess: " + temp);
                             arr.add(temp);
                             Log.d(TAG, "onSuccess: " + arr);
                         }
@@ -194,7 +214,7 @@ public class Search extends Activity {
         listView.setAdapter(adapter);
         FirebaseFirestore.getInstance()
                 .collection("jobListings")
-                .whereGreaterThanOrEqualTo("radius", 50)
+                .whereGreaterThanOrEqualTo(FieldPath.of("jobInfo", "radius"), 50)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -202,7 +222,11 @@ public class Search extends Activity {
                         List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot snapshot : snapshotList) {
                             Log.d(TAG, "onSuccess: " + snapshot.getData().toString());
-                            String temp = snapshot.getString("title") + "\n" + snapshot.getString("description") + "\t\t$" + snapshot.getDouble("basePrice") + "\t\t" + snapshot.getDouble("radius") + "mi";
+                            String temp = snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "title"))) + "\n" +
+                                    snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "description")))+ "\t\t\n$" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "basePrice"))) + "\t\t" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "radius"))) + " mi";
+                            Log.d(TAG, "onSuccess: " + temp);
                             arr.add(temp);
                             Log.d(TAG, "onSuccess: " + arr);
                         }
@@ -223,7 +247,7 @@ public class Search extends Activity {
         listView.setAdapter(adapter);
         FirebaseFirestore.getInstance()
                 .collection("jobListings")
-                .whereLessThan("radius", 50)
+                .whereLessThanOrEqualTo(FieldPath.of("jobInfo", "radius"), 20)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -231,7 +255,11 @@ public class Search extends Activity {
                         List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot snapshot : snapshotList) {
                             Log.d(TAG, "onSuccess: " + snapshot.getData().toString());
-                            String temp = snapshot.getString("title") + "\n" + snapshot.getString("description") + "\t\t$" + snapshot.getDouble("basePrice") + "\t\t" + snapshot.getDouble("radius") + "mi";
+                            String temp = snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "title"))) + "\n" +
+                                    snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "description")))+ "\t\t\n$" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "basePrice"))) + "\t\t" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "radius"))) + " mi";
+                            Log.d(TAG, "onSuccess: " + temp);
                             arr.add(temp);
                             Log.d(TAG, "onSuccess: " + arr);
                         }
@@ -252,7 +280,7 @@ public class Search extends Activity {
         listView.setAdapter(adapter);
         FirebaseFirestore.getInstance()
                 .collection("jobListings")
-                .whereLessThanOrEqualTo("radius", 20)
+                .whereLessThanOrEqualTo(FieldPath.of("jobInfo", "radius"), 10)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -260,7 +288,11 @@ public class Search extends Activity {
                         List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot snapshot : snapshotList) {
                             Log.d(TAG, "onSuccess: " + snapshot.getData().toString());
-                            String temp = snapshot.getString("title") + "\n" + snapshot.getString("description") + "\t\t$" + snapshot.getDouble("basePrice") + "\t\t" + snapshot.getDouble("radius") + "mi";
+                            String temp = snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "title"))) + "\n" +
+                                    snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "description")))+ "\t\t\n$" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "basePrice"))) + "\t\t" +
+                                    snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "radius"))) + " mi";
+                            Log.d(TAG, "onSuccess: " + temp);
                             arr.add(temp);
                             Log.d(TAG, "onSuccess: " + arr);
                         }
