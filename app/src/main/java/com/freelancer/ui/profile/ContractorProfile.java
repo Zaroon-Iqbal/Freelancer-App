@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.freelancer.R;
 import com.freelancer.databinding.ActivityContractorProfileBinding;
 import com.freelancer.joblisting.CreateJobListingTabbedActivity;
+import com.freelancer.placeholder.MessageActivityPlaceholder;
 import com.freelancer.ui.booking.PickListingDate;
 import com.freelancer.ui.profile.portfolio.HorizontalRecyclerAdpater;
 import com.freelancer.ui.profile.portfolio.PortfolioActivity;
@@ -187,8 +188,9 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
 
 
         back.setOnClickListener(v -> finish());
-
-        //appt.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.youtube.com/@HairHood"))));
+        message.setOnClickListener(v -> {
+            startActivity(new Intent(ContractorProfile.this, MessageActivityPlaceholder.class));
+        });
     }
 
     private void fillBusinessInfo() {
