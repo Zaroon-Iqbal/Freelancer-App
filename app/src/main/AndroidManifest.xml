@@ -17,6 +17,8 @@
         android:roundIcon="@drawable/logotransparent"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.history.AppointmentDetails"
+            android:exported="false"/>
         <activity
             android:name=".Queue"
             android:exported="false">

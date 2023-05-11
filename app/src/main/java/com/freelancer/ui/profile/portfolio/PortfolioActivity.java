@@ -56,15 +56,14 @@ public class PortfolioActivity extends AppCompatActivity implements RecyclerView
         list = new ArrayList<>();
         fillList(list);
         recyclerView.setLayoutManager(new GridLayoutManager(PortfolioActivity.this,2));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     public void fillList(ArrayList<ImageInfo> list){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        CollectionReference collection = FirebaseFirestore.getInstance().collection("UsersExample")
-                .document("ContractorsExample").collection("ContractorData")
-                .document(user.getUid()).collection("Portfolio");
+        CollectionReference collection = FirebaseFirestore.getInstance().collection("userListings")
+                .document(getIntent().getStringExtra("documentId")).collection("Portfolio");
 
         collection.orderBy("Timestamp", Query.Direction.DESCENDING).get().addOnSuccessListener(queryDocumentSnapshots -> {
             if(queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()){

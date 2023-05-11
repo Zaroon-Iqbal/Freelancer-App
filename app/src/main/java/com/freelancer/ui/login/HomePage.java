@@ -26,6 +26,7 @@ import com.freelancer.placeholder.ProfileActivityPlaceholder;
 import com.freelancer.ui.bidding.BiddingContractorMain;
 import com.freelancer.ui.bidding.Customer.CustomerBidMain;
 import com.freelancer.ui.map.MapActivity;
+import com.freelancer.ui.history.AppointmentList;
 import com.freelancer.ui.profile.ConsumerProfile;
 import com.freelancer.ui.profile.ContractorProfile;
 import com.google.android.gms.ads.AdListener;
@@ -137,7 +138,15 @@ public class HomePage extends AppCompatActivity {
             }
             if (count == 3) { //by clicking on the freelancer name 5 times you will be navigated
                 count = 0;
-                startActivity(new Intent(this.getApplicationContext(), TestingActivity.class));
+                Intent intent = new Intent(getApplicationContext(), ContractorProfile.class);
+                intent.putExtra("uid","D6QSDVdSuObAGtBWKrY7wtMsM7U2");
+                startActivity(intent);
+                //startActivity(new Intent(this.getApplicationContext(), TestingActivity.class));
+//                Bundle bundle = new Bundle();
+//                bundle.putString("uid","DHsQ6UhQMLPqthv5us9Y4ByIN4u1");
+//                PickListingDate listingDate = new PickListingDate();
+//                listingDate.setArguments(bundle);
+//                listingDate.show(getSupportFragmentManager(),"Pick Job Listing");
                 toast = Toast.makeText(getApplicationContext(), "Welcome to the secret menu \uD83D\uDE0E \uD83D\uDD25", Toast.LENGTH_SHORT);
                 toast.show();
                 return;
@@ -158,8 +167,10 @@ public class HomePage extends AppCompatActivity {
 
                     //When user clicks on the calendar icon
                     case R.id.CalendarNav:
-                        startActivity(new Intent(getApplicationContext(), CalendarActivity.class));
-                        overridePendingTransition(0, 0);
+//                        startActivity(new Intent(getApplicationContext(), CalendarActivity.class));
+//                        overridePendingTransition(0, 0);
+                        AppointmentList appointmentList = new AppointmentList();
+                        appointmentList.show(getSupportFragmentManager(),"Appointments");
                         return true;
 
                     //When user clicks on the favorites icon
@@ -179,6 +190,8 @@ public class HomePage extends AppCompatActivity {
                         if (type.equalsIgnoreCase("contractor")) {
                             Intent intent = new Intent(getApplicationContext(), ContractorProfile.class);
                             intent.putExtra("documentId", documentId);
+                            intent.putExtra("documentId",documentId);
+                            intent.putExtra("uid",user.getUid());
                             startActivity(intent);
                         } else if (type.equalsIgnoreCase("consumer")) {
                             Bundle bundle = new Bundle();

@@ -20,22 +20,28 @@
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+
             android:layout_marginTop="5dp"
             android:visibility="gone">
-            <RadioButton
-                android:id="@+id/yesButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Yes"
-                android:layout_marginRight="10dp"/>
-            <RadioButton
-                android:id="@+id/noButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No"/>
+
         </RadioGroup>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/formLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength = "100"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"
+            android:visibility="gone">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/formText"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:inputType="textMultiLine"
+                android:gravity="start"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

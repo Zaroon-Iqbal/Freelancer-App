@@ -18,46 +18,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JobListing implements Parcelable {
-    String content;
-    String timestamp;
-    String businessName;
-    String address;
-    String price;
-    Map<String,Object> map;
     Map<String,Object> customOptions = new HashMap<>();
     boolean exists = false;
     Map<String,Object> jobInfo;
 
-    public JobListing(Map<String,Object> map, String name, String address){
-        //this.map = map;
+    public JobListing(Map<String,Object> map){
         jobInfo = (Map<String, Object>)map.get("jobInfo");
         jobInfo.put("Job Listing ID",map.get("Job Listing ID"));
+        jobInfo.put("businessId",map.get("userId"));
         if(map.containsKey("customOptions")) {
             customOptions = (Map<String, Object>) map.get("customOptions");
             exists = true;
         }
-        this.content = (String) ((Map)map.get("jobInfo")).get("description");
-        this.businessName = name;
-        this.address = address;
-        this.price = (String) ((Map)map.get("jobInfo")).get("basePrice");
-//        if(((Map)map.get("jobInfo")).containsKey("Appt Time"))
-//        {
-//            Date date = ((Timestamp)((Map)map.get("jobInfo")).get("Appt Time")).toDate();
-//            Calendar calendar1 = new GregorianCalendar();
-//            calendar1.setTime(date);
-//            int ind = calendar1.get(Calendar.AM_PM);
-//            String ampm = (ind == 0) ? "AM":"PM";
-//            Formatter formatter = new Formatter();
-//            formatter = formatter.format("%tl:%tM",calendar1,calendar1);
-//            String time = formatter.toString()+ampm;
-//            timestamp = time;
-//        }
     }
 
     public JobListing(Parcel in){
-        businessName = in.readString();
-        address = in.readString();
-
         jobInfo = new HashMap<>();
         Bundle b1 = in.readBundle();
         for(String string: b1.keySet()){
@@ -90,9 +65,6 @@ public class JobListing implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeString(businessName);
-        dest.writeString(address);
-
         Bundle b1 = new Bundle();
         for(Map.Entry<String,Object> entry: jobInfo.entrySet()){
             b1.putString(entry.getKey(), (String) entry.getValue());

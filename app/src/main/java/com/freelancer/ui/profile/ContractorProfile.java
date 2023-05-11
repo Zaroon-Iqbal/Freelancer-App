@@ -18,11 +18,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.freelancer.R;
 import com.freelancer.databinding.ActivityContractorProfileBinding;
+import com.freelancer.joblisting.CreateJobListingTabbedActivity;
 import com.freelancer.ui.booking.PickListingDate;
 import com.freelancer.ui.profile.portfolio.HorizontalRecyclerAdpater;
 import com.freelancer.ui.profile.portfolio.PortfolioActivity;
 import com.freelancer.ui.profile.portfolio.RecyclerViewInterface;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,19 +58,26 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
     Button message;
     Button appt;
     Button edit;
+    Button jobListing;
     RecyclerView recycler;
+    RecyclerView reviews;
     ArrayList<String> list;
     HorizontalRecyclerAdpater adapter;
+    HorizontalRecyclerAdpater adapter1;
     StorageReference storageRef;
     FirebaseFirestore fireStore;
     DocumentReference userDocRef;
+    CollectionReference userCollRef;
     FirebaseUser user;
     String businessName = "";
     String aboutBusiness = "";
     String businessAddress = "";
     String userId;
+    String uid;
+    String docId;
     LinearLayout linearLayout;
     ArrayList<TextView> textViews;
+    boolean same;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -76,53 +86,105 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
         setContentView(binding.getRoot());
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        uid = getIntent().getStringExtra("uid");
+        docId = getIntent().getStringExtra("documentId");
+
+        if(uid!=null && uid.equalsIgnoreCase(user.getUid()))
+            same = true;
+        else
+            same = false;
+
         linearLayout = binding.linearLayout;
         name = binding.businessName;
         address = binding.businessAddress;
         about = binding.about;
         pic = binding.businessPic;
         link = binding.portfolioLink;
+        jobListing = binding.jobListing;
+        reviews= binding.reviews;
+        edit = binding.editButton;
+        if(same) {
+            jobListing.setVisibility(View.VISIBLE);
+            edit.setVisibility(View.VISIBLE);
+        }
         message = binding.messageButton;
         appt = binding.appointmentButton;
-        edit = binding.editButton;
+        if(!same){
+            message.setVisibility(View.VISIBLE);
+            appt.setVisibility(View.VISIBLE);
+        }
+
         back = binding.back;
         recycler = binding.horizontalPortfolioPreview;
         recycler.setLayoutManager(new LinearLayoutManager(ContractorProfile.this, LinearLayoutManager.HORIZONTAL, false));
+        reviews.setLayoutManager(new LinearLayoutManager(ContractorProfile.this,RecyclerView.HORIZONTAL,false));
         list = new ArrayList<>();
         textViews = new ArrayList<>();
 
         fireStore = FirebaseFirestore.getInstance();
+        if(same)
+        {
+            userDocRef = fireStore.collection("userListings").document(docId);
+            fillBusinessInfo();
 
-//        userDocRef = fireStore.collection("UsersExample").document("ContractorsExample").collection("ContractorData")
-//                .document(user.getUid());
-        userDocRef = fireStore.collection("userListings").document(getIntent().getStringExtra("documentId"));
-        fillBusinessInfo();
+            fillList(list);
 
-        fillList(list);
+            link.setOnClickListener(v -> {
+                Intent intent = new Intent(getApplicationContext(), PortfolioActivity.class);
+                intent.putExtra("documentId", docId);
+                startActivity(intent);
+            });
+
+            edit.setOnClickListener(v -> {
+                Intent intent = new Intent(ContractorProfile.this, EditContractorProfile.class);
+                intent.putExtra("Name",businessName);
+                intent.putExtra("Address",businessAddress);
+                intent.putExtra("About",aboutBusiness);
+                intent.putExtra("documentId", docId);
+                startActivity(intent);
+            });
+        }
+        else {
+            userCollRef = fireStore.collection("userListings");
+            userCollRef.whereEqualTo("uid",uid).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                if(queryDocumentSnapshots!=null && !queryDocumentSnapshots.isEmpty()){
+                    DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                    docId = document.getId();
+                    userDocRef = fireStore.collection("userListings").document(docId);
+                    fillBusinessInfo();
+
+                    fillList(list);
+
+                    link.setOnClickListener(v -> {
+                        Intent intent = new Intent(getApplicationContext(), PortfolioActivity.class);
+                        intent.putExtra("documentId", docId);
+                        startActivity(intent);
+                    });
+
+                    edit.setOnClickListener(v -> {
+                        Intent intent = new Intent(ContractorProfile.this, EditContractorProfile.class);
+                        intent.putExtra("Name",businessName);
+                        intent.putExtra("Address",businessAddress);
+                        intent.putExtra("About",aboutBusiness);
+                        intent.putExtra("documentId", docId);
+                        startActivity(intent);
+                    });
+                }
+            });
+        }
+
+
+
+        jobListing.setOnClickListener(v -> startActivity(new Intent(ContractorProfile.this, CreateJobListingTabbedActivity.class)));
 
         appt.setOnClickListener(v -> {
-            //startActivity(new Intent(getApplicationContext(), PickListingDate.class));
             Bundle bundle = new Bundle();
-            bundle.putString("documentId", getIntent().getStringExtra("documentId"));
+            bundle.putString("uid",uid);
             PickListingDate pick = new PickListingDate();
             pick.setArguments(bundle);
             pick.show(getSupportFragmentManager(),"Pick Listing");
         });
 
-        link.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), PortfolioActivity.class);
-            intent.putExtra("documentId", getIntent().getStringExtra("documentId"));
-            startActivity(intent);
-        });
-
-        edit.setOnClickListener(v -> {
-            Intent intent = new Intent(ContractorProfile.this, EditContractorProfile.class);
-            intent.putExtra("Name",businessName);
-            intent.putExtra("Address",businessAddress);
-            intent.putExtra("About",aboutBusiness);
-            intent.putExtra("documentId", getIntent().getStringExtra("documentId"));
-            startActivity(intent);
-        });
 
         back.setOnClickListener(v -> finish());
 
@@ -136,7 +198,6 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
                 return;
             }
             if (document != null && document.exists()) {
-                //storageRef = FirebaseStorage.getInstance().getReference();
                 if(document.contains("BusinessName")) {
                     if(!document.getString("BusinessName").isEmpty())
                     {
@@ -203,6 +264,17 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
                 }
             }
         });
+        CollectionReference reviewCollection = fireStore.collection("jobReviews");
+        ArrayList<ReviewInfo> reviewInfos = new ArrayList<>();
+        reviewCollection.whereEqualTo("uid",uid).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            if(queryDocumentSnapshots!=null && !queryDocumentSnapshots.isEmpty()){
+                for (DocumentSnapshot documentSnapshot: queryDocumentSnapshots.getDocuments()){
+                    reviewInfos.add(new ReviewInfo(documentSnapshot.getDouble("starRating"),documentSnapshot.getString("Comment")));
+                }
+                adapter1 = new HorizontalRecyclerAdpater(reviewInfos,R.layout.fragment_review_card,this);
+                reviews.setAdapter(adapter1);
+            }
+        });
     }
 
     private void fillList(ArrayList<String> list) {
@@ -217,7 +289,7 @@ public class ContractorProfile extends AppCompatActivity implements RecyclerView
                 for(int i = 0; i < length; i++){
                     list.add(pictures.get(i).get("ProfilePhoto").toString());
                 }
-                adapter = new HorizontalRecyclerAdpater(list, this);
+                adapter = new HorizontalRecyclerAdpater(list, R.layout.horizontal_images, this);
                 recycler.setAdapter(adapter);
             }
         });

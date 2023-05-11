@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,10 +26,14 @@ import com.freelancer.ui.profile.EditConsumerProfile;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +43,6 @@ import java.util.Map;
 
 public class BookListing extends AppCompatActivity {
     JobListing listing;
-    TextView time;
     TextView reason;
     TextView price;
     TextView location;
@@ -48,13 +52,8 @@ public class BookListing extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Map<String,Object>> optionList;
     OptionsRecyclerViewAdapter adapter;
-    HashSet<String> selection = new HashSet<>();
-    HashMap<String,Integer> choice = new HashMap<>();
-
-//    public BookListing(JobListing listing){
-//        this.listing = listing;
-//
-//    }
+    HashMap<Integer,ArrayList<Integer>> ids = new HashMap<>();
+    String businessAddress;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,15 +69,23 @@ public class BookListing extends AppCompatActivity {
         book = findViewById(R.id.bookButton);
         recyclerView = findViewById(R.id.customOptions);
 
+        CollectionReference ref = FirebaseFirestore.getInstance().collection("userListings");
+        ref.whereEqualTo("uid",listing.jobInfo.get("businessId")).addSnapshotListener((value, error) -> {
+            if (value != null && !value.isEmpty()){
+                businessAddress = value.getDocuments().get(0).getString("Location");
+                business.setText("Business: \n" + listing.jobInfo.get("title") + "\n" + businessAddress);
+            }
+        });
+
         reason.setText("Description: " + listing.jobInfo.get("description"));
         price.setText("Price: " + listing.jobInfo.get("basePrice"));
         location.setText("Location: " + listing.jobInfo.get("jobLocation"));
-        business.setText("Business: \n" + listing.businessName + "\n" + listing.address);
+
 
         if (!listing.customOptions.isEmpty()) {
             createOptionsList();
             recyclerView.setLayoutManager(new LinearLayoutManager(BookListing.this));
-            adapter = new OptionsRecyclerViewAdapter(optionList, selection, choice);
+            adapter = new OptionsRecyclerViewAdapter(optionList,ids);
             recyclerView.setAdapter(adapter);
         }
         book.setOnClickListener(v1 -> bookAppointment());
@@ -95,13 +102,49 @@ public class BookListing extends AppCompatActivity {
     private void bookAppointment() {
         CollectionReference collection = FirebaseFirestore.getInstance().collection("bookings");
         Map<String,Object> data = new HashMap<>();
-        ArrayList<String> arr = new ArrayList<>(selection);
-        data.put("Selection choices",arr);
-        data.put("Boolean choices",choice);
-        data.put("Contractor ID", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        data.put("Consumer ID","DHsQ6UhQMLPqthv5us9Y4ByIN4u1");
+        data.put("businessName",listing.jobInfo.get("title"));
+        data.put("businessAddress",businessAddress);
+        data.put("description",listing.jobInfo.get("description"));
+        data.put("Contractor ID", listing.jobInfo.get("businessId"));
+        data.put("Consumer ID",FirebaseAuth.getInstance().getCurrentUser().getUid());
         data.put("Book Time",new Date());
-        data.put("Job Listing ID", listing.map.get("Job Listing ID"));
+        data.put("Job Listing ID", listing.jobInfo.get("Job Listing ID"));
+        data.put("approved",false);
+        if(optionList != null)
+        {
+            HashMap<String,Object> customs = new HashMap<>();
+            for (int i = 0; i < optionList.size(); i++) {
+                View view = recyclerView.findViewHolderForAdapterPosition(i).itemView;
+                String type = (String) optionList.get(i).get("fieldType");
+                String fieldName = (String) optionList.get(i).get("fieldName");
+                String selectionType = (String) optionList.get(i).getOrDefault("selectionType", "");
+                if (type.equalsIgnoreCase("FREE_FORM")) {
+                    customs.put(fieldName, ((EditText) view.findViewById(R.id.formText)).getText().toString().trim());
+                } else if (type.equalsIgnoreCase("selection") && selectionType.equalsIgnoreCase("multiple")) {
+                    ArrayList<Integer> idList = ids.get(i);
+                    ArrayList<String> options = new ArrayList<>();
+                    for (int j = 0; j < idList.size(); j++) {
+                        View view1 = view.findViewById(idList.get(j));
+                        if (view1 instanceof CheckBox) {
+                            if (((CheckBox) view1).isChecked()) {
+                                options.add(((CheckBox) view1).getText().toString());
+                            }
+                        }
+                    }
+                    customs.put(fieldName, options);
+                } else {
+                    int a = ((RadioGroup) view.findViewById(R.id.radioGroup)).getCheckedRadioButtonId();
+                    String s;
+                    if(a > -1)
+                        s = ((RadioButton) view.findViewById(a)).getText().toString();
+                    else
+                        s = "";
+                    customs.put(fieldName, s);
+                }
+            }
+            data.put("customOptions",customs);
+        }
+        System.out.println(data);
         collection.add(data).addOnSuccessListener(documentReference -> {
             Toast.makeText(this,"Job Listing booked",Toast.LENGTH_SHORT).show();
             finish();
@@ -111,17 +154,16 @@ public class BookListing extends AppCompatActivity {
         });
     }
 
+
 }
 
 class OptionsRecyclerViewAdapter extends RecyclerView.Adapter<OptionsRecyclerViewAdapter.OptionsViewHolder>{
     ArrayList<Map<String,Object>> list;
-    HashMap<String,Integer> choice;
-    HashSet<String> selection;
+    HashMap<Integer,ArrayList<Integer>> ids;
 
-    public OptionsRecyclerViewAdapter(ArrayList<Map<String,Object>> list,HashSet<String> selection,HashMap<String,Integer> choice){
-        this.selection = selection;
-        this.choice = choice;
+    public OptionsRecyclerViewAdapter(ArrayList<Map<String,Object>> list, HashMap<Integer,ArrayList<Integer>>ids){
         this.list = list;
+        this.ids = ids;
     }
 
     @NonNull
@@ -151,31 +193,36 @@ class OptionsRecyclerViewAdapter extends RecyclerView.Adapter<OptionsRecyclerVie
         TextView textView;
         RadioGroup radioGroup;
         boolean modified = false;
-
         LinearLayout layout;
+        TextInputLayout textInputLayout;
 
         public OptionsViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.fieldName);
             radioGroup = itemView.findViewById(R.id.radioGroup);
             layout = itemView.findViewById(R.id.customOptions);
+            textInputLayout = itemView.findViewById(R.id.formLayout);
         }
         void updateView(int pos){
             String type = (String) list.get(pos).get("fieldType");
+            String selectionType = (String) list.get(pos).getOrDefault("selectionType","");
+            ArrayList<Integer> viewId = new ArrayList<>();
             if(type.equalsIgnoreCase( "BOOLEAN")){
-                String key = (String) list.get(pos).get("fieldName");
-                choice.put(key,-1);
                 radioGroup.setVisibility(View.VISIBLE);
-                radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-                    RadioButton radioButton = itemView.findViewById(checkedId);
-                    if(radioButton.getText().toString().equalsIgnoreCase("Yes"))
-                        choice.replace((String) list.get(pos).get("fieldName"),1);
-                    else
-                        choice.replace((String) list.get(pos).get("fieldName"),0);
-                    System.out.println(radioButton.getText() + " button was selected!!");
-                });
+                radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+                RadioButton yes = new RadioButton(itemView.getContext());
+                yes.setText("Yes");
+                yes.setId(View.generateViewId());
+                viewId.add(yes.getId());
+                RadioButton no = new RadioButton(itemView.getContext());
+                no.setText("No");
+                no.setId(View.generateViewId());
+                viewId.add(no.getId());
+                radioGroup.addView(yes);
+                radioGroup.addView(no);
+                ids.put(pos,viewId);
                 modified = true;
-            } else if (type.equalsIgnoreCase( "SELECTION")) {
+            } else if (type.equalsIgnoreCase( "SELECTION") && selectionType.equalsIgnoreCase("multiple")) {
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.setMargins(0,10,0,0);
                 ArrayList<String> choices = ((ArrayList<String>)list.get(pos).get("options"));
@@ -184,18 +231,35 @@ class OptionsRecyclerViewAdapter extends RecyclerView.Adapter<OptionsRecyclerVie
                 for(int i = 0; i < size; i++){
                     checkBox = new CheckBox(itemView.getContext());
                     checkBox.setText(choices.get(i));
-                    checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                        if(isChecked) {
-                            System.out.println(buttonView.getText() + " was selected");
-                            selection.add(buttonView.getText().toString());
-                        }
-                        else
-                            selection.remove(buttonView.getText().toString());
-                    });
+                    checkBox.setId(View.generateViewId());
+                    viewId.add(checkBox.getId());
                     layout.addView(checkBox,params);
                 }
+                ids.put(pos,viewId);
                 modified = true;
+            } else if (type.equalsIgnoreCase( "SELECTION") && selectionType.equalsIgnoreCase("single")) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0,10,0,0);
+                ArrayList<String> choices = ((ArrayList<String>)list.get(pos).get("options"));
+                int size = choices.size();
+                radioGroup.setVisibility(View.VISIBLE);
+                radioGroup.setOrientation(LinearLayout.VERTICAL);
+                RadioButton radioButton;
+                for(int i =0; i < size; i++){
+                    radioButton = new RadioButton(itemView.getContext());
+                    radioButton.setText(choices.get(i));
+                    radioButton.setId(View.generateViewId());
+                    viewId.add(radioButton.getId());
+                    radioGroup.addView(radioButton);
+                }
+                ids.put(pos,viewId);
+                modified = true;
+            } else if (type.equalsIgnoreCase("FREE_FORM")) {
+                textInputLayout.setVisibility(View.VISIBLE);
+                modified = true;
+                ids.put(pos,new ArrayList<>());
             }
+
         }
     }
 
