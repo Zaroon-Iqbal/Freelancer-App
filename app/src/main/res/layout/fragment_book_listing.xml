@@ -74,6 +74,15 @@
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_below="@+id/customOptions"
         android:layout_toLeftOf="@id/bookButton" />
+    <Button
+        android:id="@+id/reviewButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Write a Review"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_below="@+id/customOptions"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/customOptions"
