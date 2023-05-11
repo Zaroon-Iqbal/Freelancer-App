@@ -10,31 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
-import com.freelancer.TestingActivity;
-import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.placeholder.FavoriteActivityPlaceholder;
 import com.freelancer.placeholder.MessageActivityPlaceholder;
 import com.freelancer.placeholder.ProfileActivityPlaceholder;
-import com.freelancer.ui.Checklist;
-import com.freelancer.ui.bidding.BiddingContractorMain;
-import com.freelancer.ui.bidding.Customer.CustomerBidMain;
-import com.freelancer.ui.booking.PickListingDate;
 import com.freelancer.ui.history.AppointmentList;
 import com.freelancer.ui.profile.ConsumerProfile;
 import com.freelancer.ui.profile.ContractorProfile;
-import com.freelancer.ui.profile.EditContractorProfile;
-import com.freelancer.ui.profile.portfolio.EditPortfolio;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
+
 
 public class HomePage extends AppCompatActivity {
     private static int count = 0;
