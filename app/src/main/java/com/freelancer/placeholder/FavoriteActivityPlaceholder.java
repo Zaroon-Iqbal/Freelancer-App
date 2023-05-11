@@ -1,10 +1,16 @@
 package com.freelancer.placeholder;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +22,8 @@ import com.freelancer.ui.bidding.Customer.CustomerBidMain;
 import com.freelancer.ui.login.HomePage;
 import com.freelancer.ui.profile.ConsumerProfile;
 import com.freelancer.ui.profile.ContractorProfile;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,13 +31,25 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FavoriteActivityPlaceholder extends AppCompatActivity {
     private String type = "";
+    com.google.firebase.firestore.core.View v;
+    ListView listView;
+    ArrayList<String> arr;
+    ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favorites_placeholder);
+
+        readDocument(v);
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.FavoriteNav);
         Button customerButton = findViewById(R.id.testCustomer);
@@ -113,4 +133,35 @@ public class FavoriteActivityPlaceholder extends AppCompatActivity {
             }
         });
     }
-}
+
+    public void readDocument(com.google.firebase.firestore.core.View view) {
+        listView = findViewById(R.id.listView);
+        listView.setVisibility(android.view.View.GONE);
+        arr = new ArrayList<>();
+        FirebaseFirestore.getInstance()
+                .collection("jobListings")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
+                        for (DocumentSnapshot snapshot : snapshotList) {
+                            Log.d(TAG, "onSuccess: " + snapshot.getData().toString());
+                            String temp = snapshot.getString("title") + "\n" + snapshot.getString("description") + "\t\t$" + snapshot.getDouble("basePrice") + "\t\t" + snapshot.getDouble("radius") + "mi";
+                            Log.d(TAG, "onSuccess: " + temp);
+                            arr.add(temp);
+                            Log.d(TAG, "onSuccess: " + arr);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "onFailure: ", e);
+                    }
+                });
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arr);
+        listView.setAdapter(adapter);
+        listView.setVisibility(android.view.View.VISIBLE);
+        }
+    }

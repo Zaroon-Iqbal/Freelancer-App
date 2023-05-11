@@ -54,7 +54,8 @@ public class HomePage extends AppCompatActivity {
 
         initAdMob();
 
-        int random = (int) (Math.random() * 3);
+        //int random = (int) (Math.random() * 3);
+        int random = 1;
 
         if (random == 1) {
             loadBannerAd();
