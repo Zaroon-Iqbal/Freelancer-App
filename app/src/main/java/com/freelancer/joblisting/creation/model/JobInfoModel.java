@@ -33,37 +33,13 @@ public class JobInfoModel implements Serializable {
         this.radius = "";
         this.jobLocation = "";
     }
-    
+
     public void setTitle(String title) {
         this.title = title;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setBasePrice(String basePrice) {
-        this.basePrice = basePrice;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setRadius(String radius) {
-        this.radius = radius;
-    }
-
-    public void setJobLocation(String jobLocation) {
-        this.jobLocation = jobLocation;
     }
 
     @Override
