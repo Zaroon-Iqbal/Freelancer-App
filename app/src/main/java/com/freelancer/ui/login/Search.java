@@ -247,7 +247,7 @@ public class Search extends Activity {
         listView.setAdapter(adapter);
         FirebaseFirestore.getInstance()
                 .collection("jobListings")
-                .whereLessThan(FieldPath.of("jobInfo", "radius"), 50)
+                .whereLessThanOrEqualTo(FieldPath.of("jobInfo", "radius"), 20)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -280,7 +280,7 @@ public class Search extends Activity {
         listView.setAdapter(adapter);
         FirebaseFirestore.getInstance()
                 .collection("jobListings")
-                .whereLessThanOrEqualTo(FieldPath.of("jobInfo", "radius"), 20)
+                .whereLessThanOrEqualTo(FieldPath.of("jobInfo", "radius"), 10)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override

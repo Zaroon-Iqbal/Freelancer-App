@@ -222,36 +222,25 @@ public class HomePage extends AppCompatActivity {
         bidding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CollectionReference contractor = FirebaseFirestore.getInstance().collection("UsersExample").document("ContractorsExample").collection("ContractorData");
-                CollectionReference consumer = FirebaseFirestore.getInstance().collection("UsersExample").document("ConsumersExample").collection("ConsumerData");
-                contractor.get()
+                CollectionReference userListings = FirebaseFirestore.getInstance().collection("userListings");
+                userListings.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.getId().equals(user.getUid()))
-                                    startActivity(new Intent(HomePage.this, BiddingContractorMain.class));
+                                if (document.get("uid").equals(user.getUid()))
+                                    if (document.get("type").toString().equals("contractor"))
+                                        startActivity(new Intent(HomePage.this, BiddingContractorMain.class));
+                                    else
+                                        startActivity(new Intent(HomePage.this, CustomerBidMain.class));
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-                consumer.get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    if (document.getId().equals(user.getUid()))
-                                        startActivity(new Intent(HomePage.this, CustomerBidMain.class));
-                                }
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
+
             }
         });
     }
