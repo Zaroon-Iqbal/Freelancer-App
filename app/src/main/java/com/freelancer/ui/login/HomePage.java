@@ -74,6 +74,7 @@ public class HomePage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         ib1 = findViewById(R.id.iconContractor1);
+
         ib2 = findViewById(R.id.iconContractor2);
         ib3 = findViewById(R.id.iconContractor3);
         ib4 = findViewById(R.id.iconContractor4);
@@ -128,6 +129,19 @@ public class HomePage extends AppCompatActivity {
                 for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                     type = document.getString("type");
                     documentId = document.getId();
+                }
+                if (type.equalsIgnoreCase("consumer"))
+                {
+                    ib1.setOnClickListener(v -> {
+                        Intent intent = new Intent(HomePage.this, ContractorProfile.class);
+                        intent.putExtra("uid", "VnLSptq4oTQuVhhPztbjvTzu0xz2");
+                        startActivity(intent);
+                    });
+                    ib2.setOnClickListener(v ->{
+                        Intent intent = new Intent(HomePage.this, ContractorProfile.class);
+                        intent.putExtra("uid", "D6QSDVdSuObAGtBWKrY7wtMsM7U2");
+                        startActivity(intent);
+                    });
                 }
             }
         });

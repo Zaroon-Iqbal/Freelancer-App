@@ -36,7 +36,11 @@ public class JobListing implements Parcelable {
         jobInfo = new HashMap<>();
         Bundle b1 = in.readBundle();
         for(String string: b1.keySet()){
-            jobInfo.put(string, b1.getString(string));
+            String temp = b1.getString(string);
+            if(temp != null)
+                jobInfo.put(string, temp);
+            else
+                jobInfo.put(string, b1.getLong(string));
         }
         exists = in.readBoolean();
         if(exists)
@@ -67,7 +71,12 @@ public class JobListing implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         Bundle b1 = new Bundle();
         for(Map.Entry<String,Object> entry: jobInfo.entrySet()){
-            b1.putString(entry.getKey(), (String) entry.getValue());
+            if(entry.getValue() instanceof String)
+            {
+                b1.putString(entry.getKey(), (String) entry.getValue());
+            }
+            else
+                b1.putLong(entry.getKey(),(Long)entry.getValue());
         }
         dest.writeBundle(b1);
         dest.writeBoolean(exists);

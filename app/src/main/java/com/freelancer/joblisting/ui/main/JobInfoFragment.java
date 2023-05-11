@@ -23,6 +23,7 @@ import com.freelancer.R;
 import com.freelancer.data.viewmodel.JobInfoViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -30,7 +31,6 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * job info fragment made for displaying and retrieving accurate job listing data from contractors
@@ -60,7 +60,7 @@ public class JobInfoFragment extends Fragment {
 
     AutoCompleteTextView categoryDropdown;
 
-    AutoCompleteTextView jobRadiusDropdown;
+    TextInputEditText jobRadiusDropdown;
     AutoCompleteTextView jobLocationDropdown;
 
     JobInfoViewModel jobInfoViewModel;
@@ -111,7 +111,7 @@ public class JobInfoFragment extends Fragment {
 
         //instantiating variables to appropriate ones in XML layout file
         categoryDropdown = view.findViewById(R.id.category_items);
-        jobRadiusDropdown = view.findViewById(R.id.radius_items);
+        jobRadiusDropdown = view.findViewById(R.id.menu_radius);
         jobLocationDropdown = view.findViewById(R.id.location_items);
 
         choosePic = view.findViewById(R.id.chooseImage);
@@ -153,8 +153,6 @@ public class JobInfoFragment extends Fragment {
         });
 
 
-
-
         //adding the job listing categories
         String[] categories = {"Accounting/Finance", "Engineering", "Art/Media/Design", "Biotech/Science", "Business",
                 "Customer Service", "Education", "Food/Bev", "General Labor",
@@ -164,12 +162,7 @@ public class JobInfoFragment extends Fragment {
                 "Technical Support", "Transport", "Tv/Film", "Web/Info Design", "Writing/Editting", "other"};
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), R.layout.category_list, categories);
         categoryDropdown.setAdapter(categoryAdapter); //storing categories in a dropdown menu
-
-        //adding the radius options for dropdown menu
-        String[] radius = {"10 miles", "20 miles", "50 miles", "other"};
-        ArrayAdapter<String> radiusAdapter = new ArrayAdapter<>(getContext(), R.layout.category_list, radius);
-        jobRadiusDropdown.setAdapter(radiusAdapter);
-
+        
         //adding the method of business conducting to the drop down menu
         String[] jobLocation = {"Virtual", "Client Location", "Business Location"};
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getContext(), R.layout.category_list, jobLocation);
@@ -209,13 +202,19 @@ public class JobInfoFragment extends Fragment {
                 String jobDescription = description.getText().toString();
                 String jobPhone = phone.getText().toString();
                 String jobCity = city.getText().toString();
-                String jobPrice = price.getText().toString();
+                Double jobPrice = 0.0;
                 String category = categoryDropdown.getText().toString();
-                String location = jobRadiusDropdown.getText().toString();
+                Integer jobRadius = 0;
                 String type = jobLocationDropdown.getText().toString();
                 String imageReference = imageURL;//This is where the link to the recent image link is
 
-                jobInfoViewModel.updateJobListing(jobTitle, jobDescription, jobPhone, jobCity, jobPrice, category, location, type);
+                try {
+                    jobPrice = Double.parseDouble(price.getText().toString());
+                    jobRadius = Integer.parseInt(jobRadiusDropdown.getText().toString());
+                } catch (NumberFormatException nfe) {
+
+                }
+                jobInfoViewModel.updateJobListing(jobTitle, jobDescription, jobPhone, jobCity, jobPrice, category, jobRadius, type);
                 Log.i("Update complete", "Updated the model!");
                 jobInfoViewModel.isModelUpdateNeeded().setValue(false);
             }
@@ -240,6 +239,7 @@ public class JobInfoFragment extends Fragment {
         return storage;
     }
 */
+
     /**
      * Method used for input validation
      *

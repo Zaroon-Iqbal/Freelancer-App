@@ -40,8 +40,8 @@ public class JobInfoViewModel extends AndroidViewModel {
         return modelUpdateNeeded;
     }
 
-    public void updateJobListing(String Jtitle, String Jdescription, String Jphone, String Jcity, String Jprice, String category, String loc, String type) {
-        jobInfoModel = new JobInfoModel(Jtitle, Jdescription, Jphone, Jcity, Jprice, category, loc, type);
+    public void updateJobListing(String Jtitle, String Jdescription, String Jphone, String Jcity, Double Jprice, String category, Integer radius, String type) {
+        jobInfoModel = new JobInfoModel(Jtitle, Jdescription, Jphone, Jcity, Jprice, category, radius, type);
         //database.createJobListing(Jtitle, Jdescription, Jphone, Jcity, Jprice, category, loc, type);
     }
 }

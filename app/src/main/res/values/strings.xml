@@ -98,4 +98,5 @@
     <string name="leave_a_review">Leave a Review</string>
     <string name="title_activity_review">ReviewActivity</string>
     <string name="title_activity_review_activity.java">ReviewActivity.java</string>
+    <string name="radius_miles">Radius (miles)</string>
 </resources>

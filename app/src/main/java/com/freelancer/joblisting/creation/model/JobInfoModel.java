@@ -7,12 +7,12 @@ public class JobInfoModel implements Serializable {
     public String description;
     public String phone;
     public String city;
-    public String basePrice;
+    public Double basePrice;
     public String category;
-    public String radius;
+    public Integer radius;
     public String jobLocation;
 
-    public JobInfoModel(String title, String description, String phone, String city, String basePrice, String category, String radius, String jobLocation) {
+    public JobInfoModel(String title, String description, String phone, String city, Double basePrice, String category, Integer radius, String jobLocation) {
         this.title = title;
         this.description = description;
         this.phone = phone;
@@ -28,9 +28,9 @@ public class JobInfoModel implements Serializable {
         this.description = "";
         this.phone = "";
         this.city = "";
-        this.basePrice = "";
+        this.basePrice = 0.0;
         this.category = "";
-        this.radius = "";
+        this.radius = 0;
         this.jobLocation = "";
     }
 
