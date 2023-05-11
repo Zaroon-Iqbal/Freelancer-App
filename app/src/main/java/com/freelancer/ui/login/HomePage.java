@@ -61,6 +61,7 @@ public class HomePage extends AppCompatActivity {
     ImageButton ib5;
     ImageButton map;
     ImageButton bidding;
+    private boolean contractorCheck;
 
     ActivityHomePageBinding binding;
 
@@ -209,6 +210,7 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        //Button for the map
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,6 +218,7 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        //Button for bidding
         bidding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,17 +230,28 @@ public class HomePage extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.getId().equals(user.getUid())) {
+                                if (document.getId().equals(user.getUid()))
                                     startActivity(new Intent(HomePage.this, BiddingContractorMain.class));
-                                    break;
-                                }
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-                startActivity(new Intent(HomePage.this, CustomerBidMain.class));
+                consumer.get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    if (document.getId().equals(user.getUid()))
+                                        startActivity(new Intent(HomePage.this, CustomerBidMain.class));
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
             }
         });
     }
