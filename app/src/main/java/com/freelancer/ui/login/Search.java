@@ -1,7 +1,5 @@
 package com.freelancer.ui.login;
 
-import androidx.annotation.NonNull;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +10,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
+
 import com.freelancer.R;
+import com.freelancer.joblisting.creation.model.JobInfoModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -81,6 +82,10 @@ public class Search extends Activity {
                         for (DocumentSnapshot snapshot : snapshotList) {
                             Log.d(TAG, "onSuccess: " + snapshot.getData().toString());
                             String temp = snapshot.getString("title") + "\n" + snapshot.getString("description") + "\t\t$" + snapshot.getDouble("basePrice") + "\t\t" + snapshot.getDouble("radius") + "mi";
+                            
+                            JobInfoModel jobInfoModel = snapshot.get("jobInfo", JobInfoModel.class);
+                            Log.i("Job info", "Data: " + jobInfoModel);
+
                             Log.d(TAG, "onSuccess: " + temp);
                             arr.add(temp);
                             Log.d(TAG, "onSuccess: " + arr);
