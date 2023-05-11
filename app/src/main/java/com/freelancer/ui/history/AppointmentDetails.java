@@ -63,7 +63,7 @@ public class AppointmentDetails extends AppCompatActivity {
                                 .get().addOnSuccessListener(documentSnapshot -> {
                                     Map<String,Object> jobInfo = (Map<String, Object>) documentSnapshot.get("jobInfo");
                                     description.setText("Description:"+(String)bookingDetails.map.get("description"));
-                                    price.setText("Base Price:"+(String) jobInfo.get("basePrice"));
+                                    price.setText("Base Price:"+(jobInfo.get("basePrice")).toString());
                                     location.setText("Location:"+(String) jobInfo.get("jobLocation"));
                                     String temp = "Business:\n"+(String) jobInfo.get("title") + "\n" + (String) bookingDetails.map.get("businessAddress");
                                     business.setText(temp);

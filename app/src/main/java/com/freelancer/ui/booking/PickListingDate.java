@@ -114,7 +114,7 @@ class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecyclerVie
     @Override
     public void onBindViewHolder(@NonNull ListingViewHolder holder, int position) {
         holder.content.setText((String)listings.get(position).jobInfo.get("description"));
-        holder.price.setText("Base Price - $"+(String) listings.get(position).jobInfo.get("basePrice"));
+        holder.price.setText("Base Price - $"+(listings.get(position).jobInfo.get("basePrice")).toString());
     }
 
     @Override

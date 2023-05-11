@@ -52,9 +52,13 @@ public class ReviewActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() { //stores the review in firestore
             @Override
             public void onClick(View view) {
-                fire.createJobReview(comment.getText().toString(), rating );
-                Intent intent = new Intent(getApplicationContext(), ReviewList.class);
-                startActivity(intent);
+                String uid = getIntent().getStringExtra("uid");
+                if(uid != null)
+                {
+                    fire.createJobReview(comment.getText().toString(), rating, uid);
+                    Intent intent = new Intent(getApplicationContext(), ReviewList.class);
+                    startActivity(intent);
+                }
             }
         });
     }
