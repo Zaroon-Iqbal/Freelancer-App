@@ -151,19 +151,22 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--Radius drop down menu selection layout-->
+            <!--Price input layout-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/menu_radius"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/menu_radius_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/radius"
-                app:helperText="* Required">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/radius_miles"
+                app:helperText="* Required"
+                app:suffixText=" miles">
 
-                <AutoCompleteTextView
-                    android:id="@+id/radius_items"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/menu_radius"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="number"
+                    android:minHeight="48dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

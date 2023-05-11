@@ -86,14 +86,14 @@ public class Search extends Activity {
                                     snapshot.getString(String.valueOf(FieldPath.of("jobInfo", "description")))+ "\t\t\n$" +
                                     snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "basePrice"))) + "\t\t" +
                                     snapshot.getDouble(String.valueOf(FieldPath.of("jobInfo", "radius"))) + " mi";
-                            
+
                             // JobInfoModel jobInfoModel = snapshot.get("jobInfo", JobInfoModel.class);
                             // Log.i("Job info", "Data: " + jobInfoModel);
 
                             Log.d(TAG, "onSuccess: " + temp);
                             arr.add(temp);
                             //if (snapshot.getString("name") != null) {
-                                //arr.add(temp);
+                            //arr.add(temp);
                             //}
                             Log.d(TAG, "onSuccess: " + arr);
                         }
