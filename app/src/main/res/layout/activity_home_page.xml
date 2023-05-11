@@ -8,6 +8,12 @@
     tools:context=".ui.login.HomePage">
 
     <!--The frontend ui of the homepage by Zaroon Iqbal-->
+
+    <!--The search bar place holder-->
+
+    <!--Paid Promotion scroll section by Zaroon Iqbal-->
+    <!--Allows the user to scroll horizontally to see different buttons. By Edward Kuoch-->
+
     <ImageView
         android:id="@+id/freelancerlogo2"
         android:layout_width="419dp"
@@ -16,51 +22,21 @@
         android:contentDescription="@string/freelancer_logo"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logotransparent" />
 
-    <!--The search bar place holder-->
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="378dp"
-        android:layout_height="37dp"
-        android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
-        android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.204" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/popular_near_you"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freelancerlogo2"
-        app:layout_constraintVertical_bias="0.026" />
-
-    <!--Allows the user to scroll horizontally to see different buttons. By Edward Kuoch-->
     <ScrollView
         android:id="@+id/scroll1"
         android:layout_width="0dp"
         android:layout_height="198dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.026">
+        app:layout_constraintVertical_bias="0.02">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -109,27 +85,12 @@
 
     </ScrollView>
 
-    <!--Paid Promotion scroll section by Zaroon Iqbal-->
-    <TextView
-        android:id="@+id/PaidPromotion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/promotions"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.039"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scroll1" />
-
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="198dp"
-        app:layout_constraintHorizontal_bias="0.045"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PaidPromotion"
-        app:layout_constraintVertical_bias="0.026">
+        app:layout_constraintTop_toBottomOf="@+id/PaidPromotion">
 
         <!--Makes the scrolling animation occur horizontally-->
         <HorizontalScrollView
@@ -174,12 +135,71 @@
                     android:textColor="#000000"
                     app:layout_constraintStart_toEndOf="@+id/paidpromotion2"
                     app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </HorizontalScrollView>
 
     </ScrollView>
 
+    <TextView
+        android:id="@+id/PaidPromotion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/promotions"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.039"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scroll1" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/popular_near_you"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freelancerlogo2"
+        app:layout_constraintVertical_bias="0.059" />
+
     <!--Bottom Navigation Bar added by Edward Kuoch-->
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/ic_baseline_search_24"
+        android:baselineAligned="false"
+        android:textOff=""
+        android:textOn=""
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:adSize="BANNER"
+        app:adUnitId="@string/admob_banner_id"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="679dp"></com.google.android.gms.ads.AdView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
-import com.freelancer.calendar.CalendarActivity;
+import com.freelancer.data.calendar.CalendarActivity;
 import com.freelancer.ui.bidding.BiddingContractorMain;
 import com.freelancer.ui.bidding.Customer.CustomerBidMain;
 import com.freelancer.ui.login.HomePage;

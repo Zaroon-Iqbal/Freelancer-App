@@ -1,7 +1,9 @@
 <!-- string variables for text displayed on our mobile device-->
 <!--contributors: Zaroon, Spencer, Edward, anthony-->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Freelancer</string>
+    <string name="admob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713 </string>
+    <string name="admob_banner_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -96,4 +98,5 @@
     <string name="leave_a_review">Leave a Review</string>
     <string name="title_activity_review">ReviewActivity</string>
     <string name="title_activity_review_activity.java">ReviewActivity.java</string>
+    <string name="title_activity_search">Search</string>
 </resources>

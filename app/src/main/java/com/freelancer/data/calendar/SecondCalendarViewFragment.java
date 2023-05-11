@@ -1,4 +1,4 @@
-package com.freelancer.calendar;
+package com.freelancer.data.calendar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

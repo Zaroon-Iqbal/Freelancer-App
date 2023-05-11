@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.freelancer.calendar.CalendarActivity;
+import com.freelancer.data.calendar.CalendarActivity;
 import com.freelancer.joblisting.CreateJobListingTabbedActivity;
 import com.freelancer.joblisting.management.JobListingManagementActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,8 +41,6 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         management.setOnClickListener(this);
         review.setOnClickListener(this);
         //when the save button is clicked
-
-
     }
 
     @SuppressLint("NonConstantResourceId")

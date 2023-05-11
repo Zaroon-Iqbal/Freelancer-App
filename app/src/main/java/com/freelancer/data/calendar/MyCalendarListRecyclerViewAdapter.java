@@ -1,4 +1,4 @@
-package com.freelancer.calendar;
+package com.freelancer.data.calendar;
 
 import androidx.recyclerview.widget.RecyclerView;
 

@@ -1,22 +1,15 @@
 package com.freelancer.placeholder;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.freelancer.R;
-import com.freelancer.calendar.CalendarActivity;
 import com.freelancer.databinding.MessagePlaceholderBinding;
-import com.freelancer.ui.ChatMessaging.ChatActivity;
 import com.freelancer.ui.ChatMessaging.UserAdapter;
 import com.freelancer.ui.ChatMessaging.UserModel;
-import com.freelancer.ui.login.HomePage;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,8 +17,6 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 
 public class MessageActivityPlaceholder extends AppCompatActivity {

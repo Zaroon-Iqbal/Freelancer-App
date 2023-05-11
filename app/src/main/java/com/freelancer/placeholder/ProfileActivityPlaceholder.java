@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freelancer.R;
-import com.freelancer.calendar.CalendarActivity;
+import com.freelancer.data.calendar.CalendarActivity;
 import com.freelancer.ui.login.HomePage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".calendar.CalendarActivity">
+    tools:context=".data.calendar.CalendarActivity">
 
     <CalendarView
         android:id="@+id/calendarView"
@@ -27,7 +27,7 @@
 
         <fragment
             android:id="@+id/calendar_list_fragment"
-            android:name="com.freelancer.calendar.CalendarListFragment"
+            android:name="com.freelancer.data.calendar.CalendarListFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_item_list" />

@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,24 +15,41 @@
         android:roundIcon="@drawable/logotransparent"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.booking.PickListingDate"
-            android:exported="false"/>
+        <activity
+            android:name=".BannerAdActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Search"
+            android:exported="false"
+            android:label="@string/title_activity_search"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.booking.PickListingDate"
+            android:exported="false" />
         <activity
             android:name=".ui.profile.EditContractorProfile"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.profile.ContractorProfile"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.profile.portfolio.PortfolioActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.profile.EnlargeImage"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.profile.EditConsumerProfile"
             android:exported="false"
-            android:parentActivityName=".ui.login.LoginActivity"/>
+            android:parentActivityName=".ui.login.LoginActivity" />
         <activity
             android:name=".ReviewList"
             android:exported="false" />
@@ -60,7 +76,7 @@
             android:name=".TestingActivity"
             android:exported="false" />
         <activity
-            android:name=".calendar.CalendarActivity"
+            android:name=".data.calendar.CalendarActivity"
             android:exported="false"
             android:label="@string/title_activity_calendar"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -94,9 +110,11 @@
         <activity
             android:name=".ui.bidding.Customer.CustomerBidActivities"
             android:exported="false" />
-        <activity android:name=".ui.bidding.BiddingContractorMain"
+        <activity
+            android:name=".ui.bidding.BiddingContractorMain"
             android:exported="false" />
-        <activity android:name=".ui.bidding.BidderList"
+        <activity
+            android:name=".ui.bidding.BidderList"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
@@ -108,6 +126,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
     </application>
 
 </manifest>

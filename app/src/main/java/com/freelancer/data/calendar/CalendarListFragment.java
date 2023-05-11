@@ -1,4 +1,4 @@
-package com.freelancer.calendar;
+package com.freelancer.data.calendar;
 
 import android.content.Context;
 import android.os.Bundle;
