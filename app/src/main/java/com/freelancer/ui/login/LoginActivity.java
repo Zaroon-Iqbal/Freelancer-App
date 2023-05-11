@@ -18,6 +18,7 @@ import com.freelancer.data.viewmodel.LoginViewModel;
 import com.freelancer.databinding.ActivityLoginBinding;
 import com.freelancer.ui.registration.ContractorRegistrationActivity;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static Toast toast;
@@ -25,9 +26,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LoginViewModel loginViewModel;
     private TextInputEditText email;
     private EditText password;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        if (firebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(LoginActivity.this, HomePage.class));
+        }
         super.onCreate(savedInstanceState);
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);

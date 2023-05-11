@@ -74,9 +74,23 @@
     <string name="location">Ubicación</string>
     <string name="base_price">Precio Base</string>
     <string name="create_service">Crear Servicio</string>
-    <string name="custom_field_type">Custom field type</string>
+    <string name="custom_field_type">Tipo de campo personalizado</string>
     <string name="add_custom_field_plus">+</string>
-    <string name="additional_cost">Additional cost</string>
-    <string name="custom_field_name">Custom field name</string>
-    <string name="custom_fields">Custom fields</string>
+    <string name="additional_cost">Costo adicional</string>
+    <string name="custom_field_name">Nombre de campo personalizado</string>
+    <string name="custom_fields">Campos Personalizados</string>
+    <string name="option_name">Nombre de la opción</string>
+    <string name="done">Crear servicio</string>
+    <string name="custom_checkbox_title">Título de casilla de verificación personalizado</string>
+    <string name="header">Encabezamiento</string>
+    <string name="add">Agregar</string>
+    <string name="multiple_selection">Selección múltiple</string>
+    <string name="single_selection">Selección única</string>
+    <string name="fab_job_listing_creation_description">FAB que crea una nueva opción personalizada durante el proceso de creación de la lista de trabajos</string>
+    <string name="post_job_listing">Publicar listado de trabajos</string>
+    <string name="job_listing_management">Gestión de ofertas de trabajo</string>
+    <string name="not_registered_create_an_account">¿No registrado? ¡Crea una cuenta!</string>
+    <string name="leave_a_review">Dejar un comentario</string>
+    <string name="title_activity_review">Actividad de revisión</string>
+    <string name="title_activity_review_activity.java">Actividad de revisión.java</string>
 </resources>
