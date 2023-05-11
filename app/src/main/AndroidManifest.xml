@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,32 +15,40 @@
         android:roundIcon="@drawable/logotransparent"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.profile.portfolio.EditPortfolio"
+        <activity
+            android:name=".ui.login.Search"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.profile.portfolio.EditPortfolio"
             android:exported="false"
-            android:parentActivityName=".ui.profile.EditContractorProfile"/>
+            android:parentActivityName=".ui.profile.EditContractorProfile" />
         <activity
             android:name=".ui.profile.portfolio.EditSocialLinks"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
-            android:name= ".ui.booking.BookListing"
-            android:exported="false"/>
+            android:name=".ui.booking.BookListing"
+            android:exported="false" />
         <activity
             android:name=".ui.profile.EditContractorProfile"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.profile.ContractorProfile"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.profile.portfolio.PortfolioActivity"
             android:exported="false"
-            android:parentActivityName=".ui.profile.ContractorProfile"/>
+            android:parentActivityName=".ui.profile.ContractorProfile" />
         <activity
             android:name=".ui.profile.EnlargeImage"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.profile.EditConsumerProfile"
             android:exported="false"
-            android:parentActivityName=".ui.login.LoginActivity"/>
+            android:parentActivityName=".ui.login.LoginActivity" />
         <activity
             android:name=".ReviewList"
             android:exported="false" />
@@ -102,9 +109,11 @@
         <activity
             android:name=".ui.bidding.Customer.CustomerBidActivities"
             android:exported="false" />
-        <activity android:name=".ui.bidding.BiddingContractorMain"
+        <activity
+            android:name=".ui.bidding.BiddingContractorMain"
             android:exported="false" />
-        <activity android:name=".ui.bidding.BidderList"
+        <activity
+            android:name=".ui.bidding.BidderList"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
@@ -116,6 +125,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
     </application>
 
 </manifest>
