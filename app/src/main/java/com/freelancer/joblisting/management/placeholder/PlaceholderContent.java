@@ -32,7 +32,7 @@ public class PlaceholderContent {
     static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
-            JobInfoModel infoModel = new JobInfoModel("Title", "desc", "Phone", "city", "price", "General Labor", "10 miles", "Huntington Beach");
+            JobInfoModel infoModel = new JobInfoModel("Title", "desc", "Phone", "city", 0.0, "General Labor", 10, "Huntington Beach");
             addItem(new JobListingModel(infoModel, new ArrayList<>()));
         }
     }
