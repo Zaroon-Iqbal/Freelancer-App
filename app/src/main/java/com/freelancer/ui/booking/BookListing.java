@@ -109,7 +109,7 @@ public class BookListing extends AppCompatActivity {
         data.put("Consumer ID",FirebaseAuth.getInstance().getCurrentUser().getUid());
         data.put("Book Time",new Date());
         data.put("Job Listing ID", listing.jobInfo.get("Job Listing ID"));
-        data.put("approved",false);
+        data.put("approved",true);
         if(optionList != null)
         {
             HashMap<String,Object> customs = new HashMap<>();
